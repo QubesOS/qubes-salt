@@ -1,0 +1,8 @@
+sudo: required
+dist: bionic
+language: minimal
+install: git clone https://github.com/"${TRAVIS_REPO_SLUG%%/*}"/qubes-builder ~/qubes-builder
+script: ~/qubes-builder/scripts/travis-build
+# keep the log under 4MB limit
+env:
+ - DIST_DOM0=fc31 USE_QUBES_REPO_VERSION=4.1 USE_QUBES_REPO_TESTING=1 VERBOSE=0
