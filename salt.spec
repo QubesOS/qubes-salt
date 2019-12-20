@@ -7,13 +7,13 @@
 %global include_tests 0
 
 # Release Candidate
-%define __rc_ver rc0
+#%%define __rc_ver rc0
 
 %define fish_dir %{_datadir}/fish/vendor_functions.d
 
 Name:    salt
-Version: 2019.2.1%{?__rc_ver}
-Release: 3%{?dist}
+Version: 2019.2.2%{?__rc_ver}
+Release: 0.1%{?dist}
 Summary: A parallel remote execution system
 
 License: ASL 2.0
