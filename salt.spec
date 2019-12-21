@@ -41,6 +41,8 @@ Source19: salt-minion.fish
 Source20: salt-run.fish
 Source21: salt-syndic.fish
 
+Patch0: 0001-Workaround-for-tornado-6.patch
+
 ## Patch0:  salt-%%{version}-tests.patch
 
 
@@ -171,7 +173,7 @@ Supports Python 3.
 ## %%setup -q -T -D -a 1
 
 cd %{name}-%{version}
-## %%patch0 -p1
+%patch0 -p1
 
 
 rm -rf %{py3dir}
