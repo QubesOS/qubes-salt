@@ -1,0 +1,463 @@
+
+%bcond_with tests
+%bcond_with docs
+
+%{!?python3_pkgversion:%global python3_pkgversion 3}
+
+%global include_tests 0
+
+# Release Candidate
+#%%define __rc_ver rc0
+
+%define fish_dir %{_datadir}/fish/vendor_functions.d
+
+Name:    salt
+Version: @VERSION@%{?__rc_ver}
+Release: @REL@%{?dist}
+Epoch:   1000
+Summary: A parallel remote execution system
+
+License: ASL 2.0
+URL:     http://saltstack.org/
+Source0: https://pypi.io/packages/source/s/%{name}/%{name}-%{version}.tar.gz
+Source1: %{name}-proxy@.service
+Source2: %{name}-master
+Source3: %{name}-syndic
+Source4: %{name}-minion
+Source5: %{name}-api
+Source6: %{name}-master.service
+Source7: %{name}-syndic.service
+Source8: %{name}-minion.service
+Source9: %{name}-api.service
+Source10: README.fedora
+Source11: %{name}-common.logrotate
+Source12: salt.bash
+Source13: salt.fish
+Source14: salt_common.fish
+Source15: salt-call.fish
+Source16: salt-cp.fish
+Source17: salt-key.fish
+Source18: salt-master.fish
+Source19: salt-minion.fish
+Source20: salt-run.fish
+Source21: salt-syndic.fish
+
+Patch0: 0001-Workaround-for-tornado-6.patch
+
+## Patch0:  salt-%%{version}-tests.patch
+
+
+BuildArch: noarch
+
+%ifarch %{ix86} x86_64
+Requires: dmidecode
+%endif
+
+Requires: pciutils
+Requires: which
+
+Requires: dnf-utils
+
+%if 0%{?systemd_preun:1}
+Requires(post): systemd-units
+Requires(preun): systemd-units
+Requires(postun): systemd-units
+%endif
+
+BuildRequires: systemd-units
+Requires:      python%{python3_pkgversion}-systemd
+
+BuildRequires: python%{python3_pkgversion}-devel
+BuildRequires: python%{python3_pkgversion}-requests
+BuildRequires: python%{python3_pkgversion}-mock
+BuildRequires: python%{python3_pkgversion}-libcloud
+BuildRequires: python%{python3_pkgversion}-six
+BuildRequires: python%{python3_pkgversion}-pyyaml
+BuildRequires: python%{python3_pkgversion}-distro
+BuildRequires: git
+
+Requires: python%{python3_pkgversion}-jinja2
+Requires: python%{python3_pkgversion}-msgpack >= 0.4
+
+## Requires: python%%{python3_pkgversion}-crypto >= 2.6.1
+Requires: python%{python3_pkgversion}-m2crypto >= 0.31.0
+
+Requires: python%{python3_pkgversion}-requests
+Requires: python%{python3_pkgversion}-zmq
+Requires: python%{python3_pkgversion}-markupsafe
+Requires: python%{python3_pkgversion}-tornado >= 4.2.1
+Requires: python%{python3_pkgversion}-six
+Requires: python%{python3_pkgversion}-psutil
+Requires: python%{python3_pkgversion}-pyyaml
+Requires: python%{python3_pkgversion}-distro
+
+
+
+%description
+Salt is a distributed remote execution system used to execute commands and
+query data. It was developed in order to bring the best solutions found in
+the world of remote execution together and make them better, faster and more
+malleable. Salt accomplishes this via its ability to handle larger loads of
+information, and not just dozens, but hundreds or even thousands of individual
+servers, handle them quickly and through a simple and manageable interface.
+
+%package    master
+Summary:    Management component for salt, a parallel remote execution system
+Group:      System Environment/Daemons
+Requires:   %{name} = %{epoch}:%{version}-%{release}
+Requires:   python%{python3_pkgversion}-systemd
+
+%description master
+The Salt master is the central server to which all minions connect.
+Supports Python 3.
+
+
+%package    minion
+Summary:    Client component for Salt, a parallel remote execution system
+Group:      System Environment/Daemons
+Requires:   %{name} = %{epoch}:%{version}-%{release}
+
+%description minion
+The Salt minion is the agent component of Salt. It listens for instructions
+from the master, runs jobs, and returns results back to the master.
+Supports Python 3.
+
+
+%package    syndic
+Summary:    Master-of-master component for Salt, a parallel remote execution system
+Group:      System Environment/Daemons
+Requires:   %{name}-master = %{epoch}:%{version}-%{release}
+
+%description syndic
+The Salt syndic is a master daemon which can receive instruction from a
+higher-level master, allowing for tiered organization of your Salt
+infrastructure.
+Supports Python 3.
+
+
+%package    api
+Summary:    REST API for Salt, a parallel remote execution system
+Group:      Applications/System
+Requires:   %{name}-master = %{epoch}:%{version}-%{release}
+Requires:   python%{python3_pkgversion}-cherrypy >= 3.2.2
+
+%description api
+salt-api provides a REST interface to the Salt master.
+Supports Python 3.
+
+
+%package    cloud
+Summary:    Cloud provisioner for Salt, a parallel remote execution system
+Group:      Applications/System
+Requires:   %{name}-master = %{epoch}:%{version}-%{release}
+Requires:   python%{python3_pkgversion}-libcloud
+
+%description cloud
+The salt-cloud tool provisions new cloud VMs, installs salt-minion on them, and
+adds them to the master's collection of controllable minions.
+Supports Python 3.
+
+
+%package    ssh
+Summary:    Agentless SSH-based version of Salt, a parallel remote execution system
+Group:      Applications/System
+Requires:   %{name} = %{epoch}:%{version}-%{release}
+
+%description ssh
+The salt-ssh tool can run remote execution functions and states without the use
+of an agent (salt-minion) service.
+Supports Python 3.
+
+
+%prep
+%setup -q -c
+## %%setup -q -T -D -a 1
+
+cd %{name}-%{version}
+%patch0 -p1
+
+
+rm -rf %{py3dir}
+cp -a . %{py3dir}
+
+
+%build
+pushd %{py3dir}
+%py3_build
+popd
+
+
+%install
+rm -rf %{buildroot}
+cd $RPM_BUILD_DIR/%{name}-%{version}/%{name}-%{version}
+
+## rm -rf %%{buildroot}
+pushd %{py3dir}
+%py3_install
+
+# Add some directories
+install -d -m 0755 %{buildroot}%{_var}/log/salt
+touch %{buildroot}%{_var}/log/salt/minion
+touch %{buildroot}%{_var}/log/salt/master
+install -d -m 0755 %{buildroot}%{_var}/cache/salt
+install -d -m 0755 %{buildroot}%{_sysconfdir}/salt
+install -d -m 0755 %{buildroot}%{_sysconfdir}/salt/master.d
+install -d -m 0755 %{buildroot}%{_sysconfdir}/salt/minion.d
+install -d -m 0755 %{buildroot}%{_sysconfdir}/salt/pki
+install -d -m 0755 %{buildroot}%{_sysconfdir}/salt/pki/master
+install -d -m 0755 %{buildroot}%{_sysconfdir}/salt/pki/minion
+install -d -m 0700 %{buildroot}%{_sysconfdir}/salt/cloud.conf.d
+install -d -m 0700 %{buildroot}%{_sysconfdir}/salt/cloud.deploy.d
+install -d -m 0700 %{buildroot}%{_sysconfdir}/salt/cloud.maps.d
+install -d -m 0700 %{buildroot}%{_sysconfdir}/salt/cloud.profiles.d
+install -d -m 0700 %{buildroot}%{_sysconfdir}/salt/cloud.providers.d
+install -d -m 0755 %{buildroot}%{_sysconfdir}/salt/proxy.d
+
+# Add the config files
+install -p -m 0640 conf/minion %{buildroot}%{_sysconfdir}/salt/minion
+install -p -m 0640 conf/master %{buildroot}%{_sysconfdir}/salt/master
+install -p -m 0600 conf/cloud  %{buildroot}%{_sysconfdir}/salt/cloud
+install -p -m 0640 conf/roster %{buildroot}%{_sysconfdir}/salt/roster
+install -p -m 0640 conf/proxy  %{buildroot}%{_sysconfdir}/salt/proxy
+
+# Add the unit files
+mkdir -p %{buildroot}%{_unitdir}
+install -p -m 0644 %{SOURCE6} %{buildroot}%{_unitdir}/
+install -p -m 0644 %{SOURCE7} %{buildroot}%{_unitdir}/
+install -p -m 0644 %{SOURCE8} %{buildroot}%{_unitdir}/
+install -p -m 0644 %{SOURCE9} %{buildroot}%{_unitdir}/
+install -p -m 0644 %{SOURCE1} %{buildroot}%{_unitdir}/
+
+# Logrotate
+install -p %{SOURCE10} .
+mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d/
+install -p -m 0644 %{SOURCE11} %{buildroot}%{_sysconfdir}/logrotate.d/salt
+
+# Bash completion
+mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d/
+install -p -m 0644 %{SOURCE12} %{buildroot}%{_sysconfdir}/bash_completion.d/salt.bash
+
+# Fish completion (TBD remove -v)
+mkdir -p %{buildroot}%{fish_dir}
+install -p -m 0644  %{SOURCE13} %{buildroot}%{fish_dir}/salt.fish
+install -p -m 0644  %{SOURCE14} %{buildroot}%{fish_dir}/salt_common.fish
+install -p -m 0644  %{SOURCE15} %{buildroot}%{fish_dir}/salt-call.fish
+install -p -m 0644  %{SOURCE16} %{buildroot}%{fish_dir}/salt-cp.fish
+install -p -m 0644  %{SOURCE17} %{buildroot}%{fish_dir}/salt-key.fish
+install -p -m 0644  %{SOURCE18} %{buildroot}%{fish_dir}/salt-master.fish
+install -p -m 0644  %{SOURCE19} %{buildroot}%{fish_dir}/salt-minion.fish
+install -p -m 0644  %{SOURCE20} %{buildroot}%{fish_dir}/salt-run.fish
+install -p -m 0644  %{SOURCE21} %{buildroot}%{fish_dir}/salt-syndic.fish
+
+popd
+
+
+%clean
+rm -rf %{buildroot}
+
+
+%files
+%defattr(-,root,root,-)
+%{python3_sitelib}/%{name}/*
+%{python3_sitelib}/%{name}-*-py?.?.egg-info
+%{_sysconfdir}/logrotate.d/salt
+%{_sysconfdir}/bash_completion.d/salt.bash
+%{_var}/cache/salt
+%{_var}/log/salt
+
+## %%doc $RPM_BUILD_DIR/%%{name}-%%{version}/%%{name}-%%{version}/LICENSE
+## %%doc $RPM_BUILD_DIR/%%{name}-%%{version}/%%{name}-%%{version}/README.fedora
+%doc $RPM_BUILD_DIR/python3-%{name}-%{version}-%{release}/LICENSE
+%doc $RPM_BUILD_DIR/python3-%{name}-%{version}-%{release}/README.fedora
+
+/%{_bindir}/spm
+%doc %{_mandir}/man1/spm.1*
+%config(noreplace) %{_sysconfdir}/salt/
+%config(noreplace) %{_sysconfdir}/salt/pki
+%config(noreplace) %{fish_dir}/salt*.fish
+
+%files master
+%defattr(-,root,root)
+%doc %{_mandir}/man7/salt.7*
+%doc %{_mandir}/man1/salt.1*
+%doc %{_mandir}/man1/salt-cp.1*
+%doc %{_mandir}/man1/salt-key.1*
+%doc %{_mandir}/man1/salt-master.1*
+%doc %{_mandir}/man1/salt-run.1*
+%doc %{_mandir}/man1/salt-unity.1*
+%{_bindir}/salt
+%{_bindir}/salt-cp
+%{_bindir}/salt-key
+%{_bindir}/salt-master
+%{_bindir}/salt-run
+%{_bindir}/salt-unity
+%{_unitdir}/salt-master.service
+%config(noreplace) %{_sysconfdir}/salt/master
+%config(noreplace) %{_sysconfdir}/salt/master.d
+%config(noreplace) %{_sysconfdir}/salt/pki/master
+
+%files minion
+%defattr(-,root,root)
+%doc %{_mandir}/man1/salt-call.1*
+%doc %{_mandir}/man1/salt-minion.1*
+%doc %{_mandir}/man1/salt-proxy.1*
+%{_bindir}/salt-minion
+%{_bindir}/salt-call
+%{_bindir}/salt-proxy
+%{_unitdir}/salt-minion.service
+%{_unitdir}/salt-proxy@.service
+%config(noreplace) %{_sysconfdir}/salt/minion
+%config(noreplace) %{_sysconfdir}/salt/proxy
+%config(noreplace) %{_sysconfdir}/salt/minion.d
+%config(noreplace) %{_sysconfdir}/salt/pki/minion
+
+%files syndic
+%doc %{_mandir}/man1/salt-syndic.1*
+%{_bindir}/salt-syndic
+%{_unitdir}/salt-syndic.service
+
+%files api
+%defattr(-,root,root)
+%doc %{_mandir}/man1/salt-api.1*
+%{_bindir}/salt-api
+%{_unitdir}/salt-api.service
+
+%files cloud
+%doc %{_mandir}/man1/salt-cloud.1*
+%{_bindir}/salt-cloud
+%{_sysconfdir}/salt/cloud.conf.d
+%{_sysconfdir}/salt/cloud.deploy.d
+%{_sysconfdir}/salt/cloud.maps.d
+%{_sysconfdir}/salt/cloud.profiles.d
+%{_sysconfdir}/salt/cloud.providers.d
+%config(noreplace) %{_sysconfdir}/salt/cloud
+
+%files ssh
+%doc %{_mandir}/man1/salt-ssh.1*
+%{_bindir}/salt-ssh
+%config(noreplace) %{_sysconfdir}/salt/roster
+
+
+%preun master
+%if 0%{?systemd_preun:1}
+  %systemd_preun salt-master.service
+%else
+  if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable salt-master.service > /dev/null 2>&1 || :
+    /bin/systemctl stop salt-master.service > /dev/null 2>&1 || :
+  fi
+%endif
+
+%preun syndic
+%if 0%{?systemd_preun:1}
+  %systemd_preun salt-syndic.service
+%else
+  if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable salt-syndic.service > /dev/null 2>&1 || :
+    /bin/systemctl stop salt-syndic.service > /dev/null 2>&1 || :
+  fi
+%endif
+
+%preun minion
+%if 0%{?systemd_preun:1}
+  %systemd_preun salt-minion.service
+%else
+  if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable salt-minion.service > /dev/null 2>&1 || :
+    /bin/systemctl stop salt-minion.service > /dev/null 2>&1 || :
+  fi
+%endif
+
+%preun api
+%if 0%{?systemd_preun:1}
+  %systemd_preun salt-api.service
+%else
+  if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable salt-api.service > /dev/null 2>&1 || :
+    /bin/systemctl stop salt-api.service > /dev/null 2>&1 || :
+  fi
+%endif
+
+%post master
+%if 0%{?systemd_post:1}
+  if [ $1 -gt 1 ] ; then
+    /usr/bin/systemctl try-restart salt-master.service >/dev/null 2>&1 || :
+  else
+    %systemd_post salt-master.service
+  fi
+%else
+  /bin/systemctl daemon-reload &>/dev/null || :
+%endif
+
+%post syndic
+%if 0%{?systemd_post:1}
+  if [ $1 -gt 1 ] ; then
+    /usr/bin/systemctl try-restart salt-syndic.service >/dev/null 2>&1 || :
+  else
+    %systemd_post salt-syndic.service
+  fi
+%else
+  /bin/systemctl daemon-reload &>/dev/null || :
+%endif
+
+%post minion
+%if 0%{?systemd_post:1}
+  if [ $1 -gt 1 ] ; then
+    /usr/bin/systemctl try-restart salt-minion.service >/dev/null 2>&1 || :
+  else
+    %systemd_post salt-minion.service
+  fi
+%else
+  /bin/systemctl daemon-reload &>/dev/null || :
+%endif
+
+%post api
+%if 0%{?systemd_post:1}
+  if [ $1 -gt 1 ] ; then
+    /usr/bin/systemctl try-restart salt-api.service >/dev/null 2>&1 || :
+  else
+    %systemd_post salt-api.service
+  fi
+%else
+  /bin/systemctl daemon-reload &>/dev/null || :
+%endif
+
+%postun master
+%if 0%{?systemd_post:1}
+  %systemd_postun_with_restart salt-master.service
+%else
+  /bin/systemctl daemon-reload &>/dev/null
+  [ $1 -gt 0 ] && /bin/systemctl try-restart salt-master.service &>/dev/null || :
+%endif
+
+%postun syndic
+%if 0%{?systemd_post:1}
+  %systemd_postun_with_restart salt-syndic.service
+%else
+  /bin/systemctl daemon-reload &>/dev/null
+  [ $1 -gt 0 ] && /bin/systemctl try-restart salt-syndic.service &>/dev/null || :
+%endif
+
+%postun minion
+%if 0%{?systemd_post:1}
+  %systemd_postun_with_restart salt-minion.service
+%else
+  /bin/systemctl daemon-reload &>/dev/null
+  [ $1 -gt 0 ] && /bin/systemctl try-restart salt-minion.service &>/dev/null || :
+%endif
+
+%postun api
+%if 0%{?systemd_post:1}
+  %systemd_postun_with_restart salt-api.service
+%else
+  /bin/systemctl daemon-reload &>/dev/null
+  [ $1 -gt 0 ] && /bin/systemctl try-restart salt-api.service &>/dev/null || :
+%endif
+
+
+%changelog
+@CHANGELOG@
