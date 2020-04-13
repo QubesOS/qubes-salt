@@ -1,0 +1,75 @@
+From 81b61b44f7ce534689cce625fcc08f4c4d346d3e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Pierret=20=28fepitre=29?=
+ <frederic.pierret@qubes-os.org>
+Date: Sun, 12 Apr 2020 20:05:11 +0200
+Subject: [PATCH] Apply patch from upstream to support python 3.8
+
+saltstack/salt#56031
+---
+ salt/grains/core.py         | 16 ++++++++--------
+ salt/renderers/stateconf.py |  8 ++++----
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/salt/grains/core.py b/salt/grains/core.py
+index 9b244def9c..0b5f3ae9a8 100644
+--- a/salt/grains/core.py
++++ b/salt/grains/core.py
+@@ -35,20 +35,20 @@ except ImportError:
+ __proxyenabled__ = ['*']
+ __FQDN__ = None
+ 
+-# Extend the default list of supported distros. This will be used for the
+-# /etc/DISTRO-release checking that is part of linux_distribution()
+-from platform import _supported_dists
+-_supported_dists += ('arch', 'mageia', 'meego', 'vmware', 'bluewhite64',
+-                     'slamd64', 'ovs', 'system', 'mint', 'oracle', 'void')
+-
+ # linux_distribution deprecated in py3.7
+ try:
+     from platform import linux_distribution as _deprecated_linux_distribution
+ 
++    # Extend the default list of supported distros. This will be used for the
++    # /etc/DISTRO-release checking that is part of linux_distribution()
++    from platform import _supported_dists
++    _supported_dists += ('arch', 'mageia', 'meego', 'vmware', 'bluewhite64',
++                         'slamd64', 'ovs', 'system', 'mint', 'oracle', 'void')
++
+     def linux_distribution(**kwargs):
+         with warnings.catch_warnings():
+             warnings.simplefilter("ignore")
+-            return _deprecated_linux_distribution(**kwargs)
++            return _deprecated_linux_distribution(supported_dists=_supported_dists, **kwargs)
+ except ImportError:
+     from distro import linux_distribution
+ 
+@@ -1939,7 +1939,7 @@ def os_data():
+         )
+         (osname, osrelease, oscodename) = \
+             [x.strip('"').strip("'") for x in
+-             linux_distribution(supported_dists=_supported_dists)]
++             linux_distribution()]
+         # Try to assign these three names based on the lsb info, they tend to
+         # be more accurate than what python gets from /etc/DISTRO-release.
+         # It's worth noting that Ubuntu has patched their Python distribution
+diff --git a/salt/renderers/stateconf.py b/salt/renderers/stateconf.py
+index cfce9e6926..5c8a8322ed 100644
+--- a/salt/renderers/stateconf.py
++++ b/salt/renderers/stateconf.py
+@@ -224,10 +224,10 @@ def render(input, saltenv='base', sls='', argline='', **kws):
+             tmplctx = STATE_CONF.copy()
+             if tmplctx:
+                 prefix = sls + '::'
+-                for k in six.iterkeys(tmplctx):  # iterate over a copy of keys
+-                    if k.startswith(prefix):
+-                        tmplctx[k[len(prefix):]] = tmplctx[k]
+-                        del tmplctx[k]
++                tmplctx = {
++                    k[len(prefix):] if k.startswith(prefix) else k: v
++                    for k, v in six.iteritems(tmplctx)
++                }
+         else:
+             tmplctx = {}
+ 
+-- 
+2.25.1
+
