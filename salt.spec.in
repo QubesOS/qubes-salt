@@ -20,7 +20,6 @@
 Name:    salt
 Version: @VERSION@%{?__rc_ver}
 Release: @REL@%{?dist}
-Epoch:   1000
 Summary: A parallel remote execution system
 Group:   System Environment/Daemons
 License: ASL 2.0
@@ -151,7 +150,7 @@ Supports Python 3.
 %package    minion
 Summary:    Client component for Salt, a parallel remote execution system
 Group:      System Environment/Daemons
-Requires:   %{name} = %{epoch}:%{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
 
 %description minion
 The Salt minion is the agent component of Salt. It listens for instructions
@@ -162,7 +161,7 @@ Supports Python 3.
 %package    syndic
 Summary:    Master-of-master component for Salt, a parallel remote execution system
 Group:      System Environment/Daemons
-Requires:   %{name}-master = %{epoch}:%{version}-%{release}
+Requires:   %{name}-master = %{version}-%{release}
 
 %description syndic
 The Salt syndic is a master daemon which can receive instruction from a
@@ -174,7 +173,7 @@ Supports Python 3.
 %package    api
 Summary:    REST API for Salt, a parallel remote execution system
 Group:      Applications/System
-Requires:   %{name}-master = %{epoch}:%{version}-%{release}
+Requires:   %{name}-master = %{version}-%{release}
 Requires:   python%{python3_pkgversion}-cherrypy >= 3.2.2
 
 %description api
@@ -185,7 +184,7 @@ Supports Python 3.
 %package    cloud
 Summary:    Cloud provisioner for Salt, a parallel remote execution system
 Group:      Applications/System
-Requires:   %{name}-master = %{epoch}:%{version}-%{release}
+Requires:   %{name}-master = %{version}-%{release}
 Requires:   python%{python3_pkgversion}-libcloud
 
 %description cloud
@@ -197,7 +196,7 @@ Supports Python 3.
 %package    ssh
 Summary:    Agentless SSH-based version of Salt, a parallel remote execution system
 Group:      Applications/System
-Requires:   %{name} = %{epoch}:%{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
 
 %description ssh
 The salt-ssh tool can run remote execution functions and states without the use
