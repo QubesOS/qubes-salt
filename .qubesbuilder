@@ -1,0 +1,12 @@
+host-fc37:
+  rpm:
+    build:
+    - salt.spec
+vm-fc37:
+  rpm:
+    build:
+    - salt.spec
+source:
+  files:
+  - url: https://files.pythonhosted.org/packages/source/s/salt/salt-@VERSION@.tar.gz
+    sha512: salt-@VERSION@.tar.gz.sha512

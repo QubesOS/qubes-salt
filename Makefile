@@ -1,31 +1,46 @@
-DIST ?= fc31
+.DEFAULT_GOAL = get-sources
+.SECONDEXPANSION:
+
+DIST ?= fc32
 VERSION := $(shell cat version)
-REL := $(shell cat rel)
 
 FEDORA_SOURCES := https://src.fedoraproject.org/rpms/salt/raw/f$(subst fc,,$(DIST))/f/sources
-SRC_FILE := salt-$(VERSION).tar.gz
+SRC_FILES := \
+            salt-$(VERSION).tar.gz \
 
 BUILDER_DIR ?= ../..
 SRC_DIR ?= qubes-src
 
-DISTFILES_MIRROR ?= https://pypi.io/packages/source/s/salt/
-UNTRUSTED_SUFF := .UNTRUSTED
-FETCH_CMD := wget --no-use-server-timestamps -q -O
+SRC_URLS := \
+            https://files.pythonhosted.org/packages/source/s/salt/salt-$(VERSION).tar.gz \
 
-SHELL := /bin/bash
+UNTRUSTED_SUFF := .UNTRUSTED
+
+SHELL := bash
+
+.PHONY: get-sources verify-sources clean clean-sources
+
+ifeq ($(FETCH_CMD),)
+$(error "You can not run this Makefile without having FETCH_CMD defined")
+endif
 
 %: %.sha512
-	@$(FETCH_CMD) $@$(UNTRUSTED_SUFF) $(DISTFILES_MIRROR)$@
+	@$(FETCH_CMD) $@$(UNTRUSTED_SUFF) -- $(filter %/$@,$(SRC_URLS))
 	@sha512sum --status -c <(printf "$$(cat $<)  -\n") <$@$(UNTRUSTED_SUFF) || \
-			{ echo "Wrong SHA512 checksum on $@$(UNTRUSTED_SUFF)!"; exit 1; }
+		{ echo "Wrong SHA512 checksum on $@$(UNTRUSTED_SUFF)!"; exit 1; }
 	@mv $@$(UNTRUSTED_SUFF) $@
 
-.PHONY: get-sources
-get-sources: $(SRC_FILE)
+get-sources: $(SRC_FILES)
+	@true
 
-.PHONY: verify-sources
 verify-sources:
 	@true
+
+clean:
+	@true
+
+clean-sources:
+	rm -f $(SRC_FILES) *$(UNTRUSTED_SUFF)
 
 # This target is generating content locally from upstream project
 # 'sources' file. Sanitization is done but it is encouraged to perform
