@@ -55,6 +55,24 @@ Requires: logrotate
 BuildRequires: systemd-rpm-macros
 BuildRequires: python3-devel
 
+BuildRequires: ((python3dist(msgpack) < 0.5.5 or python3dist(msgpack) > 0.5.5) with python3dist(msgpack) >= 0.5)
+BuildRequires: (python3dist(toml) if python3-devel < 3.11)
+BuildRequires: pyproject-rpm-macros
+BuildRequires: python3-devel
+BuildRequires: python3-devel
+BuildRequires: python3dist(distro) >= 1.0.1
+BuildRequires: python3dist(jinja2)
+BuildRequires: python3dist(jmespath)
+BuildRequires: python3dist(markupsafe)
+BuildRequires: python3dist(packaging)
+BuildRequires: python3dist(pip) >= 19
+BuildRequires: python3dist(psutil) >= 5
+BuildRequires: python3dist(pycryptodomex) >= 3.9.8
+BuildRequires: python3dist(pyyaml)
+BuildRequires: python3dist(pyzmq) >= 19.0.2
+BuildRequires: python3dist(requests) >= 1
+BuildRequires: python3dist(setuptools) >= 40.8
+BuildRequires: python3dist(wheel)
 
 %description
 Salt is a distributed remote execution system used to execute commands and
@@ -135,8 +153,6 @@ Supports Python 3.
 
 %prep
 %autosetup -p1
-%generate_buildrequires
-%pyproject_buildrequires
 
 
 %build
