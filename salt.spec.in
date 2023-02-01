@@ -40,6 +40,7 @@ Source20: %{name}-run.fish
 Source21: %{name}-syndic.fish
 
 Patch0: contextvars.patch
+Patch1: pr62677.patch
 BuildArch: noarch
 
 %ifarch %{ix86} x86_64
