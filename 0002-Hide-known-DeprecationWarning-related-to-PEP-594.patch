@@ -1,0 +1,51 @@
+From 9a1efaa31d8b748c29d374c1726b940e43d5d36a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
+Date: Thu, 22 Jun 2023 00:35:15 +0200
+Subject: [PATCH] Hide known DeprecationWarning related to PEP 594
+
+The code is prepared to handle the situation where those modules will be
+missing (with very minor functionality loss), so do not confuse the
+users.
+---
+ salt/modules/linux_shadow.py | 6 +++++-
+ salt/utils/pycrypto.py       | 6 +++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/salt/modules/linux_shadow.py b/salt/modules/linux_shadow.py
+index aa149ac4c8..6b0204b4b7 100644
+--- a/salt/modules/linux_shadow.py
++++ b/salt/modules/linux_shadow.py
+@@ -18,7 +18,11 @@ import salt.utils.files
+ from salt.exceptions import CommandExecutionError
+ 
+ try:
+-    import spwd
++    import warnings
++
++    with warnings.catch_warnings():
++        warnings.filterwarnings("ignore",category=DeprecationWarning)
++        import spwd
+ except ImportError:
+     pass
+ 
+diff --git a/salt/utils/pycrypto.py b/salt/utils/pycrypto.py
+index a0f3874035..ab26ed75c3 100644
+--- a/salt/utils/pycrypto.py
++++ b/salt/utils/pycrypto.py
+@@ -23,7 +23,11 @@ except ImportError:
+     HAS_RANDOM = False
+ 
+ try:
+-    import crypt
++    import warnings
++
++    with warnings.catch_warnings():
++        warnings.filterwarnings("ignore",category=DeprecationWarning)
++        import crypt
+ 
+     HAS_CRYPT = True
+ except (ImportError, PermissionError):
+-- 
+2.39.2
+
