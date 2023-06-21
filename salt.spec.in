@@ -40,7 +40,6 @@ Source20: %{name}-run.fish
 Source21: %{name}-syndic.fish
 
 Patch0: contextvars.patch
-Patch1: pr62677.patch
 BuildArch: noarch
 
 %ifarch %{ix86} x86_64
@@ -63,13 +62,14 @@ BuildRequires: python3-devel
 BuildRequires: python3dist(distro) >= 1.0.1
 BuildRequires: python3dist(jinja2)
 BuildRequires: python3dist(jmespath)
+BuildRequires: python3dist(looseversion)
 BuildRequires: python3dist(markupsafe)
-BuildRequires: python3dist(packaging)
+BuildRequires: python3dist(packaging) >= 21.3
 BuildRequires: python3dist(pip) >= 19
 BuildRequires: python3dist(psutil) >= 5
 BuildRequires: python3dist(pycryptodomex) >= 3.9.8
 BuildRequires: python3dist(pyyaml)
-BuildRequires: python3dist(pyzmq) >= 19.0.2
+BuildRequires: python3dist(pyzmq) >= 20
 BuildRequires: python3dist(requests) >= 1
 BuildRequires: python3dist(setuptools) >= 40.8
 BuildRequires: python3dist(wheel)
@@ -219,7 +219,7 @@ install -p -m 0644  %{SOURCE21} %{buildroot}%{fish_dir}/%{name}-syndic.fish
 
 # ZSH completion
 mkdir -p %{buildroot}%{zsh_dir}
-install -p -m 0644 pkg/%{name}.zsh %{buildroot}%{zsh_dir}/_%{name}
+install -p -m 0644 pkg/common/%{name}.zsh %{buildroot}%{zsh_dir}/_%{name}
 
 
 %check
@@ -240,6 +240,7 @@ install -p -m 0644 pkg/%{name}.zsh %{buildroot}%{zsh_dir}/_%{name}
 %dir %{_sysconfdir}/%{name}/pki/
 %{fish_dir}/%{name}*.fish
 %{zsh_dir}/_%{name}
+%{_bindir}/salt-pip
 
 %files master
 %doc %{_mandir}/man7/%{name}.7*
