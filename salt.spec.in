@@ -45,6 +45,7 @@ Patch2: 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
 Patch3: 0003-Stop-using-the-deprecated-cgi-module.patch
 Patch4: 0004-Fixed-committed-reviewer-suggestion.patch
 Patch5: 0005-Stop-using-the-deprecated-pipes-module.patch
+Patch6: 0006-Fix-salt-ssh-state.-commands-retcode-for-render-fail.patch
 BuildArch: noarch
 
 %ifarch %{ix86} x86_64
