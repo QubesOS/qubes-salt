@@ -1,0 +1,34 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Tue, 12 Oct 2021 18:31:23 +0200
+Subject: Use jquery.js from sphinx
+
+Sphinx uses libjs-jquery >= 1.11.1 which is newer than jquery-1.9.1.js
+shipped by salt. Therefore jquery.js from sphinx can be used again.
+
+Forwarded: no
+Last-Updated: 2021-10-12
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ doc/_themes/saltstack/layout.html | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/doc/_themes/saltstack/layout.html b/doc/_themes/saltstack/layout.html
+index 895d6e2..8dbfe0b 100644
+--- a/doc/_themes/saltstack/layout.html
++++ b/doc/_themes/saltstack/layout.html
+@@ -19,15 +19,12 @@
+     {%- set titlesuffix = "" %}
+ {%- endif %}
+ 
+-{# Remove old version of jQuery #}
+ {% set js_blacklist = [
+     '_static/documentation_options.js',
+-    '_static/jquery.js',
+ ] %}
+ 
+ {# Add to top of the list #}
+ {% set script_files = [
+-    '_static/js/vendor/jquery-1.9.1.js',
+     '_static/js/vendor/bootstrap.min.js',
+ ] + script_files %}
+ 

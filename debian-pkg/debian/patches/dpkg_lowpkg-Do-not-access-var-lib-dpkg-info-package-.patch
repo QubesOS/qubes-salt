@@ -1,0 +1,124 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Fri, 8 Oct 2021 14:18:19 +0200
+Subject: dpkg_lowpkg: Do not access /var/lib/dpkg/info/<package>.list
+ directly
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+salt contains modules, which directly access the dpkg internal database,
+instead of using one of the public interfaces provided by dpkg. This is
+a problem for several reasons, because even though the layout and format
+of the dpkg database is administrator friendly, and it is expected that
+those might need to mess with it, in case of emergency, this “interface”
+does not extend to other programs besides the dpkg suite of tools. The
+admindir can also be configured differently at dpkg build or run-time.
+And finally, the contents and its format, will be changing in the near
+future.
+
+So use something like:
+
+```
+dpkg-query --showformat '${db-fsys:Last-Modified}\n' --show $pkg
+```
+
+to get the mtime from /var/lib/dpkg/info/<package>.list files.
+
+Bug: https://github.com/saltstack/salt/issues/52605
+Bug-Debian: https://bugs.debian.org/944970
+Forwarded: https://github.com/saltstack/salt/pull/58735
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ salt/modules/dpkg_lowpkg.py            | 33 ++++++++++-----------------------
+ tests/unit/modules/test_dpkg_lowpkg.py |  4 ++--
+ 2 files changed, 12 insertions(+), 25 deletions(-)
+
+diff --git a/salt/modules/dpkg_lowpkg.py b/salt/modules/dpkg_lowpkg.py
+index 6a88573..84b2b26 100644
+--- a/salt/modules/dpkg_lowpkg.py
++++ b/salt/modules/dpkg_lowpkg.py
+@@ -271,6 +271,7 @@ def _get_pkg_info(*packages, **kwargs):
+         "origin:${Origin}\\n"
+         "homepage:${Homepage}\\n"
+         "status:${db:Status-Abbrev}\\n"
++        "install_date:${db-fsys:Last-Modified}\\n"
+         "======\\n"
+         "description:${Description}\\n"
+         "------\\n'"
+@@ -294,11 +295,17 @@ def _get_pkg_info(*packages, **kwargs):
+             el.strip() for el in pkg_info.split(os.linesep) if el.strip()
+         ]:
+             key, value = pkg_info_line.split(":", 1)
++            if key == "install_date":
++                # Convert Unix time into ISO format in UTC
++                try:
++                    value = (
++                        datetime.datetime.utcfromtimestamp(int(value)).isoformat() + "Z"
++                    )
++                except ValueError:
++                    log.warning("Could not convert '%s' into Unix time.", value)
++                    value = None
+             if value:
+                 pkg_data[key] = value
+-            install_date = _get_pkg_install_time(pkg_data.get("package"))
+-            if install_date:
+-                pkg_data["install_date"] = install_date
+         pkg_data["description"] = pkg_descr.split(":", 1)[-1]
+         ret.append(pkg_data)
+ 
+@@ -324,26 +331,6 @@ def _get_pkg_license(pkg):
+     return ", ".join(sorted(licenses))
+ 
+ 
+-def _get_pkg_install_time(pkg):
+-    """
+-    Return package install time, based on the /var/lib/dpkg/info/<package>.list
+-
+-    :return:
+-    """
+-    iso_time = None
+-    if pkg is not None:
+-        location = "/var/lib/dpkg/info/{}.list".format(pkg)
+-        if os.path.exists(location):
+-            iso_time = (
+-                datetime.datetime.utcfromtimestamp(
+-                    int(os.path.getmtime(location))
+-                ).isoformat()
+-                + "Z"
+-            )
+-
+-    return iso_time
+-
+-
+ def _get_pkg_ds_avail():
+     """
+     Get the package information of the available packages, maintained by dselect.
+diff --git a/tests/unit/modules/test_dpkg_lowpkg.py b/tests/unit/modules/test_dpkg_lowpkg.py
+index d00fc46..29d3335 100644
+--- a/tests/unit/modules/test_dpkg_lowpkg.py
++++ b/tests/unit/modules/test_dpkg_lowpkg.py
+@@ -290,6 +290,7 @@ class DpkgTestCase(TestCase, LoaderModuleMockMixin):
+                         "origin:",
+                         "homepage:http://tiswww.case.edu/php/chet/bash/bashtop.html",
+                         "status:ii ",
++                        "install_date:1560199259",
+                         "======",
+                         "description:GNU Bourne Again SHell",
+                         " Bash is an sh-compatible command language interpreter that"
+@@ -317,8 +318,6 @@ class DpkgTestCase(TestCase, LoaderModuleMockMixin):
+             dpkg.__grains__, {"os": "Ubuntu", "osrelease_info": (18, 4)}
+         ), patch("salt.utils.path.which", MagicMock(return_value=False)), patch(
+             "os.path.exists", MagicMock(return_value=False)
+-        ), patch(
+-            "os.path.getmtime", MagicMock(return_value=1560199259.0)
+         ):
+             self.assertDictEqual(
+                 dpkg.info("bash"),
+@@ -346,6 +345,7 @@ class DpkgTestCase(TestCase, LoaderModuleMockMixin):
+                             ]
+                         ),
+                         "homepage": "http://tiswww.case.edu/php/chet/bash/bashtop.html",
++                        "install_date": "2019-06-10T20:40:59Z",
+                         "maintainer": (
+                             "Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>"
+                         ),

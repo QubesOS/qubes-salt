@@ -1,0 +1,4 @@
+usr/share/doc/salt-doc/html usr/share/doc/salt/html
+usr/share/doc/salt-doc/html/_static/favicon.ico usr/share/doc/salt-doc/html/favicon.ico
+usr/share/javascript/bootstrap/js/bootstrap.min.js usr/share/doc/salt-doc/html/_static/js/vendor/bootstrap.min.js
+usr/share/javascript/modernizr/modernizr.min.js usr/share/doc/salt-doc/html/_static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js

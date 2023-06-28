@@ -1,0 +1,6 @@
+# minor formatting error in table in man page
+salt-doc: groff-message usr/share/man/man7/salt.7.gz *
+# The salt man page contains Python tracebacks as part of the documentation.
+salt-doc: python-traceback-in-manpage usr/share/man/man7/salt.7.gz
+# False positive for referencing "package groups"
+salt-doc: typo-in-manual-page usr/share/man/man7/salt.7.gz line * "These package" "This package"

@@ -1,0 +1,339 @@
+Source: salt
+Section: admin
+Priority: optional
+Maintainer: Debian Salt Team <pkg-salt-team@alioth-lists.debian.net>
+Uploaders: Joe Healy <joehealy@gmail.com>,
+           Franklin G Mendoza <franklin.g.mendoza@gmail.com>,
+           Andriy Senkovych <jolly_roger@itblog.org.ua>,
+           Benjamin Drung <bdrung@debian.org>,
+           Ondřej Nový <onovy@debian.org>
+Build-Depends: bash-completion,
+               bind9-dnsutils | dnsutils,
+               debhelper-compat (= 13),
+               dh-python,
+               dpkg-dev (>= 1.16.2),
+               file,
+               iproute2,
+               libjs-bootstrap,
+               libjs-modernizr,
+               openssh-client,
+               python3,
+               python3-apt,
+               python3-attr (>= 19.1),
+               python3-augeas,
+               python3-boto,
+               python3-boto3,
+               python3-cheetah,
+               python3-cherrypy3,
+               python3-consul,
+               python3-croniter,
+               python3-dateutil,
+               python3-distro,
+               python3-dnspython,
+               python3-docker,
+               python3-elasticsearch,
+               python3-etcd,
+               python3-genshi,
+               python3-git,
+               python3-hglib,
+               python3-isodate,
+               python3-jinja2,
+               python3-jsonschema,
+               python3-junos-eznc,
+               python3-keyring,
+               python3-kubernetes,
+               python3-ldap,
+               python3-libcloud (>= 0.14.1),
+               python3-m2crypto | python3-pycryptodome | python3-crypto (>= 2.6),
+               python3-mako,
+               python3-mock,
+               python3-msgpack,
+               python3-mysqldb,
+               python3-openssl,
+               python3-passlib,
+               python3-pip,
+               python3-psutil,
+               python3-pygit2,
+               python3-pyinotify,
+               python3-pyroute2,
+               python3-pytest (>= 6),
+               python3-pytest-helpers-namespace (>= 2019.1.8),
+               python3-pytest-skip-markers (>= 1.1.0-3~),
+               python3-pytest-subtests,
+               python3-pytest-tempdir (>= 2019.10.12),
+               python3-pytoml,
+               python3-pyvmomi,
+               python3-requests (>= 1.0.0),
+               python3-saltfactories (>= 0.907.0-4~),
+               python3-setuptools,
+               python3-six,
+               python3-twilio,
+               python3-yaml,
+               python3-zmq (>= 13.1.0),
+               sphinx-common,
+               virtualenv,
+               zip
+Build-Depends-Indep: python3-doc, python3-sphinx (>= 1.3.5)
+Standards-Version: 4.6.0
+Homepage: https://saltproject.io/
+Vcs-Browser: https://salsa.debian.org/salt-team/salt
+Vcs-Git: https://salsa.debian.org/salt-team/salt.git
+Rules-Requires-Root: binary-targets
+
+Package: salt-common
+Architecture: all
+Depends: iproute2,
+         python3-apt,
+         python3-dateutil,
+         python3-distro,
+         python3-jinja2,
+         python3-msgpack,
+         python3-pkg-resources,
+         python3-psutil,
+         python3-requests (>= 1.0.0),
+         python3-yaml,
+         ${misc:Depends},
+         ${python3:Depends}
+Recommends: lsb-release, python3-croniter
+Suggests: python3-mako, salt-doc (= ${source:Version})
+Breaks: python3-mako (<< 0.7.0),
+        salt-formula-ceilometer (<= 2016.12.1-1),
+        salt-formula-cinder (<= 2016.12.1-1),
+        salt-formula-glance (<= 2016.12.1-1),
+        salt-formula-keystone (<= 2016.12.1-1),
+        salt-formula-kubernetes (<= 2016.12.1-1)
+Description: shared libraries that salt requires for all packages
+ salt is a powerful remote execution manager that can be used to
+ administer servers in a fast and efficient way.
+ .
+ It allows commands to be executed across large groups of
+ servers. This means systems can be easily managed, but data can
+ also be easily gathered.  Quick introspection into running
+ systems becomes a reality.
+ .
+ Remote execution is usually used to set up a certain state on a
+ remote system. Salt addresses this problem as well, the salt
+ state system uses salt state files to define the state a server
+ needs to be in.
+ .
+ Between the remote execution system, and state management Salt
+ addresses the backbone of cloud and data center management.
+ .
+ This particular package provides shared libraries that
+ salt-master, salt-minion, and salt-syndic require to function.
+
+Package: salt-master
+Architecture: all
+Pre-Depends: ${misc:Pre-Depends}
+Depends: adduser,
+         lsb-base (>= 3.0-6),
+         python3-m2crypto | python3-pycryptodome | python3-crypto (>= 2.6),
+         python3-systemd | sysvinit-core,
+         python3-zmq (>= 13.1.0),
+         salt-common (= ${source:Version}),
+         ${misc:Depends},
+         ${python3:Depends}
+Recommends: python3-pygit2 | python3-git
+Description: remote manager to administer servers via salt
+ salt is a powerful remote execution manager that can be used to
+ administer servers in a fast and efficient way.
+ .
+ It allows commands to be executed across large groups of
+ servers. This means systems can be easily managed, but data can
+ also be easily gathered.  Quick introspection into running
+ systems becomes a reality.
+ .
+ Remote execution is usually used to set up a certain state on a
+ remote system. Salt addresses this problem as well, the salt
+ state system uses salt state files to define the state a server
+ needs to be in.
+ .
+ Between the remote execution system, and state management Salt
+ addresses the backbone of cloud and data center management.
+ .
+ This particular package provides the salt controller.
+
+Package: salt-minion
+Architecture: all
+Pre-Depends: ${misc:Pre-Depends}
+Depends: dctrl-tools,
+         lsb-base (>= 3.0-6),
+         python3-m2crypto | python3-pycryptodome | python3-crypto (>= 2.6),
+         python3-systemd | sysvinit-core,
+         python3-zmq (>= 13.1.0),
+         salt-common (= ${source:Version}),
+         ${misc:Depends},
+         ${python3:Depends}
+Recommends: debconf-utils, dmidecode, e2fsprogs, fdisk
+Suggests: python3-augeas
+Description: client package for salt, the distributed remote execution system
+ salt is a powerful remote execution manager that can be used to
+ administer servers in a fast and efficient way.
+ .
+ It allows commands to be executed across large groups of
+ servers. This means systems can be easily managed, but data can
+ also be easily gathered.  Quick introspection into running
+ systems becomes a reality.
+ .
+ Remote execution is usually used to set up a certain state on a
+ remote system. Salt addresses this problem as well, the salt
+ state system uses salt state files to define the state a server
+ needs to be in.
+ .
+ Between the remote execution system, and state management Salt
+ addresses the backbone of cloud and data center management.
+ .
+ This particular package provides the worker / agent for salt.
+
+Package: salt-syndic
+Architecture: all
+Pre-Depends: ${misc:Pre-Depends}
+Depends: lsb-base (>= 3.0-6),
+         python3-systemd | sysvinit-core,
+         salt-master (= ${source:Version}),
+         ${misc:Depends},
+         ${python3:Depends}
+Description: master-of-masters for salt, the distributed remote execution system
+ salt is a powerful remote execution manager that can be used to
+ administer servers in a fast and efficient way.
+ .
+ It allows commands to be executed across large groups of
+ servers. This means systems can be easily managed, but data can
+ also be easily gathered.  Quick introspection into running
+ systems becomes a reality.
+ .
+ Remote execution is usually used to set up a certain state on a
+ remote system. Salt addresses this problem as well, the salt
+ state system uses salt state files to define the state a server
+ needs to be in.
+ .
+ Between the remote execution system, and state management Salt
+ addresses the backbone of cloud and data center management.
+ .
+ This particular package provides the master of masters for salt
+ - it enables the management of multiple masters at a time.
+
+Package: salt-ssh
+Architecture: all
+Depends: salt-common (= ${source:Version}), ${misc:Depends}, ${python3:Depends}
+Description: remote manager to administer servers via Salt SSH
+ salt is a powerful remote execution manager that can be used to
+ administer servers in a fast and efficient way.
+ .
+ It allows commands to be executed across large groups of
+ servers. This means systems can be easily managed, but data can
+ also be easily gathered.  Quick introspection into running
+ systems becomes a reality.
+ .
+ Remote execution is usually used to set up a certain state on a
+ remote system. Salt addresses this problem as well, the salt
+ state system uses salt state files to define the state a server
+ needs to be in.
+ .
+ Between the remote execution system, and state management Salt
+ addresses the backbone of cloud and data center management.
+ .
+ This particular package provides the salt ssh controller. It
+ is able to run salt modules and states on remote hosts via ssh.
+ No minion or other salt specific software needs to be installed
+ on the remote host.
+
+Package: salt-doc
+Architecture: all
+Section: doc
+Built-Using: ${sphinxdoc:Built-Using}
+Depends: fonts-open-sans,
+         libjs-bootstrap,
+         libjs-modernizr,
+         ${misc:Depends},
+         ${sphinxdoc:Depends}
+Breaks: salt-common (<< 2016.11.5)
+Replaces: salt-common (<< 2016.11.5)
+Description: additional documentation for salt, the distributed remote execution system
+ salt is a powerful remote execution manager that can be used to
+ administer servers in a fast and efficient way.
+ .
+ It allows commands to be executed across large groups of
+ servers. This means systems can be easily managed, but data can
+ also be easily gathered.  Quick introspection into running
+ systems becomes a reality.
+ .
+ Remote execution is usually used to set up a certain state on a
+ remote system. Salt addresses this problem as well, the salt
+ state system uses salt state files to define the state a server
+ needs to be in.
+ .
+ Between the remote execution system, and state management Salt
+ addresses the backbone of cloud and data center management.
+ .
+ This particular package provides the HTML documentation for
+ salt.
+
+Package: salt-cloud
+Architecture: all
+Depends: python3-libcloud (>= 0.14.1-1),
+         salt-common (= ${source:Version}),
+         ${misc:Depends},
+         ${python3:Depends}
+Suggests: python3-botocore
+Recommends: python3-netaddr
+Description: public cloud VM management system
+ Salt is a powerful remote execution manager that can be used to
+ administer servers in a fast and efficient way.
+ .
+ It allows commands to be executed across large groups of
+ servers. This means systems can be easily managed, but data can
+ also be easily gathered.  Quick introspection into running
+ systems becomes a reality.
+ .
+ Remote execution is usually used to set up a certain state on a
+ remote system. Salt addresses this problem as well, the salt
+ state system uses salt state files to define the state a server
+ needs to be in.
+ .
+ Salt Cloud is built-in to Salt to provision systems on cloud hosts or
+ hypervisors and immediately bring them under management.
+
+Package: salt-api
+Architecture: all
+Pre-Depends: ${misc:Pre-Depends}
+Depends: lsb-base (>= 3.0-6),
+         python3-systemd | sysvinit-core,
+         salt-master,
+         ${misc:Depends},
+         ${python3:Depends}
+Recommends: python3-cherrypy3
+Description: Generic, modular network access system
+ a modular interface on top of Salt that can provide a variety of entry points
+ into a running Salt system. It can start and manage multiple interfaces
+ allowing a REST API to coexist with XMLRPC or even a Websocket API.
+ .
+ The Salt API system is used to expose the fundamental aspects of Salt control
+ to external sources. salt-api acts as the bridge between Salt itself and
+ REST, Websockets, etc.
+
+Package: salt-proxy
+Architecture: all
+Depends: salt-minion (= ${source:Version}), ${misc:Depends}, ${python3:Depends}
+Description: Proxy client package for salt stack
+ Proxy minion allows a remote manager to administer devices that are unable to
+ run a minion. salt is a powerful remote execution manager that can be used to
+ administer servers in a fast and efficient way.
+ .
+ It allows commands to be executed across large groups of
+ devices. This means systems can be easily managed, but data can
+ also be easily gathered.  Quick introspection into running
+ systems becomes a reality.
+ .
+ Remote execution is usually used to set up a certain state on a
+ remote system. Salt addresses this problem as well, the salt
+ state system uses salt state files to define the state a server
+ needs to be in.
+ .
+ Between the remote execution system, and state management Salt
+ addresses the backbone of cloud and data center management.
+ .
+ This particular package provides the salt proxy minion. It
+ is able to run salt modules and states on remote hosts via a proxy
+ which transmits appropriate commands to devices and replies with the
+ results of said commands.

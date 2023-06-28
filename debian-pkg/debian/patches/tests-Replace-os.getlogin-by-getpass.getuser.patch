@@ -1,0 +1,55 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Wed, 28 Apr 2021 20:05:16 +0200
+Subject: tests: Replace os.getlogin by getpass.getuser
+
+The test `test_run_cwd_in_combination_with_runas` fails in some test
+environments (like Debian autopkgtest):
+
+```
+======================================================================
+ERROR: test_run_cwd_in_combination_with_runas (unit.modules.test_cmdmod.CMDMODTestCase)
+[CPU:0.0%|MEM:6.5%] cmd.run executes command in the cwd directory
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tests/unit/modules/test_cmdmod.py", line 449, in test_run_cwd_in_combination_with_runas
+    runas = os.getlogin()
+OSError: [Errno 6] No such device or address
+
+----------------------------------------------------------------------
+```
+
+Therefore replace `os.getlogin` by `getpass.getuser` as recommended by
+upstream: "For most purposes, it is more useful to use
+`getpass.getuser()` since the latter checks the environment variables
+`LOGNAME` or `USERNAME` to find out who the user is, and falls back to
+`pwd.getpwuid(os.getuid())[0]` to get the login name of the current real
+user id."
+
+Bug-Debian: https://bugs.debian.org/964270
+Forwarded: https://github.com/saltstack/salt/pull/57935
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ tests/pytests/unit/modules/test_cmdmod.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tests/pytests/unit/modules/test_cmdmod.py b/tests/pytests/unit/modules/test_cmdmod.py
+index bc1d281..77fa7fc 100644
+--- a/tests/pytests/unit/modules/test_cmdmod.py
++++ b/tests/pytests/unit/modules/test_cmdmod.py
+@@ -5,6 +5,7 @@
+ """
+ 
+ import builtins
++import getpass
+ import logging
+ import os
+ import re
+@@ -449,7 +450,7 @@ def test_run_cwd_in_combination_with_runas():
+     """
+     cmd = "pwd"
+     cwd = "/tmp"
+-    runas = os.getlogin()
++    runas = getpass.getuser()
+ 
+     with patch.dict(cmdmod.__grains__, {"os": "Darwin", "os_family": "Solaris"}):
+         stdout = cmdmod._run(cmd, cwd=cwd, runas=runas).get("stdout")

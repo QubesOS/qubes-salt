@@ -1,0 +1,1 @@
+dir_to_symlink /usr/share/doc/salt/html /usr/share/doc/salt-doc/html 3000+dfsg1-3~

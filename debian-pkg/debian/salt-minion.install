@@ -1,0 +1,3 @@
+conf/minion /etc/salt
+pkg/salt-minion.service /lib/systemd/system
+usr/bin/salt-minion

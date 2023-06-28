@@ -1,0 +1,37 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Tue, 2 Nov 2021 13:30:01 +0100
+Subject: Fix misspelled import of M2Crypto in test_crypt.py
+
+When running the tests from `tests/pytests/unit/utils/test_crypt.py`,
+`test_random` fails when `M2Crypto` is installed:
+
+```
+$ python3 -m pytest -ra tests/pytests/unit/utils/test_crypt.py
+[...]
+FAILED tests/pytests/unit/utils/test_crypt.py::test_random -
+AssertionError: assert CryptodomeRandom is None
+```
+
+This is caused by `salt.utils.crypt` importing `M2Crypto`, but the test
+does not due to a spelling mistake. This was introduced in
+74194770a8d50d3c8a2ccc2031de924435c4e495.
+
+Forwarded: https://github.com/saltstack/salt/pull/61165
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ tests/pytests/unit/utils/test_crypt.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/pytests/unit/utils/test_crypt.py b/tests/pytests/unit/utils/test_crypt.py
+index bb069ec..8a9432c 100644
+--- a/tests/pytests/unit/utils/test_crypt.py
++++ b/tests/pytests/unit/utils/test_crypt.py
+@@ -7,7 +7,7 @@ import salt.utils.crypt
+ from tests.support.mock import patch
+ 
+ try:
+-    import M2Crypt  # pylint: disable=unused-import
++    import M2Crypto  # pylint: disable=unused-import
+ 
+     HAS_M2CRYPTO = True
+ except ImportError:

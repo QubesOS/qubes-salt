@@ -1,0 +1,42 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Wed, 13 Oct 2021 17:43:43 +0200
+Subject: doc: Exclude documentation_options.js from default theme
+
+`documentation_options.js` from the default theme sets the option
+`URL_ROOT` to:
+
+```
+document.getElementById("documentation_options").getAttribute('data-url_root')
+```
+
+This requires that the script element for `documentation_options.js`
+includes the tag `id="documentation_options"` and sets the
+`data-url_root` tag. Otherwise evaluating `URL_ROOT` will fail and
+building the documentation during the Debian package build will fail:
+
+```
+dh_sphinxdoc: error: DOCUMENTATION_OPTIONS does not define URL_ROOT
+```
+
+The variable `DOCUMENTATION_OPTIONS` is directly set `layout.html` and
+therefore `documentation_options.js` does not need to be included. So
+just exclude it.
+
+Forwarded: https://github.com/saltstack/salt/pull/61044
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ doc/_themes/saltstack/layout.html | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/doc/_themes/saltstack/layout.html b/doc/_themes/saltstack/layout.html
+index 4dc5ce5..502b5f5 100644
+--- a/doc/_themes/saltstack/layout.html
++++ b/doc/_themes/saltstack/layout.html
+@@ -21,6 +21,7 @@
+ 
+ {# Remove old version of jQuery #}
+ {% set js_blacklist = [
++    '_static/documentation_options.js',
+     '_static/jquery.js',
+ ] %}
+ 

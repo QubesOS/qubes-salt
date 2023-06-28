@@ -1,0 +1,137 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Mon, 1 Nov 2021 14:08:27 +0100
+Subject: job_status: Convert datetime objects into formatted strings
+
+`salt-call schedule.job_status` will return empty values for the
+`datetime.datetime` objects. So convert the `datetime.datetime` objects
+into formatted strings. Then they will be shown correctly:
+
+```
+$ sudo salt-call schedule.job_status __mine_interval
+local:
+    ----------
+    _last_run:
+        2021-11-01T12:36:57
+    _next_fire_time:
+        2021-11-01T13:36:57
+    _next_scheduled_fire_time:
+        2021-11-01T13:36:57
+    _run_on_start:
+        False
+    _seconds:
+        3600
+    _splay:
+        None
+    enabled:
+        True
+    function:
+        mine.update
+    jid_include:
+        True
+    maxrunning:
+        2
+    minutes:
+        60
+    name:
+        __mine_interval
+    return_job:
+        False
+    run:
+        True
+    run_on_start:
+        True
+    splay:
+        None
+```
+
+Forwarded: https://github.com/saltstack/salt/pull/61043
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ changelog/61043.fixed                       |  1 +
+ salt/modules/schedule.py                    | 13 +++++++++++--
+ tests/pytests/unit/modules/test_schedule.py | 15 +++++++++++++--
+ 3 files changed, 25 insertions(+), 4 deletions(-)
+ create mode 100644 changelog/61043.fixed
+
+diff --git a/changelog/61043.fixed b/changelog/61043.fixed
+new file mode 100644
+index 0000000..79cd46d
+--- /dev/null
++++ b/changelog/61043.fixed
+@@ -0,0 +1 @@
++schedule.job_status module: Convert datetime objects into formatted strings
+diff --git a/salt/modules/schedule.py b/salt/modules/schedule.py
+index e5b3dd8..b9f07a3 100644
+--- a/salt/modules/schedule.py
++++ b/salt/modules/schedule.py
+@@ -1339,7 +1339,7 @@ def show_next_fire_time(name, **kwargs):
+     return ret
+ 
+ 
+-def job_status(name):
++def job_status(name, time_fmt="%Y-%m-%dT%H:%M:%S"):
+     """
+     Show the information for a particular job.
+ 
+@@ -1351,6 +1351,14 @@ def job_status(name):
+ 
+     """
+ 
++    def convert_datetime_objects_in_dict_to_string(data_dict, time_fmt):
++        return {
++            key: value.strftime(time_fmt)
++            if isinstance(value, datetime.datetime)
++            else value
++            for key, value in data_dict.items()
++        }
++
+     schedule = {}
+     try:
+         with salt.utils.event.get_event("minion", opts=__opts__) as event_bus:
+@@ -1362,7 +1370,8 @@ def job_status(name):
+                 event_ret = event_bus.get_event(
+                     tag="/salt/minion/minion_schedule_job_status_complete", wait=30
+                 )
+-                return event_ret.get("data", {})
++                data = event_ret.get("data", {})
++                return convert_datetime_objects_in_dict_to_string(data, time_fmt)
+     except KeyError:
+         # Effectively a no-op, since we can't really return without an event system
+         ret = {}
+diff --git a/tests/pytests/unit/modules/test_schedule.py b/tests/pytests/unit/modules/test_schedule.py
+index e6cb134..5009809 100644
+--- a/tests/pytests/unit/modules/test_schedule.py
++++ b/tests/pytests/unit/modules/test_schedule.py
+@@ -2,6 +2,7 @@
+     :codeauthor: Jayesh Kariya <jayeshk@saltstack.com>
+ """
+ 
++import datetime
+ import logging
+ 
+ import pytest
+@@ -625,7 +626,12 @@ def test_job_status(sock_dir):
+     """
+     Test is_enabled
+     """
+-    job1 = {"function": "salt", "seconds": 3600}
++    job1 = {
++        "_last_run": datetime.datetime(2021, 11, 1, 12, 36, 57),
++        "_next_fire_time": datetime.datetime(2021, 11, 1, 13, 36, 57),
++        "function": "salt",
++        "seconds": 3600,
++    }
+ 
+     comm1 = "Modified job: job1 in schedule."
+ 
+@@ -641,4 +647,9 @@ def test_job_status(sock_dir):
+             _ret_value = {"complete": True, "data": job1}
+             with patch.object(SaltEvent, "get_event", return_value=_ret_value):
+                 ret = schedule.job_status("job1")
+-                assert ret == job1
++                assert ret == {
++                    "_last_run": "2021-11-01T12:36:57",
++                    "_next_fire_time": "2021-11-01T13:36:57",
++                    "function": "salt",
++                    "seconds": 3600,
++                }

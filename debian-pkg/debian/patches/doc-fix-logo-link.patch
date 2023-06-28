@@ -1,0 +1,25 @@
+From: Steffen Kockel <steffen.kockel@profitbricks.com>
+Date: Tue, 23 Apr 2019 17:45:00 +0200
+Subject: doc: Fix logo link
+
+The link on the brand image was pointing to index.html which does not
+exist. The index file seems to be contents.html.
+
+Forwarded: no
+---
+ doc/_themes/saltstack/layout.html | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/doc/_themes/saltstack/layout.html b/doc/_themes/saltstack/layout.html
+index 0a3a619..895d6e2 100644
+--- a/doc/_themes/saltstack/layout.html
++++ b/doc/_themes/saltstack/layout.html
+@@ -186,7 +186,7 @@
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                     </a>
+-                    <a class="brand" href="{{ pathto('index') }}"><img src="{{ pathto('_static/images/SaltStack-Logo.png', 1) }}" /></a>
++                    <a class="brand" href="{{ pathto('contents') }}"><img src="{{ pathto('_static/images/SaltStack-Logo.png', 1) }}" /></a>
+                     <div class="nav-collapse collapse">
+                         {%- block relbar1 %}{{ relbar() }}{% endblock %}
+                     </div>

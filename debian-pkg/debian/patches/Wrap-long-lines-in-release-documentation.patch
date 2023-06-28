@@ -1,0 +1,309 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Thu, 11 Nov 2021 12:51:51 +0100
+Subject: Wrap long lines in release documentation
+
+Forwarded: https://github.com/saltstack/salt/pull/61224
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ doc/topics/releases/2016.11.6.rst | 22 ++++++++++---
+ doc/topics/releases/2017.7.3.rst  | 25 ++++++++++++---
+ doc/topics/releases/2018.3.4.rst  | 65 ++++++++++++++++++++++++++++++---------
+ doc/topics/releases/2019.2.1.rst  |  4 ++-
+ 4 files changed, 92 insertions(+), 24 deletions(-)
+
+diff --git a/doc/topics/releases/2016.11.6.rst b/doc/topics/releases/2016.11.6.rst
+index bb56146..328bab2 100644
+--- a/doc/topics/releases/2016.11.6.rst
++++ b/doc/topics/releases/2016.11.6.rst
+@@ -200,7 +200,9 @@ Changelog for v2016.11.5..v2016.11.6
+ 
+       * 687872a488 Lint
+ 
+-      * dadf4b851c Add documentation to the example master and minion configuration files. Move minion event signing to a saner place. Enable dropping messages when signature does not verify or when minion is not adding the signature to its payloads.
++      * dadf4b851c Add documentation to the example master and minion configuration files. Move
++        minion event signing to a saner place. Enable dropping messages when signature does not
++        verify or when minion is not adding the signature to its payloads.
+ 
+       * e44673cdae Add caching of key.
+ 
+@@ -556,7 +558,15 @@ Changelog for v2016.11.5..v2016.11.6
+ 
+   * d9546c6283 Merge pull request `#41599`_ from garethgreenaway/41540_fixes_to_archive_module
+ 
+-  * 66a136e6d8 Fixing issues raised in `#41540`_ when a zip file is created on a Windows system.  The issue has two parts, first directories that end up in the archive end up in the results of aarchive.list twice as they show up as both files and directories because of the logic to handle the fact that Windows doesn't mark them as directories.  This issue shows up when an extraction is run a second time since the module verified the file types and the subdirectory is not a file.  The second issue is related to permissions, if Salt is told to extract permissions (which is the default) then the directory and files end up being unreadable since the permissions are not available.  This change sets the permissions to what the default umask for the user running Salt is.
++  * 66a136e6d8 Fixing issues raised in `#41540`_ when a zip file is created on a Windows system.
++    The issue has two parts, first directories that end up in the archive end up in the results of
++    aarchive.list twice as they show up as both files and directories because of the logic to
++    handle the fact that Windows doesn't mark them as directories. This issue shows up when an
++    extraction is run a second time since the module verified the file types and the subdirectory
++    is not a file. The second issue is related to permissions, if Salt is told to extract
++    permissions (which is the default) then the directory and files end up being unreadable since
++    the permissions are not available. This change sets the permissions to what the default umask
++    for the user running Salt is.
+ 
+ * **ISSUE** `#40950`_: (`idokaplan`_) Import certificate (refs: `#41453`_, `#41383`_)
+ 
+@@ -835,7 +845,9 @@ Changelog for v2016.11.5..v2016.11.6
+ 
+   * 3f950596f4 Fixing lint issues.
+ 
+-  * f3a6531a69 On occasion an exception will occur which results in the  event not returning properly, even though the wire_bytes  is correctly populated. In this situation, we log to trace  and continue. `#34460`_
++  * f3a6531a69 On occasion an exception will occur which results in the event not returning
++    properly, even though the wire_bytes is correctly populated. In this situation, we log to trace
++    and continue. `#34460`_
+ 
+ * **PR** `#41421`_: (`UtahDave`_) Correct doc to actually blacklist a module
+   @ *2017-05-25 21:01:46 UTC*
+@@ -992,7 +1004,9 @@ Changelog for v2016.11.5..v2016.11.6
+ 
+   * 5039fe12fb Removing chdir as it is no needed with this change
+ 
+-  * 4550c3ce49 Updating the code that is pulling in the list of cached minions to use self.cache.list instead of relying on checking the local file system, which only works for the localfs cache method.  `#40748`_
++  * 4550c3ce49 Updating the code that is pulling in the list of cached minions to use
++    self.cache.list instead of relying on checking the local file system, which only works for the
++    localfs cache method. `#40748`_
+ 
+ * **ISSUE** `#38894`_: (`amendlik`_) salt.runner and salt.wheel ignore test=True (refs: `#41309`_, `#41611`_)
+ 
+diff --git a/doc/topics/releases/2017.7.3.rst b/doc/topics/releases/2017.7.3.rst
+index 398c327..a3ab5c4 100644
+--- a/doc/topics/releases/2017.7.3.rst
++++ b/doc/topics/releases/2017.7.3.rst
+@@ -462,7 +462,8 @@ Changelog for v2017.7.2..v2017.7.3
+ 
+   * aeb5f4e248 Add state.running ssh integration test
+ 
+-* **ISSUE** `saltstack/salt-jenkins#675`_: (`rallytime`_) [2017.7] unit.states.test_file.TestFileState.test_directory is failing on Fedora 27 and CentOS 6 (refs: `#45295`_)
++* **ISSUE** `saltstack/salt-jenkins#675`_: (`rallytime`_) [2017.7] unit.states.test_file.TestFileState.test_directory
++  is failing on Fedora 27 and CentOS 6 (refs: `#45295`_)
+ 
+ * **PR** `#45295`_: (`gtmanfred`_) test directory that doesn't exist
+   @ *2018-01-08 20:59:53 UTC*
+@@ -1079,7 +1080,14 @@ Changelog for v2017.7.2..v2017.7.3
+ 
+   * 32ef1e12ae Merge branch '2017.7' into 2017.7_replace_with_newer_2016.11_win_pkg
+ 
+-  * 494835c3f2 I backported develop and applied a long list of fixes to 2016.11 this brings these fixes into 2017.7 - Software was not always being removed, general if & was in the string or msi was downloaded to uninstall the software - pkg.list_upgrades failed. Added support for 'latest' and 'Not Found' for version_cmp() to fix this. - output fixes - pkg.list_available no longer forces a pkg.refresh_db this is no longer required, as by default it will update if older than 6 hours - cmd /s /c is prefixed for all commands i.e. installs and removes. - cmd are now strings, instead of a list when using cmd.run. As windows only supports strings. And the " were being broken
++  * 494835c3f2 I backported develop and applied a long list of fixes to 2016.11 this brings these
++    fixes into 2017.7 - Software was not always being removed, general if & was in the string or
++    msi was downloaded to uninstall the software - pkg.list_upgrades failed. Added support for
++    'latest' and 'Not Found' for version_cmp() to fix this. - output fixes - pkg.list_available no
++    longer forces a pkg.refresh_db this is no longer required, as by default it will update if
++    older than 6 hours - cmd /s /c is prefixed for all commands i.e. installs and removes. - cmd
++    are now strings, instead of a list when using cmd.run. As windows only supports strings. And
++    the " were being broken
+ 
+ * **PR** `#44754`_: (`twangboy`_) Fix inet_pton for Windows on Py3
+   @ *2017-12-12 14:04:20 UTC*
+@@ -1561,7 +1569,8 @@ Changelog for v2017.7.2..v2017.7.3
+ 
+   * 9d43221422 Correct indentation
+ 
+-  * d6e28ebed1 Add handling for FreeBSD in method zone_compare to avoid exception when /etc/localtime file does is absent.  This is valid configuration on FreeBSD and represents UTC.
++  * d6e28ebed1 Add handling for FreeBSD in method zone_compare to avoid exception when
++    /etc/localtime file does is absent.  This is valid configuration on FreeBSD and represents UTC.
+ 
+ * **ISSUE** `#41869`_: (`mirceaulinic`_) Thorium: unable to execute runners (refs: `#44781`_)
+ 
+@@ -3446,7 +3455,9 @@ Changelog for v2017.7.2..v2017.7.3
+ 
+       * babad12d83 Revise "Contributing" docs: merge-forwards/release branches explained!
+ 
+-* **ISSUE** `#43737`_: (`syedaali`_) salt.loaded.int.module.boto_kinesis.__virtual__() is wrongly returning `None`. It should either return `True`, `False` or a new name. If you're the developer of the module 'boto_kinesis', please fix this. (refs: `#43748`_)
++* **ISSUE** `#43737`_: (`syedaali`_) salt.loaded.int.module.boto_kinesis.__virtual__() is wrongly
++  returning `None`. It should either return `True`, `False` or a new name. If you're the developer
++  of the module 'boto_kinesis', please fix this. (refs: `#43748`_)
+ 
+ * **PR** `#43748`_: (`rallytime`_) Add message to boto_kinesis modules if boto libs are missing
+   @ *2017-09-27 13:19:33 UTC*
+@@ -4401,7 +4412,11 @@ Changelog for v2017.7.2..v2017.7.3
+ 
+     * c15bcbe1cc Merge remote-tracking branch 'upstream/2016.11' into fix-apache-config-multi-entity
+ 
+-    * 4164047951 Fix apache.config with multiple statement At this moment when you post more than one statement in config only last is used. Also file is rewrote multiple times until last statement is written. Example: salt '*' apache.config /etc/httpd/conf.d/ports.conf config="[{'Listen': '8080'}, {'Proxy': "Something"}]" Ends only with    Proxy Something and ignore Listen 8080, This patch fix this issue.
++    * 4164047951 Fix apache.config with multiple statement At this moment when you post more than
++      one statement in config only last is used. Also file is rewrote multiple times until last
++      statement is written. Example: salt '*' apache.config /etc/httpd/conf.d/ports.conf
++      config="[{'Listen': '8080'}, {'Proxy': "Something"}]" Ends only with Proxy Something and
++      ignore Listen 8080, This patch fix this issue.
+ 
+   * b90e59ede9 Merge pull request `#43154`_ from lomeroe/bp-43116-2016.11
+ 
+diff --git a/doc/topics/releases/2018.3.4.rst b/doc/topics/releases/2018.3.4.rst
+index b8894ee..67e4bcb 100644
+--- a/doc/topics/releases/2018.3.4.rst
++++ b/doc/topics/releases/2018.3.4.rst
+@@ -498,7 +498,9 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * f7a100c Merge pull request `#51151`_ from Ch3LL/bp_51061
+ 
+-  * ffdae27 When writing output to stdout we want to ensure that the data is a string not bytes.  Under py2 the salt.utils.data.encode function results in a string but under py3 the result is a bytestring.  Swapping out salt.utils.data.encode for salt.utils.stringutils.to_str.
++  * ffdae27 When writing output to stdout we want to ensure that the data is a string not bytes.
++    Under py2 the salt.utils.data.encode function results in a string but under py3 the result is a
++    bytestring. Swapping out salt.utils.data.encode for salt.utils.stringutils.to_str.
+ 
+ * **PR** `#51150`_: (`Ch3LL`_) Back-port `#49508`_ to 2018.3
+   @ *2019-01-12 03:18:19 UTC*
+@@ -524,7 +526,9 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * e8c8c0f Adding some tests to ensure "ALL PRIVILEGES" is handled correctly in 8.0 and 5.6
+ 
+-  * b4bfd9f Add additional grants.  Adding logic to handle when ALL or ALL PRIVILEGES is passed for the grant, including some logic to handle the fact that the grants are split when show grants is run for a particular user.
++  * b4bfd9f Add additional grants.  Adding logic to handle when ALL or ALL PRIVILEGES is passed for
++    the grant, including some logic to handle the fact that the grants are split when show grants
++    is run for a particular user.
+ 
+     * 74edfd9 Fix pylint
+ 
+@@ -1262,11 +1266,14 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+     * 1236b51 Merge pull request `#50659`_ from garethgreenaway/49954_gem_installed_less_than_greater_than_support
+ 
+-      * 0ec8bcf When using the gem installed state, when passing a version that includes greater than or less than symbols, ensure that the installed versions meets that requirement.
++      * 0ec8bcf When using the gem installed state, when passing a version that includes greater
++        than or less than symbols, ensure that the installed versions meets that requirement.
+ 
+     * 6317f3a Merge pull request `#50583`_ from damon-atkins/jenkins_pylint
+ 
+-      * 2d1f51c Fix lint only changes, full lint on merge forwards - lint only changes previous diff picked up out of data files, when the branch was out of date. - full limit on merge forward to pick up changes in the lint checks between versions. - update CODEOWNERS for .ci/*
++      * 2d1f51c Fix lint only changes, full lint on merge forwards - lint only changes previous diff
++        picked up out of data files, when the branch was out of date. - full limit on merge forward
++        to pick up changes in the lint checks between versions. - update CODEOWNERS for .ci/*
+ 
+     * 15bf09a Merge pull request `#50605`_ from Oloremo/fix-supervisord-dead-state-idempotency
+ 
+@@ -1315,7 +1322,8 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * b604785 Merge pull request `#50683`_ from garethgreenaway/48759_adding_aliases_include_expand
+ 
+-  * 3940a0f When adding alises to an existing Certbot certificate, if we see a message about expanding in the stderr returned from cmd.run_all we should rerun the cmd with --expand included.
++  * 3940a0f When adding alises to an existing Certbot certificate, if we see a message about
++    expanding in the stderr returned from cmd.run_all we should rerun the cmd with --expand included.
+ 
+ * **ISSUE** `#50406`_: (`glkappe`_) salt-ssh can't use Mongo returner (refs: `#50664`_)
+ 
+@@ -1324,7 +1332,9 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * 15f9ae4 Merge pull request `#50664`_ from garethgreenaway/50406_salt_ssh_returner_configuration
+ 
+-  * 3525411 When pulling values out of the available configuration for returners we should always default to using keys for those returners, eg. mongo.user for the username.  Otherwise in certain situations, eg. when using salt-ssh we will end up with the wrong value for the user.
++  * 3525411 When pulling values out of the available configuration for returners we should always
++    default to using keys for those returners, eg. mongo.user for the username. Otherwise in
++    certain situations, eg. when using salt-ssh we will end up with the wrong value for the user.
+ 
+ * **PR** `#50652`_: (`twangboy`_) Fix `unit.utils.test_mac_utils` on Windows
+   @ *2018-11-27 20:45:41 UTC*
+@@ -1359,7 +1369,11 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+     * 6679242 Merge pull request `#50590`_ from garethgreenaway/bp-50333
+ 
+-      * 1f5aa4b pkg.installed currently fails when sources is used along with hold: True.  This was due to a change in `#48426`_ that swapped out sending the pkgs variable for the desired variable instead.  This caused problems with pkg.hold because desired and sources are always populated, and pkg.hold can only include one or the other.  This change just includes desired in the call to pkg.hold since desired has the same value for sources.
++      * 1f5aa4b pkg.installed currently fails when sources is used along with hold: True.
++        This was due to a change in `#48426`_ that swapped out sending the pkgs variable for the
++        desired variable instead. This caused problems with pkg.hold because desired and sources
++        are always populated, and pkg.hold can only include one or the other. This change just
++        includes desired in the call to pkg.hold since desired has the same value for sources.
+ 
+         * 39e811b Add issue url to tests
+ 
+@@ -1396,7 +1410,10 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * 722be43 Fixing lint
+ 
+-  * 65b4421 Adding some master specific functions to uitls/masters.py to determine if a Salt process is running.  Updating utils/schedule.py to use the appropriate running function either from utils/master.py or utils/minion.py depending on where the scheduled job is running.  Adding tests to test maxrunning in scheduled jobs for both the minion and master.
++  * 65b4421 Adding some master specific functions to uitls/masters.py to determine if a Salt
++    process is running. Updating utils/schedule.py to use the appropriate running function either
++    from utils/master.py or utils/minion.py depending on where the scheduled job is running. Adding
++    tests to test maxrunning in scheduled jobs for both the minion and master.
+ 
+   * 0d65304 Swapping manual mocking to autodoc_mock_imports
+ 
+@@ -1415,7 +1432,8 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * db89b27 Merge branch '2018.3' into 50542_mysql_ensure_verify_login_uses_connection_host
+ 
+-  * 0284323 Ensure that verify_login is using the host from the connection_args and not the host associated with the user.  Adding a test to ensure user_exists when the passed host is the MySQL wildcard %.
++  * 0284323 Ensure that verify_login is using the host from the connection_args and not the host associated with the user.
++    Adding a test to ensure user_exists when the passed host is the MySQL wildcard %.
+ 
+ * **PR** `#50619`_: (`s0undt3ch`_) Don't squash tracebacks and Unicode fixes
+   @ *2018-11-26 17:04:31 UTC*
+@@ -1578,7 +1596,10 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * 4f30611 lint
+ 
+-  * 4f9eb95 Fixing a typo in the _virtual function, should be checking for existing grains in osdata not grains.  Updating the detection to look for /sys/bus/xen/drivers/xenconsole instead of specifically looking for any files under /sys/bus/xen/drivers.  Some systems that are not running as Xen PV hosts include files under that location, particular Oracle Linux.
++  * 4f9eb95 Fixing a typo in the _virtual function, should be checking for existing grains in
++    osdata not grains. Updating the detection to look for /sys/bus/xen/drivers/xenconsole instead
++    of specifically looking for any files under /sys/bus/xen/drivers. Some systems that are not
++    running as Xen PV hosts include files under that location, particular Oracle Linux.
+ 
+ * **ISSUE** `#50224`_: (`mruepp`_) Augeas changes state with setm not working (refs: `#50526`_)
+ 
+@@ -1825,7 +1846,8 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * 3aaad17 Merge pull request `#50468`_ from garethgreenaway/50461_fix_elementary_os_family_grain
+ 
+-  * 77e8dcc On later versions of elementary, the os_family is being populated as elementary.  In order for the aptpkg module to function, we need to override is to be Debian.
++  * 77e8dcc On later versions of elementary, the os_family is being populated as elementary.
++    In order for the aptpkg module to function, we need to override is to be Debian.
+ 
+ * **ISSUE** `#50311`_: (`marek-obuchowicz`_) pkg.installed state fails even though it succeeded (refs: `#50590`_, `#50333`_)
+ 
+@@ -1840,7 +1862,11 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * 7bc9b3d Merge branch '2018.3' into 50311_pkg_installed_fails_sources_hold
+ 
+-  * 6e96728 pkg.installed currently fails when sources is used along with hold: True.  This was due to a change in `#48426`_ that swapped out sending the pkgs variable for the desired variable instead.  This caused problems with pkg.hold because desired and sources are always populated, and pkg.hold can only include one or the other.  This change just includes desired in the call to pkg.hold since desired has the same value for sources.
++  * 6e96728 pkg.installed currently fails when sources is used along with hold: True.  This was due
++    to a change in `#48426`_ that swapped out sending the pkgs variable for the desired variable
++    instead. This caused problems with pkg.hold because desired and sources are always populated,
++    and pkg.hold can only include one or the other. This change just includes desired in the call
++    to pkg.hold since desired has the same value for sources.
+ 
+ * **PR** `#50434`_: (`rallytime`_) [2018.3] Merge forward from 2017.7 to 2018.3
+   @ *2018-11-08 17:40:39 UTC*
+@@ -2484,7 +2510,11 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * 51b3fa4 Merge pull request `#50216`_ from garethgreenaway/50162_when_plus_splay_endless_loop
+ 
+-  * 685509f Fixing an issue when a combination of the when parameter as a list plus using the splay parameter would cause the schedule to continuously run jobs in an endless loop, regardless of if their scheduled time had been receached.  Also fixing a related issue where scheduled jobs that rely on _next_fire_time were not being run as the corrected splayed time but rather running at the original scheduled time.  Adding new tests.
++  * 685509f Fixing an issue when a combination of the when parameter as a list plus using the splay
++    parameter would cause the schedule to continuously run jobs in an endless loop, regardless of
++    if their scheduled time had been receached. Also fixing a related issue where scheduled jobs
++    that rely on _next_fire_time were not being run as the corrected splayed time but rather
++    running at the original scheduled time. Adding new tests.
+ 
+ * **PR** `#50190`_: (`dwoz`_) Fix test_managed_file_with_grains_data on Windows
+   @ *2018-10-24 22:43:35 UTC*
+@@ -2837,7 +2867,14 @@ Changelog for v2018.3.3..v2018.3.4
+ 
+   * eedeacb Updating another reference to salt.utils.mac_utils to use __utils__
+ 
+-                            * 6ef5ce4 Due to a previous PR the test_sdb_runner in sdb.test_vault was failing because of a exception that was being swallowed in the test run_run function.  The cause was that when vault related functions were being run, if they were being run on the master then they were being forced to run through the _get_token_and_url_from_master() function, which is pull the id element out of the grains dictionary.  When the call was taking place from a runner, the exception was popping up since there is no id when called from a runner.  This fix checks to see if the id exists in the dictionary first, if it is there then _get_token_and_url_from_master() is called, otherwise _use_local_config is called.
++  * 6ef5ce4 Due to a previous PR the test_sdb_runner in sdb.test_vault was failing because of a
++    exception that was being swallowed in the test run_run function. The cause was that when vault
++    related functions were being run, if they were being run on the master then they were being
++    forced to run through the _get_token_and_url_from_master() function, which is pull the id
++    element out of the grains dictionary. When the call was taking place from a runner, the
++    exception was popping up since there is no id when called from a runner. This fix checks to see
++    if the id exists in the dictionary first, if it is there then _get_token_and_url_from_master()
++    is called, otherwise _use_local_config is called.
+ 
+ * **PR** `#49987`_: (`terminalmage`_) Make Pillar no longer munge file_roots
+   @ *2018-10-15 21:58:08 UTC*
+diff --git a/doc/topics/releases/2019.2.1.rst b/doc/topics/releases/2019.2.1.rst
+index 290a514..265ce56 100644
+--- a/doc/topics/releases/2019.2.1.rst
++++ b/doc/topics/releases/2019.2.1.rst
+@@ -295,7 +295,9 @@ Changelog for v2019.2.0..v2019.2.1
+ 
+   * 993c341 Merge pull request `#54235`_ from ogd-software/fix_46034-2019.2.1
+ 
+-  * 93bd30d Add alternative fix for "!" stomping Apparently (after watching Jenkins tests fail), what yaml.safe_load returns depends not on the version of salt, but on some other external dependency. Because of this, fix both possible return values.
++  * 93bd30d Add alternative fix for "!" stomping Apparently (after watching Jenkins tests fail),
++    what yaml.safe_load returns depends not on the version of salt, but on some other external
++    dependency. Because of this, fix both possible return values.
+ 
+   * c95dd4d Add test for this specific bugfix
+ 

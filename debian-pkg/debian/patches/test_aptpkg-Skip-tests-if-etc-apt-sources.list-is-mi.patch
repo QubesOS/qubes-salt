@@ -1,0 +1,102 @@
+From: Benjamin Drung <bdrung@debian.org>
+Date: Sat, 16 Apr 2022 14:32:55 +0200
+Subject: test_aptpkg: Skip tests if /etc/apt/sources.list is missing
+
+If `/etc/apt/sources.list` does not exist, three functional test cases fail
+with
+
+```
+FileNotFoundError: [Errno 2] No such file or directory: '/etc/apt/sources.list'
+```
+
+because they try to open this files:
+
+```
+________________________________ test_get_repos ________________________________
+
+    def test_get_repos():
+        """
+        Test aptpkg.get_repos
+        """
+>       test_repo, comps = get_current_repo()
+
+/<<PKGBUILDDIR>>/tests/pytests/functional/modules/test_aptpkg.py:109:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/<<PKGBUILDDIR>>/tests/pytests/functional/modules/test_aptpkg.py:64: in get_current_repo
+    with salt.utils.files.fopen("/etc/apt/sources.list") as fp:
+________________________ test_get_repos_multiple_comps _________________________
+
+    def test_get_repos_multiple_comps():
+        """
+        Test aptpkg.get_repos when multiple comps
+        exist in repo.
+        """
+>       test_repo, comps = get_current_repo(multiple_comps=True)
+
+/<<PKGBUILDDIR>>/tests/pytests/functional/modules/test_aptpkg.py:126:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/<<PKGBUILDDIR>>/tests/pytests/functional/modules/test_aptpkg.py:64: in get_current_repo
+    with salt.utils.files.fopen("/etc/apt/sources.list") as fp:
+_____________________________ test_expand_repo_def _____________________________
+
+    def test_expand_repo_def():
+        """
+        Test aptpkg.expand_repo_def when the repo exists.
+        """
+>       test_repo, comps = get_current_repo()
+
+/<<PKGBUILDDIR>>/tests/pytests/functional/modules/test_aptpkg.py:169:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/<<PKGBUILDDIR>>/tests/pytests/functional/modules/test_aptpkg.py:64: in get_current_repo
+    with salt.utils.files.fopen("/etc/apt/sources.list") as fp:
+```
+
+Some Debian buildd do not have `/etc/apt/sources.list` and therefore these test
+cases fail:
+https://buildd.debian.org/status/fetch.php?pkg=salt&arch=all&ver=3004%2Bdfsg1-9&stamp=1644870337&raw=0
+
+So just skip these test cases if `/etc/apt/sources.list` does not exist.
+
+Forwarded: https://github.com/saltstack/salt/pull/61954
+Signed-off-by: Benjamin Drung <bdrung@debian.org>
+---
+ tests/pytests/functional/modules/test_aptpkg.py | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
+
+diff --git a/tests/pytests/functional/modules/test_aptpkg.py b/tests/pytests/functional/modules/test_aptpkg.py
+index 65b8064..710c2e0 100644
+--- a/tests/pytests/functional/modules/test_aptpkg.py
++++ b/tests/pytests/functional/modules/test_aptpkg.py
+@@ -61,18 +61,21 @@ def get_current_repo(multiple_comps=False):
+         Search for a repo that contains multiple comps.
+         For example: main, restricted
+     """
+-    with salt.utils.files.fopen("/etc/apt/sources.list") as fp:
+-        for line in fp:
+-            if line.startswith("#"):
+-                continue
+-            if "ubuntu.com" in line or "debian.org" in line:
+-                test_repo = line.strip()
+-                comps = test_repo.split()[3:]
+-                if multiple_comps:
+-                    if len(comps) > 1:
++    try:
++        with salt.utils.files.fopen("/etc/apt/sources.list") as fp:
++            for line in fp:
++                if line.startswith("#"):
++                    continue
++                if "ubuntu.com" in line or "debian.org" in line:
++                    test_repo = line.strip()
++                    comps = test_repo.split()[3:]
++                    if multiple_comps:
++                        if len(comps) > 1:
++                            break
++                    else:
+                         break
+-                else:
+-                    break
++    except FileNotFoundError as error:
++        pytest.skip("Missing {}".format(error.filename))
+     return test_repo, comps
+ 
+ 

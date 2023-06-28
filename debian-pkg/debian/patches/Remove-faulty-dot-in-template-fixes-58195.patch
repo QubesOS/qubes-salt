@@ -1,0 +1,78 @@
+From: Antoine Amacher <antoine.amacher@infomaniak.com>
+Date: Tue, 16 Nov 2021 08:56:45 +0100
+Subject: Remove faulty dot in template fixes #58195
+
+Bug-Debian: https://bugs.debian.org/998655
+Origin: upstream, https://github.com/saltstack/salt/pull/61095
+---
+ changelog/58195.fixed                     |  1 +
+ salt/templates/debian_ip/debian_eth.jinja |  2 +-
+ tests/unit/modules/test_debian_ip.py      | 34 +++++++++++++++++++++++++++++++
+ 3 files changed, 36 insertions(+), 1 deletion(-)
+ create mode 100644 changelog/58195.fixed
+
+diff --git a/changelog/58195.fixed b/changelog/58195.fixed
+new file mode 100644
+index 0000000..d41c939
+--- /dev/null
++++ b/changelog/58195.fixed
+@@ -0,0 +1 @@
++Remove unnecessary dot in template that cause the bridge interface to fail on debian. Fixes #58195
+diff --git a/salt/templates/debian_ip/debian_eth.jinja b/salt/templates/debian_ip/debian_eth.jinja
+index 3cf0cde..87ada95 100644
+--- a/salt/templates/debian_ip/debian_eth.jinja
++++ b/salt/templates/debian_ip/debian_eth.jinja
+@@ -36,7 +36,7 @@
+ {% endif %}{% endfor %}{% endif %}{% if interface.bonding  %}{% for item in interface.bonding_keys  -%}
+ {% if interface.bonding[item] is string      %}    bond-{{ item }} {{ interface.bonding[item] }}
+ {% elif interface.bonding[item] is iterable  %}    bond-{{ item }} {{ interface.bonding[item]|join(' ') }}
+-{% endif %}{% endfor %}{% endif %}{% if interface.bridging %}{% for item in interface.bridging_keys -%}.
++{% endif %}{% endfor %}{% endif %}{% if interface.bridging %}{% for item in interface.bridging_keys -%}
+ {% if interface.bridging[item] is string     %}    bridge_{{ item }} {{ interface.bridging[item] }}
+ {% elif interface.bridging[item] is iterable %}    bridge_{{ item }} {{ interface.bridging[item]|join(' ') }}
+ {% endif %}{% endfor %}{% endif %}{% endif %}{% endif %}{% endfor %}
+diff --git a/tests/unit/modules/test_debian_ip.py b/tests/unit/modules/test_debian_ip.py
+index b4e8bae..4384aea 100644
+--- a/tests/unit/modules/test_debian_ip.py
++++ b/tests/unit/modules/test_debian_ip.py
+@@ -561,6 +561,40 @@ test_interfaces = [
+                 '    mode 802.3ad\n',
+                 '\n']},
+ 
++        # Bridged interface
++        {'iface_name': 'br0', 'iface_type': 'bridge', 'enabled': True,
++            'build_interface': {
++                'proto': 'static',
++                'ipaddr': '192.168.4.10',
++                'netmask': '255.255.255.0',
++                'gateway': '192.168.4.1',
++                'bridge_ports': 'eth1',
++                'enable_ipv6': False,
++                'noifupdown': True,
++                },
++           'get_interface': odict([('br0', odict([('enabled', True), ('data', odict([
++                ('inet', odict([
++                    ('addrfam', 'inet'),
++                    ('proto', 'static'),
++                    ('filename', None),
++                    ('address', '192.168.4.10'),
++                    ('netmask', '255.255.255.0'),
++                    ('gateway', '192.168.4.1'),
++                    ('bridging', odict([
++                        ('ports', 'eth1'),
++                    ])),
++                    ('bridging_keys', ['ports']),
++                    ])),
++                ]))]))]),
++            'return': [
++                'auto br0\n',
++                'iface br0 inet static\n',
++                '    address 192.168.4.10\n',
++                '    netmask 255.255.255.0\n',
++                '    gateway 192.168.4.1\n',
++                '    bridge_ports eth1\n',
++                '\n']},
++
+         # DNS NS as list
+         {'iface_name': 'eth13', 'iface_type': 'eth', 'enabled': True,
+             'build_interface': {

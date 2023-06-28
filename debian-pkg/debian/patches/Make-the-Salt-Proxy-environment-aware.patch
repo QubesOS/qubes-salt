@@ -1,0 +1,59 @@
+From: Arno Toell <arno.toell@profitbricks.com>
+Date: Fri, 30 Sep 2016 10:08:21 +0200
+Subject: Make the Salt Proxy environment aware
+
+The Salt proxy minion is looking for proxy minion modules in
+`salt://_proxy/`. It does so however only in the default `base`
+environment. On setups which do not use `base` or shall be executed in a
+different environment this breaks:
+
+/etc/salt/master:
+```
+...
+file_roots:
+  noc:
+    - /srv/salt
+...
+```
+
+```
+$ grep "proxyenabled" /srv/salt/_proxy/junos_manager.py
+__proxyenabled__ = ['junos_manager']
+
+$ salt-proxy --proxyid=dev1 -l debug
+...
+[DEBUG   ] rest_sample proxy __virtual__() called...
+[INFO    ] ssh_sample proxy __virtual__() called...
+[DEBUG   ] Could not LazyLoad junos_manager.grains
+[DEBUG   ] Could not LazyLoad junos_manager.init
+[ERROR   ] Proxymodule junos_manager is missing an init() or a
+shutdown() or both. Check your proxymodule.  Salt-proxy aborted.
+[WARNING ] Stopping the Salt Proxy Minion
+[ERROR   ] -1
+[INFO    ] The proxy minion is shutting down..
+[INFO    ] The Salt ProxyMinion is shut down
+```
+
+This is because the loader only looks for _proxy modules in the `base`
+environment. This commit fixes this (but might possibly break other
+things, though I did not find side-effects).
+
+Initial pull request: https://github.com/saltstack/salt/pull/36704
+Forwarded: https://github.com/saltstack/salt/pull/55932
+Signed-off-by: Benjamin Drung <benjamin.drung@cloud.ionos.com>
+---
+ salt/minion.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/salt/minion.py b/salt/minion.py
+index 63fb6e9..8224424 100644
+--- a/salt/minion.py
++++ b/salt/minion.py
+@@ -3907,6 +3907,6 @@ class SProxyMinion(SMinion):
+         self.opts["grains"] = salt.loader.grains(self.opts, proxy=self.proxy)
+ 
+         #  Sync the grains here so the proxy can communicate them to the master
+-        self.functions["saltutil.sync_grains"](saltenv="base")
++        self.functions["saltutil.sync_grains"](saltenv=self.opts["saltenv"])
+         self.grains_cache = self.opts["grains"]
+         self.ready = True

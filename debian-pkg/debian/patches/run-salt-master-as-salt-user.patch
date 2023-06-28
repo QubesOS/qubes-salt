@@ -1,0 +1,39 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Wed, 17 Nov 2021 14:55:43 +0100
+Subject: Run salt-master daemon as 'salt' user
+
+Forwarded: no
+---
+ pkg/salt-master.service | 5 +++++
+ salt/config/__init__.py | 2 ++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/pkg/salt-master.service b/pkg/salt-master.service
+index 377c87a..0adb2e6 100644
+--- a/pkg/salt-master.service
++++ b/pkg/salt-master.service
+@@ -8,6 +8,11 @@ LimitNOFILE=100000
+ Type=notify
+ NotifyAccess=all
+ ExecStart=/usr/bin/salt-master
++User=salt
++Group=salt
++CacheDirectory=salt/master
++RuntimeDirectory=salt
++StateDirectory=salt/pki/master
+ 
+ [Install]
+ WantedBy=multi-user.target
+diff --git a/salt/config/__init__.py b/salt/config/__init__.py
+index f160215..c774ec9 100644
+--- a/salt/config/__init__.py
++++ b/salt/config/__init__.py
+@@ -71,6 +71,8 @@ else:
+     _DFLT_FQDNS_GRAINS = True
+     _MASTER_TRIES = 1
+     _MASTER_USER = salt.utils.user.get_user()
++    if _MASTER_USER == "root":
++        _MASTER_USER = "salt"
+ 
+ 
+ def _gather_buffer_space():

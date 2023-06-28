@@ -1,0 +1,140 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Fri, 17 Sep 2021 10:53:17 +0200
+Subject: loader: Fix loading grains with annotations
+
+If custom grain modules use annotations, salt will fail to load them.
+Example grain:
+
+```
+from typing import Dict
+
+def example_grain() -> Dict[str, str]:
+    return {"example": "42"}
+```
+
+`salt-call grains.items` will print this exception:
+
+```
+Failed to load grains defined in grain file ... in function <...>, error:
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/salt/loader.py", line 847, in grains
+    parameters = salt.utils.args.get_function_argspec(funcs[key]).args
+  File "/usr/lib/python3/dist-packages/salt/utils/args.py", line 271, in get_function_argspec
+    aspec = _getargspec(func)
+  File "/usr/lib/python3/dist-packages/salt/utils/args.py", line 40, in _getargspec
+    "Function has keyword-only arguments or annotations"
+ValueError: Function has keyword-only arguments or annotations, use getfullargspec() API which can support them
+```
+
+Python recommends to use `inspect.signature` instead of
+`inspect.getfullargspec` (which is only needs to maintain compatibility with
+the Python 2 `inspect` module API). Since salt only supports Python 3, drop
+using the wrapper function `get_function_argspec` and use `inspect.signature`
+directly.
+
+Forwarded: https://github.com/saltstack/salt/pull/60285
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ changelog/60285.fixed                    |  1 +
+ salt/loader/__init__.py                  |  4 +--
+ tests/pytests/unit/loader/test_loader.py | 46 ++++++++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+), 2 deletions(-)
+ create mode 100644 changelog/60285.fixed
+
+diff --git a/changelog/60285.fixed b/changelog/60285.fixed
+new file mode 100644
+index 0000000..2f84ec9
+--- /dev/null
++++ b/changelog/60285.fixed
+@@ -0,0 +1 @@
++loader: Fix loading grains with annotations
+diff --git a/salt/loader/__init__.py b/salt/loader/__init__.py
+index f7815ac..361157d 100644
+--- a/salt/loader/__init__.py
++++ b/salt/loader/__init__.py
+@@ -5,6 +5,7 @@ plugin interfaces used by Salt.
+ """
+ 
+ import contextlib
++import inspect
+ import logging
+ import os
+ import re
+@@ -16,7 +17,6 @@ import salt.defaults.events
+ import salt.defaults.exitcodes
+ import salt.loader.context
+ import salt.syspaths
+-import salt.utils.args
+ import salt.utils.context
+ import salt.utils.data
+ import salt.utils.dictupdate
+@@ -934,7 +934,7 @@ def grains(opts, force_refresh=False, proxy=None, context=None):
+             # proxymodule for retrieving information from the connected
+             # device.
+             log.trace("Loading %s grain", key)
+-            parameters = salt.utils.args.get_function_argspec(funcs[key]).args
++            parameters = inspect.signature(funcs[key]).parameters
+             kwargs = {}
+             if "proxy" in parameters:
+                 kwargs["proxy"] = proxy
+diff --git a/tests/pytests/unit/loader/test_loader.py b/tests/pytests/unit/loader/test_loader.py
+index 18e9b1a..8f0c271 100644
+--- a/tests/pytests/unit/loader/test_loader.py
++++ b/tests/pytests/unit/loader/test_loader.py
+@@ -4,10 +4,56 @@ tests.pytests.unit.loader.test_loader
+ 
+ Unit tests for salt's loader
+ """
++import os
++import shutil
++import textwrap
++
++import pytest
+ import salt.loader
+ import salt.loader.lazy
+ 
+ 
++@pytest.fixture
++def grains_dir(tmp_path):
++    """
++    Create a simple directory with grain modules.
++    """
++    grain_with_annotation = textwrap.dedent(
++        """
++        from typing import Dict
++
++        def example_grain() -> Dict[str, str]:
++            return {"example": "42"}
++        """
++    )
++    tmp_path = str(tmp_path)
++    with salt.utils.files.fopen(os.path.join(tmp_path, "example.py"), "w") as fp:
++        fp.write(grain_with_annotation)
++    try:
++        yield tmp_path
++    finally:
++        shutil.rmtree(tmp_path)
++
++
++def test_grains():
++    """
++    Load grains.
++    """
++    opts = salt.config.DEFAULT_MINION_OPTS.copy()
++    grains = salt.loader.grains(opts, force_refresh=True)
++    assert "saltversion" in grains
++
++
++def test_custom_grain_with_annotations(grains_dir):
++    """
++    Load custom grain with annotations.
++    """
++    opts = salt.config.DEFAULT_MINION_OPTS.copy()
++    opts["grains_dirs"] = [grains_dir]
++    grains = salt.loader.grains(opts, force_refresh=True)
++    assert grains.get("example") == "42"
++
++
+ def test_raw_mod_functions():
+     "Ensure functions loaded by raw_mod are LoaderFunc instances"
+     opts = {

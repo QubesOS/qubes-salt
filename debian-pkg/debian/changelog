@@ -1,0 +1,1340 @@
+salt (3004.1+dfsg-2) unstable; urgency=medium
+
+  * Replace HgPillarTestCase patch with upstream commit
+  * Drop skipping tests that do not fail any more
+  * Update test_aptpkg.py patches to also fix test_expand_repo_def
+
+ -- Benjamin Drung <bdrung@debian.org>  Sat, 16 Apr 2022 14:39:12 +0200
+
+salt (3004.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream security/bugfix release. (Closes: #1008945)
+    - Sign authentication replies to prevent MiTM (CVE-2022-22935)
+    - Prevent job and fileserver replays (CVE-2022-22936)
+    - Sign pillar data to prevent MiTM attacks. (CVE-2202-22934)
+    - Fixed targeting bug, especially visible when using syndic and user auth.
+      (CVE-2022-22941) (#60413)
+    - Fix denial of service in junos ifconfig output parsing.
+  * d/watch: Drop number from repack suffix
+  * Refresh patches
+  * Mark test_list_available_packages requiring network
+  * Rely on pytest-skip-markers 1.1.0-3 that supports NO_INTERNET
+  * Don't rely on importlib.metadata, it's still not ready for our usage
+    (Closes: #1008896)
+  * test_aptpkg.py: Fix UnboundLocalError: local variable 'test_repo'
+    (Closes: #1006036)
+  * Update my email address to @debian.org
+
+ -- Benjamin Drung <bdrung@debian.org>  Sat, 16 Apr 2022 03:43:12 +0200
+
+salt (3004+dfsg1-10) unstable; urgency=medium
+
+  * test_aptpkg: Skip tests if /etc/apt/sources.list is missing
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Wed, 16 Feb 2022 10:46:42 +0100
+
+salt (3004+dfsg1-9) unstable; urgency=medium
+
+  * autopkgtest: Drop creating /tmp/salt-tests-tmpdir
+  * Run 50 non-slow integration tests
+  * Run 150 functional tests as well
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Mon, 14 Feb 2022 19:36:43 +0100
+
+salt (3004+dfsg1-8) unstable; urgency=medium
+
+  * Mock ip_addrs() in utils/minions.py unit test (Closes: #1005053)
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Mon, 07 Feb 2022 11:51:52 +0100
+
+salt (3004+dfsg1-7) unstable; urgency=medium
+
+  [ Lukas Märdian ]
+  * Cherry-pick upstream commit (78525c9) to fix test failure on Python 3.10,
+    using new 'collections.abc.Mapping' module
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Wed, 02 Feb 2022 12:41:06 +0100
+
+salt (3004+dfsg1-6) unstable; urgency=medium
+
+  * linux_sysctl.present: Fix replacing spaces by tabs (PR #61452)
+  * Update patches to latest version pushed upstream
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Thu, 13 Jan 2022 22:58:10 +0100
+
+salt (3004+dfsg1-5) unstable; urgency=medium
+
+  * Fix test cases with PermissionError on /var/cache and forward it upstream
+  * Update patches to latest version pushed upstream
+  * Update lintian override for script-not-executable
+  * Update year in debian/copyright
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Wed, 12 Jan 2022 17:14:14 +0100
+
+salt (3004+dfsg1-4) unstable; urgency=medium
+
+  * Make intersphinx_mapping patch upstreamable and forward it upstream
+  * Drop support unittest.mock patch and use python3-mock
+  * Fix black and isort issues in patches
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Wed, 17 Nov 2021 16:18:06 +0100
+
+salt (3004+dfsg1-3) unstable; urgency=medium
+
+  * Wrap long lines in Python code and documentation
+  * Do not require contextvars for Python >= 3.7 (Closes: #999590)
+  * Remove faulty dot in network interfaces template to fix network.managed
+    state with bridge interfaces to break networking (Closes: #998655)
+  * salt-doc: Replace duplicate image by symlinks
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Tue, 16 Nov 2021 18:46:14 +0100
+
+salt (3004+dfsg1-2) unstable; urgency=medium
+
+  * Fix test_ssh_kwargs to not access /etc/salt/pki
+  * Depend on openssh-client for SSH test cases
+  * Restore patch to replace os.getlogin by getpass.getuser
+    (it was only merged upstream after the release of version 3004)
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Wed, 03 Nov 2021 14:25:15 +0100
+
+salt (3004+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Drop 6 patches that were backported, accepted upstream, or unneeded
+  * Refresh remaining patches
+  * Require python3-saltfactories >= 0.907
+  * Switch to pytest for running unit tests
+  * Add new build dependencies for test cases: file, python3-apt,
+    python3-passlib, python3-six
+  * Mark test_buildout_bootstrap with pytest
+  * Create /tmp/salt-tests-tmpdir before running tests
+  * Mark tests that access /var/cache with skip_if_not_root
+  * Skip failing test_salt_ext_six_import_override
+  * Depend on iproute2 for salt.utils.network.linux_interfaces
+  * Correct sfdisk recommendation to fdisk (Closes: #998077)
+  * Drop removed six.py from copyright
+  * Fix test cases with PermissionError on /var/cache/salt
+  * Fix misspelled import of M2Crypto in test_crypt.py
+  * Run only pytests with autopkgtest (otherwise it fails at the end)
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Tue, 02 Nov 2021 18:22:04 +0100
+
+salt (3002.7+dfsg1-1) unstable; urgency=high
+
+  * New upstream CVE security fix release fixing CVE-2021-21996 and
+    CVE-2021-22004 (Closes: #994016)
+  * Drop Fix-CVE-2021-31607-in-snapper-module.patch (applied upstream)
+  * Update homepage URL to saltproject.io
+  * Fix doc building with sphinx 4.2.0
+  * Depend on bind9-dnsutils for NetworkTestCase.test_dig
+  * Bump Standards-Version to 4.6.0
+  * Update lintian overrides for lintian 2.108.0
+  * Backport schedule.job_status from version 3003
+  * templates: move the globals up to the Environment (Jinja2 3.0.0)
+    (upstream #60811, closes: #996271)
+  * Override lintan error python-traceback-in-manpage for salt man page
+  * Depend on python3-m2crypto as alternative to python3-pycryptodome
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Wed, 13 Oct 2021 21:01:21 +0200
+
+salt (3002.6+dfsg1-4) unstable; urgency=medium
+
+  * loader: Fix loading grains with annotations (PR #60285)
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Tue, 01 Jun 2021 16:12:21 +0200
+
+salt (3002.6+dfsg1-3) unstable; urgency=medium
+
+  * Make python3-distro dependency unconditional
+  * Require python3-attr >= 19.1
+  * Fix onlyif/unless when multiple conditions (backport from upstream)
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Tue, 04 May 2021 15:20:42 +0200
+
+salt (3002.6+dfsg1-2) unstable; urgency=medium
+
+  * Fix CVE-2021-31607 in snapper module (Closes: #987496)
+  * doc: Set latest version during documentation generation
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Tue, 27 Apr 2021 19:20:29 +0200
+
+salt (3002.6+dfsg1-1) unstable; urgency=medium
+
+  * New upstream bug fix release:
+    - Fix argument injection bug in restartcheck.restartcheck. This change
+      hardens the fix for CVE-2020-28243. (#200)
+    - Allow "extra_filerefs" as sanitized kwargs for SSH client.
+      Fix regression on "cmd.run" when passing tuples as cmd. (#59664)
+    - Allow all ssh kwargs as sanitized kwargs for SSH client. (#59748)
+    - Store git sha in salt/_version.py when installing from a tag so it can
+      be found if needed later. (#59137)
+  * Update my email address
+  * Refresh Fix-test_run_all_output_loglevel_debug.patch
+
+ -- Benjamin Drung <benjamin.drung@ionos.com>  Tue, 20 Apr 2021 15:48:59 +0200
+
+salt (3002.5+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release fixing several security issues (Closes: #983632):
+    CVE-2020-28243, CVE-2020-28972, CVE-2020-35662, CVE-2021-3148,
+    CVE-2021-3144, CVE-2021-25281, CVE-2021-25282, CVE-2021-25283,
+    CVE-2021-25284, CVE-2021-3197
+  * Fix test_run_all_output_loglevel_debug
+  * test_module_names: Exclude unit.auth.test_auth
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Tue, 02 Mar 2021 14:34:15 +0100
+
+salt (3002.2+dfsg1-1) unstable; urgency=medium
+
+  * New upstream bugfix release
+  * Do not use unittest.mock.__version__ (Closes: #975522)
+  * Bump Standards-Version to 4.5.1
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Mon, 23 Nov 2020 13:13:55 +0100
+
+salt (3002.1+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release:
+    - Prevent shell injections in netapi SSH client (CVE-2020-16846)
+    - Prevent creating world readable private keys with the TLS execution
+      module. (CVE-2020-17490)
+    - Properly validate eauth credentials and tokens along with their ACLs
+      (CVE-2020-25592)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Mon, 09 Nov 2020 14:59:51 +0100
+
+salt (3002+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Drop 4 patches that were accepted upstream and refresh remaining patches
+  * Drop skipping tests that succeed again
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Mon, 26 Oct 2020 11:05:37 +0100
+
+salt (3001.1+dfsg1-2) unstable; urgency=medium
+
+  * Add patches to not access internal dpkg databases in the salt modules
+    alternatives and dpkg_lowpkg (Closes: #944970)
+  * Fix autopkgtest test suite failing with Python exit code 120
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Thu, 22 Oct 2020 11:29:16 +0200
+
+salt (3001.1+dfsg1-1) unstable; urgency=medium
+
+  [ Benjamin Drung ]
+  * New upstream release.
+  * Support pytest-salt-factories 0.93.0
+  * Rename lintian overrides for lintian 2.97.0
+  * Switch to debhelper 13
+  * Switch to python3-pycryptodome (Closes: #971295)
+  * Drop bsdmainutils dependency (Closes: #964515)
+
+  [ Debian Janitor ]
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+    Repository-Browse.
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Fri, 09 Oct 2020 12:28:20 +0200
+
+salt (3001+dfsg1-2) unstable; urgency=medium
+
+  * tests: Replace os.getlogin by getpass.getuser (Closes: #964270, #964614)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Tue, 14 Jul 2020 12:57:17 +0200
+
+salt (3001+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #962514)
+  * Drop 18 patches that were accepted upstream and refresh remaining patches
+  * Fix parsing version of virtualenv (upstream bug #57734)
+  * d/copyright: Drop removal of nssm.exe (not present any more)
+  * Remove NOTICE from docs (not shipped any more)
+  * Replace python3-pytestsalt by python3-saltfactories for tests
+  * Fix import of Crypto in salt.cloud.clouds.ec2
+  * Support testing against system installed version (for autopkgtest)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Tue, 23 Jun 2020 19:29:13 +0200
+
+salt (3000.2+dfsg1-1) unstable; urgency=medium
+
+  * New upstream bug-fix release
+  * Fix bug in Replace-deprecated-inspect.formatargspec.patch
+  * Refresh spelling mistake fix patches
+  * Replace patch for test_datetime_config_validation by the patch that were
+    accepted upstream.
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Thu, 30 Apr 2020 12:28:43 +0200
+
+salt (3000.1+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Drop Fix-regression-in-service-states-with-reload-argumen.patch
+    (applied upstream)
+  * Refresh remaining patches
+  * doc: Do not mock Python's concurrent module (Closes: #955057)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Thu, 09 Apr 2020 18:17:36 +0200
+
+salt (3000+dfsg1-4) unstable; urgency=medium
+
+  * Let sphinx display the full traceback when an unhandled exception occurs
+    to help debugging #955057.
+  * autopkgtest: Skip tests that need Internet access (Closes: #954154)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Mon, 30 Mar 2020 11:29:56 +0200
+
+salt (3000+dfsg1-3) unstable; urgency=medium
+
+  * Move documentation to /usr/share/doc/salt-doc/html
+  * Add support for setting DEB_BUILD_OPTIONS=nodoc
+  * Improve skip tests that need Internet access (to fix build on Ubuntu)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Tue, 03 Mar 2020 16:19:19 +0100
+
+salt (3000+dfsg1-2) unstable; urgency=medium
+
+  * Require python3-pytestsalt >= 2019.6.13 for tests
+  * Skip more test cases that need Internet access
+  * Install NOTICE in salt-common
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Mon, 02 Mar 2020 14:39:19 +0100
+
+salt (3000+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Refresh patches
+  * Drop tornado4 patches and use vendored tornado
+  * Fix CMDMODTestCase if home directory does not exist (PR #55961)
+  * Fix deprecation warnings for imports from collections (PR #56225)
+  * Replace log.warn by log.warning (PR #56226)
+  * Replace deprecated ElementTree.getchildren() (PR #56226)
+  * Fix broken symlink in test_symlink_list (PR #56227)
+  * Add new build/test Python dependencies: cheetah, genshi, mako, openssl
+  * Fix regression in service states with reload argument
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Tue, 25 Feb 2020 15:42:34 +0100
+
+salt (2019.2.3+dfsg1-2) unstable; urgency=medium
+
+  * Fix all unit test failures on Python 3.8:
+    - Replace deprecated inspect.formatargspec
+    - Support distro.linux_distribution
+    - Fix RuntimeError: dictionary keys changed during iteration
+    - Fix unit.modules.test_virt.VirtTestCase.test_update
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Mon, 03 Feb 2020 09:57:12 +0100
+
+salt (2019.2.3+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fix command injection in salt-api NEST API (CVE-2019-17361)
+      (Closes: #949222)
+  * Drop 11 patches that are included upstream
+  * Run KubernetesTestCase.test_setup_client_key_file again
+  * Split and refresh patch for disabling failing tests
+  * Refresh remaining patches
+  * Skip hanging unit.transport.test_zeromq.AESReqTestCases
+  * Skip failing ConfigTestCase.test_datetime_config_validation
+  * Skip test_check_virtualname if source directory is not found
+  * Mock kubernetes when building the documentation
+  * Bump Standards-Version to 4.5.0 (no changes required)
+  * Depend on python3-distro for Python >= 3.8
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Wed, 29 Jan 2020 14:27:51 +0100
+
+salt (2018.3.4+dfsg1-7) unstable; urgency=medium
+
+  * doc: Set script type explicitly to text/javascript
+  * Use jquery.js from sphinx
+  * Symlink vendor JavaScript files before building
+  * Use dh_sphinxdoc
+  * Fix various spelling mistakes
+  * Fix salt to work with python3-yaml 5.1.2-1 (Closes: #933922):
+    - Set default_flow_style=None in yaml.dump calls
+    - Fix yamldumper test for both py2/py3
+  * Bump Standards-Version to 4.4.0 (no changes needed)
+  * Switch to debhelper 12
+  * Add missing Pre-Depends on ${misc:Pre-Depends}
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Thu, 29 Aug 2019 18:26:56 +0200
+
+salt (2018.3.4+dfsg1-6) unstable; urgency=medium
+
+  * Revert changes that were rejected by the release team:
+    - Drop fixing various spelling mistakes
+    - Drop using jquery.js from sphinx
+    - Drop using dh_sphinxdoc
+    - Drop patch to set script type explicitly to text/javascript
+  * doc: Use local Open Sans fonts instead of querying Google
+    to fix possible privacy breach
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Fri, 24 May 2019 15:01:45 +0200
+
+salt (2018.3.4+dfsg1-5) unstable; urgency=medium
+
+  * Cherry-pick upstream patch to fix edge case when minion ID is a
+    16-character string (Closes: #928337)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Thu, 02 May 2019 13:23:44 +0200
+
+salt (2018.3.4+dfsg1-4) unstable; urgency=medium
+
+  * Cherry-pick upstream patch to fix retrieving systemd version (for 241-3)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Fri, 26 Apr 2019 16:38:39 +0200
+
+salt (2018.3.4+dfsg1-3) unstable; urgency=medium
+
+  [ Benjamin Drung ]
+  * tests: Drop copying missing templates directory
+  * salt-doc: Install favicon in document root and do not compress it
+  * salt-doc: Fix JavaScript symlinks to bootstrap (Closes: #919849)
+  * doc: Set script type explicitly to text/javascript
+  * Use jquery.js from sphinx
+  * Symlink vendor JavaScript files before building
+  * Use dh_sphinxdoc
+
+  [ Steffen Kockel ]
+  * doc: Fix logo link to point to contents.html
+  * doc: Ensure searchtools.js gets included (to fix the search)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Thu, 25 Apr 2019 13:39:10 +0200
+
+salt (2018.3.4+dfsg1-2) unstable; urgency=medium
+
+  * Fix test_xen_virtual on kernels with no Xen support (Closes: #922352)
+  * Expose tornado4 as tornado for zmq.eventloop.ioloop (Closes: #924763)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Wed, 17 Apr 2019 20:26:11 +0200
+
+salt (2018.3.4+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Refresh patches
+  * Fix various spelling mistakes
+  * Drop NOTICE from salt-common (the upstream tarball does not contain it)
+  * Skip SampleConfTest and ExtendTestCase if the required sample conf or
+    templates directories are missing
+  * Run tests with LC_ALL=C.UTF-8
+  * Remove unused minified documentation CSS files
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Fri, 05 Apr 2019 13:58:40 +0200
+
+salt (2018.3.4~git20180207+dfsg1-1) unstable; urgency=medium
+
+  * New upstream pre-release snapshot.
+  * Drop 11 patches that were accepted upstream and refresh remaining ones
+  * test_argspec_report: Fix expected argspec_report result
+  * Drop python3-cassandra from B-D until it enters testing (Closes: #921658)
+  * Silence linux_distribution deprecation warning (Closes: #921630)
+  * Fix use of deprecated pygit2 function (Closes: #921567)
+  * Fix tornado4 patch to show its version in 'salt -V' (Closes: #921632)
+  * Add NOTICE to salt-common
+  * Skip test_module_name_source_match (failing in autopkgtest)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Fri, 08 Feb 2019 17:05:57 +0100
+
+salt (2018.3.3+dfsg1-2) unstable; urgency=medium
+
+  * Check existence before removing /var/lib/salt/pki on purge (Closes: #918312)
+  * Don't import obsolete Directive class from Sphinx to fix build failure with
+    Sphinx 1.8. Thanks to Dmitry Shachnev. (Closes: #918377)
+  * Bump Standards-Version to 4.3.0 (no changes are required)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Mon, 07 Jan 2019 15:30:51 +0100
+
+salt (2018.3.3+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release
+    - CVE-2018-15751: remote authentication bypass in salt-api (netapi) allows
+      executing arbitrary commands (Closes: #913475)
+    - CVE-2018-15750: Directory traversal in salt-api allows remote attackers
+      to identitfy arbitrary files (Closes: #913476)
+    - Support Python 3.7 (Closes: #904654)
+    - Fix typo (Closes: #906275)
+  * Drop 22 patches that were accepted by upstream and refresh remaining ones.
+  * Remove inactive Wolodja Wentland. Thanks for your work. (Closes: #898142)
+  * Remove empty /var/lib/salt on package purge (Closes: #905519)
+  * Fix InstallRequirement.from_line for pip 18.1
+  * Use collections.abc instead of collections for Python 3.7 (from upstream)
+  * Add patch to support unittest.mock from Python >= 3.6 again
+  * Fix RemoveCapacityFromDiskgroupTestCase require pyvmomi
+  * Fix twilio version checking
+  * Bump Standards-Version to 4.2.1 (no changes are required)
+  * Call setup.py install with --install-layout deb
+  * Fix documentation build (with five individual patches)
+  * Upgrade to libjs-bootstrap version 3 (Closes: #908430)
+  * Add multiple build dependencies to increase unittest coverage
+  * Add autopkgtest to run the unittests
+  * Skip failing test_event_subscription (for now) due to tornado bug #2536
+    when using openssl 1.1.1 with TLS 1.3.
+  * Skip failing kubernetes test (for now, needs an upstream fix)
+  * Use python3-tornado4 due to missing support for tornado version 5
+    (Closes: #893817, #896921)
+
+ -- Benjamin Drung <benjamin.drung@cloud.ionos.com>  Fri, 21 Dec 2018 19:21:57 +0100
+
+salt (2017.7.4+dfsg1-1) unstable; urgency=medium
+
+  * New upstream bug-fix release
+  * Use xz for repacked source tarball
+  * Change salt master user from 'root' to 'salt' by default (Closes: #891303)
+  * Fix Python 3 support for debconfmod (LP: #1752651)
+  * Support dynamic pillar_root environment (fixes upstream bug #20581)
+  * kubernetes: Fix ValueError for template in AppsV1beta1DeploymentSpec
+    (see upstream bug #46329)
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Mon, 05 Mar 2018 15:36:11 +0100
+
+salt (2017.7.3+dfsg1-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * New upstream release
+  * Break Python 3 not compatible salt-formulas (Closes: #889934)
+
+  [ Benjamin Drung ]
+  * Fix skipping Kubernetes tests if client is not installed
+  * Build depend on python3-kubernetes (for test run)
+  * Declare that override_dh_fixperms target requires root
+  * Move source lintian overrides to debian/source
+  * Use canonical URL for Vcs-Git
+  * Support nocheck build option
+  * Move certificate files to /var/lib/salt/pki (Closes: #698898)
+  * Let salt master service handle the file permissions instead of using
+    "chown -R" (which is vulnerable to hardlink attacks)
+  * Replace Workaround-wrong-oscodename-grain.patch by proper solution
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Wed, 21 Feb 2018 20:28:41 +0100
+
+salt (2017.7.2+dfsg1-2) unstable; urgency=medium
+
+  * Fix Unicode tests when run with LC_ALL=POSIX
+  * Replace work around for doc generation with proper fix
+  * salt-master.postinst: Ensure that /etc/salt/pki exists
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Fri, 26 Jan 2018 19:36:22 +0100
+
+salt (2017.7.2+dfsg1-1) unstable; urgency=medium
+
+  [ Benjamin Drung ]
+  * New upstream release.
+  * Refresh patches and drop backported default-fingerprint-sha256.patch
+  * Update Vcs URLs to point to salsa.debian.org
+  * Switch to Python 3
+  * Use libjs-twitter-bootstrap for bootstrap.js
+  * Add python3-psutil dependency to salt-common
+  * Recommend python3-pygit2 over python3-git
+  * Fix unit.modules.test_cmdmod.CMDMODTestCase.test_run test case
+  * Fix skipping test when boto is not installed
+  * doc: Mock keyring module import
+  * doc: Define fake version for msgpack and psutil
+  * Update doc.conf.intersphinx_mapping patch for Python 3
+  * Work around build failure with python3-sphinx (see upstream bug 45684)
+  * Build documentation with python3-sphinx
+  * Enable running unit tests
+  * Use dbus-run-session instead of dbus-launch (Closes: #836297)
+  * Run salt-master as 'salt' user instead of root (Closes: #801396)
+  * Raise LimitNOFILE to default max open files (100,000 files)
+
+  [ Ondřej Nový ]
+  * Remove privacy breach in docs, replace YouTube iframes with links
+  * Disable shorturls extension in docs
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Thu, 25 Jan 2018 16:31:30 +0100
+
+salt (2016.11.8+dfsg1-2) unstable; urgency=medium
+
+  * Recommends sfdisk for salt-minon (Closes: #872099)
+  * Recommends e2fsprogs for salt-minion (Closes: #887245)
+  * d/copyright: Bump my copyright year
+  * Bump debhelper compat level to 11
+  * Bump Standards-Version to 4.1.3 (no changes needed)
+
+ -- Ondřej Nový <onovy@debian.org>  Mon, 15 Jan 2018 16:01:11 +0100
+
+salt (2016.11.8+dfsg1-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * New upstream release. Security fixies:
+    - CVE-2017-12791: Directory traversal vulnerability on salt-master via
+      crafted minion IDs (Closes: #872399)
+    - CVE-2017-14695:  Directory traversal vulnerability in minion id
+      validation in SaltStack (Closes: #879089)
+    - CVE-2017-14696: Remote Denial of Service with a specially crafted
+      authentication request (Closes: #879090)
+  * Remove patches applied upstream and rebase others
+  * Add myself to uploaders
+  * Bump debhelper compat level to 10
+    - Use dh_missing --fail-missing
+    - New debhelper don't require to depend on dh-systemd
+    - Don't pass --with-systemd to dh, it's default now
+  * d/watch: Use https
+  * Use Files-Excluded in d/copyright instead of own repack script
+  * d/copyright:
+    - Add myself for Debian part
+    - Remove debian/repack
+  * Deprecating priority extra as per policy 4.0.1
+  * Remove deprecated upstart configuration
+
+  [ Benjamin Drung ]
+  * Add python-msgpack dependency to salt-common (Closes: #869659)
+
+ -- Ondřej Nový <onovy@debian.org>  Mon, 11 Dec 2017 12:21:41 +0100
+
+salt (2016.11.5+ds-1) unstable; urgency=medium
+
+  * New upstream bug-fix release. Security fixes:
+    - CVE-2017-8109: salt-ssh minion copied over configuration from the Salt
+      Master without adjusting permissions (Closes: #861219)
+  * Refresh patches and drop Fix-top_file_merging_strategy-warning.patch
+  * Do not require sphinx-build for cleaning docs (Closes: #851559)
+  * Install spm into salt-common
+  * Install salt-unity into salt-master
+  * Add documentation keys to systemd service files (PR 41401)
+  * Move salt.7 from salt-common to salt-doc, since it uses 1.7 MiB (compressed)
+  * Fix spelling mistakes (found by lintian) (PR 41404)
+  * Document aptpkg architectures parameter
+  * Fix pkgrepo.managed always return changes for test=true (PR 41456)
+  * Update fingerprint hash type default from md5 to sha256. Note: upstream
+    defers this change to the next major release (Nitrogen)
+  * Fix bashism in bootstrap-salt.sh (Closes: #772406)
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Fri, 26 May 2017 17:54:23 +0200
+
+salt (2016.11.2+ds-1) unstable; urgency=medium
+
+  * New upstream bug-fix release. Security fixes:
+    - CVE-2017-5192: local_batch client external authentication not respected
+    - CVE-2017-5200: Salt-api allows arbitrary command execution on a
+      salt-master via Salt's ssh_client
+  * Refresh patches
+  * Fix top_file_merging_strategy warning if env_order is set (fixes upstream
+    bug #29104)
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Wed, 01 Feb 2017 17:09:07 +0100
+
+salt (2016.11.1+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop 3 patches that are included upstream and refresh remaining patches.
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Fri, 23 Dec 2016 17:36:42 +0100
+
+salt (2016.3.4+ds-2) unstable; urgency=medium
+
+  * Workaround-wrong-oscodename-grain.patch: Fix salt-minion startup issue when
+    VERSION_ID is not defined in /etc/os-release.
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Tue, 29 Nov 2016 10:47:07 +0100
+
+salt (2016.3.4+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop four upstream-applied patches and refresh remaining patches
+  * Support initializing OpenSSL 1.1 (patch accepted upstream) (Closes: #844503)
+  * Fix/workaround wrong oscodename grain (when lsb-release is not installed)
+  * Cherry-pick tempfile cleanup fix from pull request 37540
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Thu, 24 Nov 2016 15:35:04 +0100
+
+salt (2016.3.3+ds-3) unstable; urgency=medium
+
+  * Remove grains type deprecation warning from 2016.3
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Thu, 27 Oct 2016 17:03:26 +0200
+
+salt (2016.3.3+ds-2) unstable; urgency=medium
+
+  * Depend on python-systemd for all services (needed for startup notification)
+    unless sysvinit is used as default init system
+  * Cherry-pick upstream commit to fix error when profiling is turned on and
+    minions don't return.
+  * Preserve the merge order specified in env_order (fixes upstream bug #29104)
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Tue, 25 Oct 2016 11:46:19 +0200
+
+salt (2016.3.3+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Replace doc build fix patch by final patch version from 2016.3 branch
+  * Correct Vcs-Git URL
+  * Make the Salt Proxy environment aware (patch taken from develop branch)
+  * Depend on lsb-base (>= 3.0-6) for /lib/lsb/init-functions
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Tue, 18 Oct 2016 11:45:38 +0200
+
+salt (2016.3.2+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Refresh patches.
+  * Fix documentation build (see upstream bug #35399).
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Thu, 25 Aug 2016 19:00:32 +0200
+
+salt (2016.3.1+ds-1) unstable; urgency=medium
+
+  * New upstream release
+  * Drop backported maintenance process patch
+  * Change doc-base index file to ToC
+
+ -- Wolodja Wentland <debian@babilen5.org>  Wed, 13 Jul 2016 10:46:06 +0200
+
+salt (2016.3.0+ds-1) unstable; urgency=medium
+
+  [ Wolodja Wentland ]
+  * New upstream release
+  * Bump Standards-Version to 3.9.8
+  * Use Build-Depends-Indep for arch independent build dependencies
+    - Bump python-sphinx dependency to 1.3.5 as salt-doc FTBFS with earlier
+      versions due to https://github.com/sphinx-doc/sphinx/issues/2247
+    - Add python2.7-doc to correctly resolve intersphinx references to the
+      Python documentation
+  * Drop patches accepted upstream
+  * Fix crashing maintenance process
+    - See https://github.com/saltstack/salt/issues/33544 and the 2016.3.0
+      release notes for details
+
+  [ Robert James Hernandez ]
+  * Moving daemon check to after loading default (Closes: #825578)
+
+ -- Wolodja Wentland <debian@babilen5.org>  Mon, 30 May 2016 09:01:20 +0000
+
+salt (2015.8.8+ds-1) unstable; urgency=high
+
+  * New upstream release
+    - CVE-2016-3176: Fix insecure configuration of PAM external
+      authentication service (Closes: #819184)
+  * Drop reproducible_builds.patch (accepted upstream)
+  * Cherry-pick the four patches from 2015.8.8.2
+  * Re-add shebang to ssh-id-wrapper shell script
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Mon, 04 Apr 2016 13:21:16 +0200
+
+salt (2015.8.7+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Override lintian warning about long link in JavaScript comment.
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Mon, 22 Feb 2016 11:57:20 +0100
+
+salt (2015.8.5+ds-1) unstable; urgency=high
+
+  [ Benjamin Drung ]
+  * Drop patches that were accepted upstream
+  * Rewrite reproducible patch and sent it to upstream
+  * Bump Standards-Version to 3.9.7 (no changes needed)
+  * Ignore false positive source-is-missing lintian error (see #813013)
+
+  [ Wolodja Wentland ]
+  * New upstream release.
+    - CVE-2016-1866: Improper handling of clear messages on the minion, which
+      could result in executing commands not sent by the master.
+  * Add Wolodja Wentland to Uploaders
+  * Use secure URI for Vcs-Git
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Thu, 04 Feb 2016 10:44:45 +0100
+
+salt (2015.8.3+ds-3) unstable; urgency=medium
+
+  * Cherry-pick fix to silence warnings from (not installed) nova client
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Thu, 14 Jan 2016 15:48:02 +0100
+
+salt (2015.8.3+ds-2) unstable; urgency=medium
+
+  * salt-master: Depend on python-systemd for the startup notification
+    unless sysvinit is used as default init system (Closes: #807741,
+    LP: #1525184)
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Mon, 14 Dec 2015 12:17:44 +0100
+
+salt (2015.8.3+ds-1) unstable; urgency=high
+
+  * New upstream release.
+    - CVE-2015-8034: Fix information leak from state.sls cache data stored as
+      world-readable (Closes: #807356)
+  * Drop Fix-OS-related-grains-on-Debian.patch (accepted upstream)
+  * Use upstream systemd service files (Closes: #806786)
+  * Extend description of salt-cloud
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Wed, 09 Dec 2015 12:14:33 +0100
+
+salt (2015.8.1+ds-2) unstable; urgency=medium
+
+  * Demote python-croniter to recommends (only needed for the schedule state)
+  * Add missing dependency on python-tornado >= 4.2
+  * Fix OS related grains on Debian (wrongly named "Debian GNU")
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Fri, 06 Nov 2015 17:40:11 +0100
+
+salt (2015.8.1+ds-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #801289)
+  * debian/repack: Create xz compressed source tarball
+  * Refresh reproducible_builds patch and refresh remaining patches
+  * Drop make-log-file-group-readable.patch (applied upstream)
+  * Require python-crypto (>= 2.6)
+  * Add a separate salt-proxy package
+  * Drop patch to support sphinx < 1.3 (sphinx is recent enough in unstable)
+  * Add myself to uploaders
+  * Raise compat level to 9
+  * Update debian/copyright
+
+ -- Benjamin Drung <benjamin.drung@profitbricks.com>  Thu, 05 Nov 2015 10:13:16 +0100
+
+salt (2015.5.3+ds-1) unstable; urgency=medium
+
+  * [e481db1] Imported Upstream version 2015.5.3+ds
+  * [16f6801] Added salt-minion dependency on bsdmainutils. Closes: 790758
+  * [761f735] Added dependency on python-croniter. Closes: 771015
+  * [5b957bb] Weakened dependency on python-mako to suggests.
+
+ -- Joe Healy <joehealy@gmail.com>  Tue, 28 Jul 2015 22:37:05 +1000
+
+salt (2015.5.2+ds-1) unstable; urgency=medium
+
+  * [e6d32ad] Updated repack script to remove new sphinx theme
+  * [48bdace] Imported Upstream version 2015.5.2+ds
+  * [9e98c1c] Updated patches for 2015.5.2 and set doc theme to saltstack
+
+ -- Joe Healy <joehealy@gmail.com>  Wed, 01 Jul 2015 00:13:37 +1000
+
+salt (2015.5.0+ds-1) unstable; urgency=medium
+
+  * [52d8863] Imported Upstream version 2015.5.0+ds. Closes: 783300
+  * [bd5ad46] Updated patches for 2015.5. Closes: 777664
+
+ -- Joe Healy <joehealy@gmail.com>  Mon, 11 May 2015 21:53:01 +1000
+
+salt (2014.7.5+ds-1) unstable; urgency=medium
+
+  * [f41091a] Imported Upstream version 2014.7.5+ds
+
+ -- Joe Healy <joehealy@gmail.com>  Tue, 21 Apr 2015 11:46:27 +1000
+
+salt (2014.7.4+ds-1) UNRELEASED; urgency=medium
+
+  [ Benjamin Drung ]
+  * [c1f16f3] debian/changelog: Use capital UNRELEASED
+  * [48334b4] Point Vcs-Browser to cgit instead of gitweb.
+  * [b9e3de4] Remove unused ${shlibs:Depends} dependencies
+
+  [ Joe Healy ]
+  * [510c0d1] Imported Upstream version 2014.7.4+ds
+  * [8489807] Updated doc patches
+
+ -- Joe Healy <joehealy@gmail.com>  Wed, 15 Apr 2015 23:08:49 +1000
+
+salt (2014.7.2+ds-1) experimental; urgency=medium
+
+  * [dc3a14e] Added python-debian as dependency for package version tracking
+  * [9de90f3] Updated changelog to relabel versions that were not uploaded
+  * [984a676] Updated watch file to use pypi redirector
+  * [4e082fd] Imported Upstream version 2014.7.2+ds
+  * [7930d76] Added dh_python as a build dep
+  * [1e2ddb6] Refreshed patches for 2014.7.2
+  * [ca0f3e9] "Fixed" timestamps in generated files for reproducible builds.
+  * [9ef435b] Make log file readable by adm user. Closes: 777664
+  * [1feadd6] Refreshed lintian overrides and added comments as to their need
+
+ -- Joe Healy <joehealy@gmail.com>  Tue, 17 Mar 2015 20:07:43 +1100
+
+salt (2014.7.1+ds-3) UNRELEASED; urgency=medium
+
+  * [70d659a] Fixed salt-api upstart script
+
+ -- Joe Healy <joehealy@gmail.com>  Tue, 10 Feb 2015 11:20:12 +1100
+
+salt (2014.7.1+ds-2) UNRELEASED; urgency=medium
+
+  * [87971d4] Added dependency on python-dateutil
+  * [cb9b2e2] Added init.d, systemd and upstart files for salt-api
+
+ -- Joe Healy <joehealy@gmail.com>  Thu, 05 Feb 2015 17:22:45 +1100
+
+salt (2014.7.1+ds-1) UNRELEASED; urgency=medium
+
+  * [77a2f91] Imported Upstream version 2014.7.1+ds
+  * [7525339] Refreshed patches for 2014.7.1
+  * [314362b] Added salt-api packaging
+
+ -- Joe Healy <joehealy@gmail.com>  Thu, 29 Jan 2015 10:12:26 +1100
+
+salt (2014.7.0+ds-2) experimental; urgency=medium
+
+  * [9954f59] Added python-requests as a dependency
+
+ -- Joe Healy <joehealy@gmail.com>  Wed, 12 Nov 2014 15:26:00 +1100
+
+salt (2014.7.0+ds-1) experimental; urgency=medium
+
+  * [8e2c682] Imported Upstream version 2014.7.0+ds
+  * [2ad9738] Updated patches for 2014.7 release
+  * [0ac1a0c] Updated dependencies for initial 2014.7 release
+
+ -- Joe Healy <joehealy@gmail.com>  Wed, 12 Nov 2014 10:36:31 +1100
+
+salt (2014.1.13+ds-1) unstable; urgency=medium
+
+  * [448ac5b] Imported Upstream version 2014.1.13+ds
+  * [9b5d860] Added python-apt as a dependency
+  * [c068fad] Removed patch for 2014.1.11 release notes as upstream added notes
+  * [4a22a13] Updated to standards version 3.9.6, no change needed
+
+ -- Joe Healy <joehealy@gmail.com>  Tue, 21 Oct 2014 00:30:37 +1100
+
+salt (2014.1.11+ds-2) unstable; urgency=medium
+
+  * [fa6cb29] Added 2014.1.11 release notes
+
+ -- Joe Healy <joehealy@gmail.com>  Fri, 26 Sep 2014 13:58:18 +1000
+
+salt (2014.1.11+ds-1) unstable; urgency=medium
+
+  * [d0fbbd5] Imported Upstream version 2014.1.11+ds
+  * [edd6667] Fixed minor copyright issues picked up by lintian
+
+ -- Joe Healy <joehealy@gmail.com>  Fri, 26 Sep 2014 13:31:11 +1000
+
+salt (2014.1.10+ds-1) unstable; urgency=medium
+
+  * [ff6185d] Imported Upstream version 2014.1.10+ds
+
+ -- Joe Healy <joehealy@gmail.com>  Tue, 05 Aug 2014 23:20:17 +1000
+
+salt (2014.1.7+ds-2) unstable; urgency=medium
+
+  * [f04fd3a] Load intersphinx data from filesystem. Closes: 755026
+
+ -- Joe Healy <joehealy@gmail.com>  Tue, 22 Jul 2014 10:49:40 +1000
+
+salt (2014.1.7+ds-1) unstable; urgency=medium
+
+  * [00e814e] Imported Upstream version 2014.1.7+ds
+
+ -- Joe Healy <joehealy@gmail.com>  Thu, 10 Jul 2014 09:41:31 +1000
+
+salt (2014.1.6+ds-1) unstable; urgency=medium
+
+  * [a0fe230] Moved python-git recommendation to salt-master
+  * [25d5ac9] Imported Upstream version 2014.1.6+ds
+  * [3ad8e3a] Removed and updated patches for 2014.1.6
+
+ -- Joe Healy <joehealy@gmail.com>  Wed, 09 Jul 2014 09:48:28 +1000
+
+salt (2014.1.5+ds-5) unstable; urgency=medium
+
+  * [14ee714] Added stub for ext_nodes to re-enable comms with older minions
+
+ -- Joe Healy <joehealy@gmail.com>  Sun, 22 Jun 2014 20:45:41 +1000
+
+salt (2014.1.5+ds-4) unstable; urgency=medium
+
+  * [39e8303] Patch to remove spurious iptables --help output
+
+ -- Joe Healy <joehealy@gmail.com>  Sun, 22 Jun 2014 10:09:18 +1000
+
+salt (2014.1.5+ds-3) unstable; urgency=medium
+
+  * [12bbc7b] Fix for grain detection on xen and openvz (Upstream issue 11877)
+
+ -- Joe Healy <joehealy@gmail.com>  Thu, 19 Jun 2014 04:21:24 +1000
+
+salt (2014.1.5+ds-2) unstable; urgency=medium
+
+  * [55dac69] Added version requirement for salt-cloud
+  * [7a00f9e] Clean up of build depends
+
+ -- Joe Healy <joehealy@gmail.com>  Wed, 18 Jun 2014 06:48:40 +1000
+
+salt (2014.1.5+ds-1) unstable; urgency=medium
+
+  * [17cddb2] Imported Upstream version 2014.1.5+ds
+  * [6fbecdc] Removed patch for 748092 as upstream have fixed issue.
+  * [a23be88] Minor doc patch fixed
+
+ -- Joe Healy <joehealy@gmail.com>  Sat, 14 Jun 2014 22:09:22 +1000
+
+salt (2014.1.4+ds-2) unstable; urgency=medium
+
+  * [8716b5d] Fix to salt-ssh to not require python-zmq. Closes: 748092
+
+ -- Joe Healy <joehealy@gmail.com>  Thu, 15 May 2014 16:28:11 +1000
+
+salt (2014.1.4+ds-1) unstable; urgency=medium
+
+  * [a9b0074] Imported Upstream version 2014.1.4+ds
+  * [fd38419] Removed patch for removing externalip grain
+
+ -- Joe Healy <joehealy@gmail.com>  Tue, 06 May 2014 21:03:13 +1000
+
+salt (2014.1.3+ds-2) unstable; urgency=medium
+
+  * [897f3b6] Removed external_ip grain due to privacy issues
+
+ -- Joe Healy <joehealy@gmail.com>  Thu, 24 Apr 2014 16:50:27 +1000
+
+salt (2014.1.3+ds-1) unstable; urgency=medium
+
+  * [07ff82c] Imported Upstream version 2014.1.3+ds
+  * [20cbcd6] Kill off all salt-master processes when stopping/restarting
+
+ -- Joe Healy <joehealy@gmail.com>  Fri, 18 Apr 2014 14:30:42 +1000
+
+salt (2014.1.1+ds-1) unstable; urgency=medium
+
+  * [1b25dba] Removed renaming of js file in repack script as upstream fixed
+  * [a5ee734] Imported Upstream version 2014.1.1+ds
+
+ -- Joe Healy <joehealy@gmail.com>  Thu, 20 Mar 2014 23:11:07 +1100
+
+salt (2014.1.0+ds-1) unstable; urgency=medium
+
+  * [d5adf7f] Removed windows binary
+  * [7c0cc71] Imported Upstream version 2014.1.0+ds
+  * [12c1810] Updated debian/copyright for new files
+  * [fee767d] Updated patches for 2014.1
+  * [409559a] Added salt-cloud
+
+ -- Joe Healy <joehealy@gmail.com>  Fri, 28 Feb 2014 16:02:44 +1100
+
+salt (0.17.5+ds-1) unstable; urgency=medium
+
+  * [af8c595] Added repack script to fix source issue. Closes: 736783
+  * [20ce79b] Imported Upstream version 0.17.5+ds
+  * [a536794] Send environment info with state (upstream commit #113adcd)
+  * [838f341] Added release notes from upstream
+  * [f741d6d] Updated copyright to reflect repacking
+  * [d747742] Added lintian override for minified js files with source
+
+ -- Joe Healy <joehealy@gmail.com>  Fri, 07 Feb 2014 10:07:55 +1100
+
+salt (0.17.5-1) unstable; urgency=medium
+
+  * [68d201f] Imported Upstream version 0.17.5
+  * [f48d855] Minor update of doc patches to reflect upstream changes
+
+ -- Joe Healy <joehealy@gmail.com>  Sun, 26 Jan 2014 23:20:05 +1100
+
+salt (0.17.4-2) unstable; urgency=medium
+
+  * [178932c] Removed documentation tracking code (google analytics)
+
+ -- Joe Healy <joehealy@gmail.com>  Wed, 22 Jan 2014 11:09:50 +1100
+
+salt (0.17.4-1) unstable; urgency=low
+
+  * Imported Upstream version 0.17.4
+  * removed patches no longer needed
+   * doc-conf_py-changes.diff
+   * pkgrepo-salt-bug-8560
+   * release-notes.diff
+  * Added patch (yaml.scanner) for doc build error
+
+ -- Joe Healy <joehealy@gmail.com>  Mon, 16 Dec 2013 20:35:13 +1100
+
+salt (0.17.2-3) unstable; urgency=low
+
+  * [a4f9a88] Suggest documentation when installing. Closes: 730842
+  * [7eb7969] Depend on python-msgpack rather than msgpack-python.
+              Closes: 730875
+  * [38deac5] Bump standards version - No changes needed.
+
+ -- Joe Healy <joehealy@gmail.com>  Sun, 01 Dec 2013 13:26:05 +1100
+
+salt (0.17.2-2) unstable; urgency=low
+
+  * [d5d4256] Removed test symbolic link
+  * [aba0f43] Addition of patch for upstream bug 8560
+
+ -- Joe Healy <joehealy@gmail.com>  Tue, 19 Nov 2013 17:35:29 +1100
+
+salt (0.17.2-1) unstable; urgency=low
+
+  * [51557a0] Added debconf-utils as a recommended package for salt-minion
+  * [3e6db19] Added dependency on msgpack-python to salt-ssh. Closes: 729181
+  * [37b3fbc] Removed gbp dfsg filtering
+  * [8562ec2] Updated upstart files to reflect latest ubuntu versions
+  * [00398b1] Imported Upstream version 0.17.2
+  * [43c3a3d] Added files previously removed in repacking to copyright file
+  * [37d2781] Added links so that packaged versions of js and css files are used
+  * [3dcf641] Added doc dependencies on js libraries
+  * [58980a0] Updated documentation version to 0.17.2
+  * [94b12c9] Added 0.17.2 release notes from upstream
+
+ -- Joe Healy <joehealy@gmail.com>  Sun, 17 Nov 2013 00:01:06 +1100
+
+salt (0.17.1+dfsg-1) unstable; urgency=medium
+
+  * [ebd0329] Updated gbp.conf to remove saltstack theme
+  * [ba2cb77] Updated debian/watch to deal with dfsg versions
+  * [091a74a] Imported Upstream version 0.17.1+dfsg
+   * Various security fixes, Closes: 726480
+    * Insufficent Argument Validation CVE-2013-4435
+    * MITM ssh attack in salt-ssh CVE-2013-4436
+    * Insecure Usage of /tmp in salt-ssh CVE-2013-4438
+    * YAML Calling Unsafe Loading Routine CVE-2013-4438
+    * Failure to Validate Minions Posting Data CVE-2013-4439
+  * [47ce833] Removed patches for issues fixed by upstream
+  * [fddc7b5] Added patches for doc theme change and minor fixes
+  * [b146f77] Build man pages
+  * [cd33d3a] Copyright and licence audit, Closes: 725999
+
+ -- Joe Healy <joehealy@gmail.com>  Wed, 23 Oct 2013 00:19:26 +1100
+
+salt (0.17.0-2) unstable; urgency=low
+
+  * [d952c6f] Fix upstream regression: prefer getfqdn call over /etc/hostname
+
+ -- Andriy Senkovych <jolly_roger@itblog.org.ua>  Tue, 08 Oct 2013 14:37:02 +0300
+
+salt (0.17.0-1) unstable; urgency=low
+
+  * [9d6c0ae] Updated watch file to deal with upstream rc file naming
+  * [6861b2f] Imported Upstream version 0.17.0
+  * [19e5529] Addition of salt-ssh and dependency refactor to suit
+  * [0b7af23] Dereference symbolic links for salt-ssh - upstream issue #7480
+
+ -- Joe Healy <joehealy@gmail.com>  Tue, 01 Oct 2013 09:01:10 +1000
+
+salt (0.16.4-2) unstable; urgency=low
+
+  [ Joe Healy ]
+  * Team upload.
+  * [9862171] Reduced priority due to dependency on lower priority packages
+  * [0fab0f8] Revert 70573cb: "Ensure minions procs killed..." Closes: 722446
+
+ -- Joe Healy <joehealy@gmail.com>  Wed, 11 Sep 2013 15:15:52 +1000
+
+salt (0.16.4-1) unstable; urgency=low
+
+  [ Joe Healy ]
+  * Team upload.
+  * [fa55b16] Imported Upstream version 0.16.4
+
+ -- Joe Healy <joehealy@gmail.com>  Sun, 08 Sep 2013 10:47:07 +1000
+
+salt (0.16.3-1) unstable; urgency=low
+
+  [ Joe Healy ]
+  * Team upload.
+  * [911d75a] Overhaul of init.d scripts. Fixes lintian issue and closes: 692066
+  * [77ec715] Imported Upstream version 0.16.3
+  * [ee76ab8] Undo packaging fix upstream issue #6502
+  * [ed508f0] Added lintian override for awkward spacing in man page table
+  * [70573cb] Ensure all minion processes are killed when stopping/restarting
+
+ -- Joe Healy <joehealy@gmail.com>  Thu, 15 Aug 2013 23:06:02 +1000
+
+salt (0.16.2-2) unstable; urgency=low
+
+  [ Joe Healy ]
+  * Team upload.
+  * [5fb2336] Fix upstream issue #6502 "Fix traceback in salt-call --local"
+
+ -- Joe Healy <joehealy@gmail.com>  Sat, 03 Aug 2013 21:29:18 +1000
+
+salt (0.16.2-1) unstable; urgency=low
+
+  [ Joe Healy ]
+  * Team upload.
+  * [526271e] Updated debian/copyright to reflect minor upstream changes
+  * [1f38e01] updated debian/rules to use dh-systemd. Closes: #715249
+  * [21abc2e] Imported Upstream version 0.16.2
+  * [50da5a7] Updated *.service files to get rid of lintian warning.
+
+ -- Joe Healy <joehealy@gmail.com>  Fri, 02 Aug 2013 15:46:10 +1000
+
+salt (0.16.0-1) unstable; urgency=low
+
+  [ Joe Healy ]
+  * Team upload.
+  * [a7fdace] Imported Upstream version 0.16.0. Closes: #712819
+
+ -- Joe Healy <joehealy@gmail.com>  Thu, 04 Jul 2013 10:48:59 +1000
+
+salt (0.15.3-1) unstable; urgency=low
+
+  [ Joe Healy ]
+  * Team upload.
+  * [ad0a089] Imported Upstream version 0.15.3
+  * [99d70ab] Updated to depend on zeromq 3. Closes: #690525
+  * [0aefc36] Added python-git as a recommended package. Closes: #700174
+
+ -- Joe Healy <joehealy@gmail.com>  Mon, 03 Jun 2013 23:47:24 +1000
+
+salt (0.15.1-1) unstable; urgency=high
+
+  [ Joe Healy ]
+  * team upload
+  * [3f2928c] Imported Upstream version 0.15.1
+  * [5d46d17] Imported Upstream version 0.15.0 Closes: #703600
+  * [ee734d5] Added dctrl-tools as a recommendation
+  * [0c3a6e6] Removed unnecessary cleanup step in build process
+  * [552cb80] Updated changelog and NEWS file for 0.15.1
+  * [1d878ca] removed files that should not have been checked in
+
+  [ Ulrich Dangel ]
+  * [e30e35a] Move security notice from salt-common.NEWS to NEWS
+
+ -- Ulrich Dangel <uli@debian.org>  Sun, 19 May 2013 22:46:03 +0100
+
+salt (0.14.1-1) unstable; urgency=low
+
+  [ Joe Healy ]
+  * Imported Upstream version 0.14.1
+
+ -- Joe Healy <joehealy@gmail.com>  Sun, 14 Apr 2013 03:31:37 +0000
+
+salt (0.14.0-1) unstable; urgency=low
+
+  [ Joe Healy ]
+  * team upload
+  * [4234664] Updated debian branch
+  * [a623ed7] Added gitignore file
+  * [f97485a] Imported Upstream version 0.14.0 Closes: #701155
+  * [ee4a462] Updated maintainer and uploaders Closes: #698772
+
+  [ Andriy Senkovych ]
+  * [5752009] Update Vcs-* fields to point to pkg-salt alioth repository.
+  * [6d3bea7] debian/copyright: set versioned copyright format uri
+  * [a282c5f] Remove unnecessary dh_quilt invocations
+  * [64fe85c] Add Andriy Senkovych <jolly_roger@itblog.org.ua> to Uploaders
+
+  [ Ulrich Dangel ]
+  * [aa8f816] Change conflict to breaks and adjust python-mako comparison
+
+ -- Ulrich Dangel <uli@debian.org>  Mon, 08 Apr 2013 21:08:03 +0100
+
+salt (0.12.1-1~bpo60+1~madduck.2) squeeze-backports; urgency=low
+
+  * Add recommendation to python-mako, but conflict with versions before
+    0.7.0, since Salt won't work with the version in squeeze, but needs the
+    backport instead.
+
+ -- martin f. krafft <madduck@debian.org>  Thu, 24 Jan 2013 20:17:21 +1300
+
+salt (0.12.1-1~bpo60+1~madduck.1) squeeze-backports; urgency=low
+
+  * RebuilD for squeeze-backports.
+
+ -- martin f. krafft <madduck@debian.org>  Thu, 24 Jan 2013 16:45:13 +1300
+
+salt (0.12.1-1) unstable; urgency=low
+
+  * [2f34fe9] New upstream version 0.12.1
+  * [f25519b] Refresh version fix
+
+ -- Ulrich Dangel <uli@debian.org>  Tue, 22 Jan 2013 22:05:26 +0000
+
+salt (0.12.0-1) unstable; urgency=low
+
+  * [b6c675e] New upstream version 0.12.0
+  * [bd89271] Import patch to fix version.py
+
+ -- Ulrich Dangel <uli@debian.org>  Sat, 19 Jan 2013 11:26:17 +0000
+
+salt (0.11.1+ds-1) unstable; urgency=low
+
+  * Team upload.
+  * Re-roll a new orig.tar.gz for 0.11.1 that includes all the files with
+    "debian" in their name. Closes: #697747
+  * Update debian/watch to drop the (temporary) +ds suffix
+
+ -- Raphaël Hertzog <hertzog@debian.org>  Wed, 09 Jan 2013 10:41:47 +0100
+
+salt (0.11.1-1) unstable; urgency=low
+
+  * [9dfcb21] Update watch uri as github no longer offers download page
+  * [2aedacf] Don't filter pyc files
+  * [3adc2cf] New upstream version 0.11.1
+  * [281093f] Use default config file from conf directory
+  * [88e0f24] Mention new default file locations
+  * [7ddd3fc] Add bash completion
+
+ -- Ulrich Dangel <uli@debian.org>  Fri, 04 Jan 2013 04:35:59 +0000
+
+salt (0.10.5-1) unstable; urgency=low
+
+  * [f735ab9] Filter pyc files
+  * [62462dd] New upstream version 0.10.5 (Closes: #690481)
+  * [9726d8b] Install empty include dirs for salt-master and salt-minion.
+  * [8705c6e] Build-depend on msgpack-python
+  * [6832d36] Update config file templates
+
+ -- Ulrich Dangel <uli@debian.org>  Mon, 19 Nov 2012 08:34:09 +0000
+
+salt (0.10.4-1) unstable; urgency=low
+
+  * [5431ef2] Imported Upstream version 0.10.4
+  * [bcd48a0] Remove patch 'add_hacking_rst', applied upstream.
+  * [3135d52] Fix salt-master restart (Patch by martin f. krafft)
+    (Closes: #692064)
+  * [15abbbb] Recommend lsb-release. With new upstream code this
+    provides lsb* grains. (Closes: #690700)
+
+ -- Christian Hofstaedtler <christian@hofstaedtler.name>  Sat, 10 Nov 2012 17:57:52 +0100
+
+salt (0.10.2-1~experimental+1) experimental; urgency=low
+
+  * [cf57587] Import upstream version 0.10.2
+  * [1ff7a9f] Add patch to create HACKING.rst
+
+ -- Ulrich Dangel <uli@debian.org>  Sat, 04 Aug 2012 02:57:52 +0200
+
+salt (0.10.1-3) unstable; urgency=low
+
+  * [efbd4a8] Change uploaders email address for Ulrich Dangel
+  * [442ead1] Recommends dmidecode instead of Depend to support non-x86 systems.
+
+ -- Ulrich Dangel <uli@debian.org>  Mon, 30 Jul 2012 12:40:53 +0200
+
+salt (0.10.1-2) unstable; urgency=low
+
+  * [bda6011] Add dmidecode to depends for salt-minion. (Closes: #680410)
+  * [ad4786e] Depend on the same salt version
+  * [671c2c3] Depend on debhelper version fixing #577040
+
+ -- Ulrich Dangel <uli@debian.org>  Mon, 09 Jul 2012 23:15:27 +0200
+
+salt (0.10.1-1) unstable; urgency=low
+
+  [ Ulrich Dangel ]
+  * [f1d627c] Always recreate orig.tar.gz with git-buildpackage
+
+  [ Michael Prokop ]
+  * Merge new upstream release
+  * [ee1806a] Add python-augeas to suggests of salt-minion
+
+ -- Michael Prokop <mika@debian.org>  Fri, 22 Jun 2012 18:56:02 +0200
+
+salt (0.10.0-1) unstable; urgency=low
+
+  [ Ulrich Dangel ]
+  * Merge new upstream release
+  * [bd10385] Change debian/source/format to quilt
+  * [ba60137] Add ignore options
+  * [54e70de] Copy service files from rpm package
+  * [1d21548] Update install files
+  * [c2737c9] Update pyversions file to use 2.6
+  * [573b27a] Update salt-common.install to install complete python
+    package
+  * [9b739f5] Update debian/rules to use python support and update
+    build dependencies
+  * [bf51e1c] Provide pydists-overrides for msgpack-python
+  * [4bbd2bf] Add dependency to python-pkg-resources for
+    salt-{minion,master,syndic}
+  * [ad8f712] Update config files to latest version
+
+  [ Jeroen Dekkers ]
+  * [9ae1aa5] Unapply patches from source
+  * [933c1ee] Add debian/gbp.conf
+  * [be9529b] Add >= 1.0 to python-sphinx build-depend
+
+ -- Michael Prokop <mika@debian.org>  Wed, 20 Jun 2012 22:39:40 +0200
+
+salt (0.9.9-1) unstable; urgency=low
+
+  * Initial release. [Closes: #643789]
+
+ -- Michael Prokop <mika@debian.org>  Thu, 14 Jun 2012 18:39:17 +0200

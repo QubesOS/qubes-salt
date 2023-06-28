@@ -1,0 +1,966 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Thu, 11 Nov 2021 12:23:06 +0100
+Subject: Wrap contributor list in release documentation
+
+The release documentation files contain a list of contributors for the
+release. This list is written in one line and can become very long,
+which makes reading source file uneasy.
+
+So wrap the list of contributions in the release documentation files.
+
+Forwarded: https://github.com/saltstack/salt/pull/61224
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ doc/topics/releases/2014.7.6.rst  |  9 ++++++++-
+ doc/topics/releases/2014.7.7.rst  |  6 +++++-
+ doc/topics/releases/2015.5.1.rst  |  9 ++++++++-
+ doc/topics/releases/2015.5.11.rst |  8 +++++++-
+ doc/topics/releases/2015.5.2.rst  |  8 +++++++-
+ doc/topics/releases/2015.5.3.rst  | 11 ++++++++++-
+ doc/topics/releases/2015.5.4.rst  | 15 ++++++++++++++-
+ doc/topics/releases/2015.5.5.rst  |  5 ++++-
+ doc/topics/releases/2015.5.6.rst  |  9 ++++++++-
+ doc/topics/releases/2015.5.7.rst  |  9 ++++++++-
+ doc/topics/releases/2015.5.8.rst  |  3 ++-
+ doc/topics/releases/2015.5.9.rst  |  5 ++++-
+ doc/topics/releases/2015.8.1.rst  |  8 +++++++-
+ doc/topics/releases/2015.8.11.rst |  9 ++++++++-
+ doc/topics/releases/2015.8.12.rst |  6 +++++-
+ doc/topics/releases/2015.8.2.rst  | 14 +++++++++++++-
+ doc/topics/releases/2015.8.3.rst  |  6 +++++-
+ doc/topics/releases/2015.8.4.rst  | 13 ++++++++++++-
+ doc/topics/releases/2015.8.8.rst  | 12 +++++++++++-
+ doc/topics/releases/2015.8.9.rst  | 12 +++++++++++-
+ doc/topics/releases/2016.11.1.rst |  6 +++++-
+ doc/topics/releases/2016.11.2.rst |  8 +++++++-
+ doc/topics/releases/2016.11.3.rst |  8 +++++++-
+ doc/topics/releases/2016.11.4.rst | 11 ++++++++++-
+ doc/topics/releases/2016.11.5.rst |  6 +++++-
+ doc/topics/releases/2016.11.6.rst |  9 ++++++++-
+ doc/topics/releases/2016.11.8.rst | 11 ++++++++++-
+ doc/topics/releases/2016.11.9.rst | 10 +++++++++-
+ doc/topics/releases/2016.3.1.rst  |  5 ++++-
+ doc/topics/releases/2016.3.2.rst  |  9 ++++++++-
+ doc/topics/releases/2016.3.3.rst  |  7 ++++++-
+ doc/topics/releases/2016.3.4.rst  | 13 ++++++++++++-
+ doc/topics/releases/2016.3.5.rst  | 12 +++++++++++-
+ doc/topics/releases/2016.3.6.rst  |  8 +++++++-
+ doc/topics/releases/2017.7.1.rst  |  3 ++-
+ doc/topics/releases/2017.7.2.rst  |  9 ++++++++-
+ doc/topics/releases/2017.7.3.rst  | 14 +++++++++++++-
+ doc/topics/releases/2017.7.5.rst  |  9 ++++++++-
+ doc/topics/releases/2017.7.6.rst  |  8 +++++++-
+ doc/topics/releases/2017.7.8.rst  |  9 ++++++++-
+ doc/topics/releases/2018.3.1.rst  |  9 ++++++++-
+ doc/topics/releases/2018.3.3.rst  |  9 ++++++++-
+ doc/topics/releases/2018.3.4.rst  | 13 ++++++++++++-
+ doc/topics/releases/2019.2.1.rst  |  9 ++++++++-
+ doc/topics/releases/2019.2.2.rst  |  3 ++-
+ doc/topics/releases/3000.1.rst    |  4 +++-
+ 46 files changed, 353 insertions(+), 46 deletions(-)
+
+diff --git a/doc/topics/releases/2014.7.6.rst b/doc/topics/releases/2014.7.6.rst
+index abbd572..c88e4df 100644
+--- a/doc/topics/releases/2014.7.6.rst
++++ b/doc/topics/releases/2014.7.6.rst
+@@ -13,7 +13,14 @@ Statistics
+ - Total Issue References: **66**
+ - Total PR References: **166**
+ 
+-- Contributors: **49** (`0xf10e`_, `Azidburn`_, `F30`_, `JaseFace`_, `JohannesEbke`_, `aletourneau`_, `aneeshusa`_, `basepi`_, `bastichelaar`_, `bersace`_, `cachedout`_, `cedwards`_, `cellscape`_, `chris-prince`_, `clan`_, `clinta`_, `cr1st1p`_, `cro`_, `dr4Ke`_, `ericfode`_, `ether42`_, `garethgreenaway`_, `gtmanfred`_, `hvnsweeting`_, `jfindlay`_, `jleroy`_, `joejulian`_, `justinta`_, `kaithar`_, `lorengordon`_, `martinhoefling`_, `mguegan`_, `multani`_, `notpeter`_, `panticz`_, `rallytime`_, `rominf`_, `rubic`_, `s0undt3ch`_, `skizunov`_, `slinu3d`_, `t0rrant`_, `techhat`_, `teizz`_, `terminalmage`_, `thatch45`_, `twangboy`_, `vdesjardins`_, `vr-jack`_)
++- Contributors: **49** (`0xf10e`_, `Azidburn`_, `F30`_, `JaseFace`_, `JohannesEbke`_,
++  `aletourneau`_, `aneeshusa`_, `basepi`_, `bastichelaar`_, `bersace`_, `cachedout`_, `cedwards`_,
++  `cellscape`_, `chris-prince`_, `clan`_, `clinta`_, `cr1st1p`_, `cro`_, `dr4Ke`_, `ericfode`_,
++  `ether42`_, `garethgreenaway`_, `gtmanfred`_, `hvnsweeting`_, `jfindlay`_, `jleroy`_,
++  `joejulian`_, `justinta`_, `kaithar`_, `lorengordon`_, `martinhoefling`_, `mguegan`_, `multani`_,
++  `notpeter`_, `panticz`_, `rallytime`_, `rominf`_, `rubic`_, `s0undt3ch`_, `skizunov`_,
++  `slinu3d`_, `t0rrant`_, `techhat`_, `teizz`_, `terminalmage`_, `thatch45`_, `twangboy`_,
++  `vdesjardins`_, `vr-jack`_)
+ 
+ 
+ Security Fix
+diff --git a/doc/topics/releases/2014.7.7.rst b/doc/topics/releases/2014.7.7.rst
+index 481852d..ffb957c 100644
+--- a/doc/topics/releases/2014.7.7.rst
++++ b/doc/topics/releases/2014.7.7.rst
+@@ -13,7 +13,11 @@ Statistics
+ - Total Issue References: **20**
+ - Total PR References: **60**
+ 
+-- Contributors: **28** (`AkhterAli`_, `BretFisher`_, `MrCitron`_, `alekti`_, `basepi`_, `bersace`_, `cachedout`_, `corux`_, `cro`_, `davidjb`_, `dumol`_, `efficks`_, `garethgreenaway`_, `hvnsweeting`_, `jacksontj`_, `jacobhammons`_, `jaybocc2`_, `jfindlay`_, `jquast`_, `justinta`_, `msteed`_, `nmadhok`_, `notpeter`_, `puneetk`_, `rallytime`_, `techhat`_, `trevor-h`_, `twangboy`_)
++- Contributors: **28** (`AkhterAli`_, `BretFisher`_, `MrCitron`_, `alekti`_, `basepi`_, `bersace`_,
++  `cachedout`_, `corux`_, `cro`_, `davidjb`_, `dumol`_, `efficks`_, `garethgreenaway`_,
++  `hvnsweeting`_, `jacksontj`_, `jacobhammons`_, `jaybocc2`_, `jfindlay`_, `jquast`_, `justinta`_,
++  `msteed`_, `nmadhok`_, `notpeter`_, `puneetk`_, `rallytime`_, `techhat`_, `trevor-h`_,
++  `twangboy`_)
+ 
+ 
+ Changelog for v2014.7.6..v2014.7.7
+diff --git a/doc/topics/releases/2015.5.1.rst b/doc/topics/releases/2015.5.1.rst
+index 7728cb4..7391a81 100644
+--- a/doc/topics/releases/2015.5.1.rst
++++ b/doc/topics/releases/2015.5.1.rst
+@@ -14,7 +14,14 @@ Statistics
+ - Total Issue References: **30**
+ - Total PR References: **177**
+ 
+-- Contributors: **49** (`Arabus`_, `Lothiraldan`_, `Snergster`_, `TaiSHiNet`_, `The-Loeki`_, `UtahDave`_, `aboe76`_, `ahus1`_, `basepi`_, `bastiaanb`_, `bradthurber`_, `cachedout`_, `cellscape`_, `corywright`_, `cro`_, `dennisjac`_, `dmyerscough`_, `galet`_, `garethgreenaway`_, `gladiatr72`_, `gtmanfred`_, `iggy`_, `ionutbalutoiu`_, `jacobhammons`_, `jayeshka`_, `jfindlay`_, `joejulian`_, `jpic`_, `justinta`_, `kaidokert`_, `kaithar`_, `kiorky`_, `lisa2lisa`_, `msciciel`_, `nleib`_, `notpeter`_, `optix2000`_, `rahulhan`_, `rallytime`_, `rubic`_, `ryan-lane`_, `s0undt3ch`_, `slinu3d`_, `steverweber`_, `techhat`_, `terminalmage`_, `ticosax`_, `twangboy`_, `whiteinge`_)
++- Contributors: **49** (`Arabus`_, `Lothiraldan`_, `Snergster`_, `TaiSHiNet`_, `The-Loeki`_,
++  `UtahDave`_, `aboe76`_, `ahus1`_, `basepi`_, `bastiaanb`_, `bradthurber`_, `cachedout`_,
++  `cellscape`_, `corywright`_, `cro`_, `dennisjac`_, `dmyerscough`_, `galet`_, `garethgreenaway`_,
++  `gladiatr72`_, `gtmanfred`_, `iggy`_, `ionutbalutoiu`_, `jacobhammons`_, `jayeshka`_,
++  `jfindlay`_, `joejulian`_, `jpic`_, `justinta`_, `kaidokert`_, `kaithar`_, `kiorky`_,
++  `lisa2lisa`_, `msciciel`_, `nleib`_, `notpeter`_, `optix2000`_, `rahulhan`_, `rallytime`_,
++  `rubic`_, `ryan-lane`_, `s0undt3ch`_, `slinu3d`_, `steverweber`_, `techhat`_, `terminalmage`_,
++  `ticosax`_, `twangboy`_, `whiteinge`_)
+ 
+ 
+ Cloud Runner Changes
+diff --git a/doc/topics/releases/2015.5.11.rst b/doc/topics/releases/2015.5.11.rst
+index 6d53f0d..0c1c9f3 100644
+--- a/doc/topics/releases/2015.5.11.rst
++++ b/doc/topics/releases/2015.5.11.rst
+@@ -14,7 +14,13 @@ Statistics
+ - Total Issue References: **73**
+ - Total PR References: **162**
+ 
+-- Contributors: **46** (`AndrewPashkin`_, `Ch3LL`_, `DmitryKuzmenko`_, `TheNullByte`_, `UtahDave`_, `abednarik`_, `amontalban`_, `anlutro`_, `attiasr`_, `basepi`_, `borgstrom`_, `brejoc`_, `bstevenson`_, `cachedout`_, `carlwgeorge`_, `efficks`_, `gerhardqux`_, `gtmanfred`_, `heyfife`_, `jacobhammons`_, `jfindlay`_, `justinta`_, `lomeroe`_, `lorengordon`_, `mtorromeo`_, `nmadhok`_, `notpeter`_, `paclat`_, `pcn`_, `phistrom`_, `rallytime`_, `robgott`_, `sacren`_, `sastorsl`_, `serge-p`_, `sjmh`_, `sjorge`_, `techhat`_, `terminalmage`_, `thatch45`_, `thegoodduke`_, `toanju`_, `tomwalsh`_, `twangboy`_, `whiteinge`_, `yannis666`_)
++- Contributors: **46** (`AndrewPashkin`_, `Ch3LL`_, `DmitryKuzmenko`_, `TheNullByte`_, `UtahDave`_,
++  `abednarik`_, `amontalban`_, `anlutro`_, `attiasr`_, `basepi`_, `borgstrom`_, `brejoc`_,
++  `bstevenson`_, `cachedout`_, `carlwgeorge`_, `efficks`_, `gerhardqux`_, `gtmanfred`_, `heyfife`_,
++  `jacobhammons`_, `jfindlay`_, `justinta`_, `lomeroe`_, `lorengordon`_, `mtorromeo`_, `nmadhok`_,
++  `notpeter`_, `paclat`_, `pcn`_, `phistrom`_, `rallytime`_, `robgott`_, `sacren`_, `sastorsl`_,
++  `serge-p`_, `sjmh`_, `sjorge`_, `techhat`_, `terminalmage`_, `thatch45`_, `thegoodduke`_,
++  `toanju`_, `tomwalsh`_, `twangboy`_, `whiteinge`_, `yannis666`_)
+ 
+ 
+ Changelog for v2015.5.10..v2015.5.11
+diff --git a/doc/topics/releases/2015.5.2.rst b/doc/topics/releases/2015.5.2.rst
+index b94380a..48851e7 100644
+--- a/doc/topics/releases/2015.5.2.rst
++++ b/doc/topics/releases/2015.5.2.rst
+@@ -14,7 +14,13 @@ Statistics
+ - Total Issue References: **36**
+ - Total PR References: **145**
+ 
+-- Contributors: **49** (`Sacro`_, `The-Loeki`_, `YanChii`_, `aboe76`_, `anlutro`_, `awdrius`_, `basepi`_, `cdarwin`_, `cedwards`_, `clan`_, `corywright`_, `cro`_, `djcrabhat`_, `dmyerscough`_, `dr4Ke`_, `fayetted`_, `galet`_, `garethgreenaway`_, `ghost`_, `hazelesque`_, `hvnsweeting`_, `jacksontj`_, `jacobhammons`_, `jayeshka`_, `jbq`_, `jfindlay`_, `joejulian`_, `justinta`_, `kartiksubbarao`_, `kiorky`_, `merll`_, `msteed`_, `neogenix`_, `nicholascapo`_, `nleib`_, `pengyao`_, `pruiz`_, `rallytime`_, `randybias`_, `ryan-lane`_, `steverweber`_, `swdream`_, `techhat`_, `terminalmage`_, `thcipriani`_, `thusoy`_, `trevor-h`_, `twangboy`_, `whiteinge`_)
++- Contributors: **49** (`Sacro`_, `The-Loeki`_, `YanChii`_, `aboe76`_, `anlutro`_, `awdrius`_,
++  `basepi`_, `cdarwin`_, `cedwards`_, `clan`_, `corywright`_, `cro`_, `djcrabhat`_, `dmyerscough`_,
++  `dr4Ke`_, `fayetted`_, `galet`_, `garethgreenaway`_, `ghost`_, `hazelesque`_, `hvnsweeting`_,
++  `jacksontj`_, `jacobhammons`_, `jayeshka`_, `jbq`_, `jfindlay`_, `joejulian`_, `justinta`_,
++  `kartiksubbarao`_, `kiorky`_, `merll`_, `msteed`_, `neogenix`_, `nicholascapo`_, `nleib`_,
++  `pengyao`_, `pruiz`_, `rallytime`_, `randybias`_, `ryan-lane`_, `steverweber`_, `swdream`_,
++  `techhat`_, `terminalmage`_, `thcipriani`_, `thusoy`_, `trevor-h`_, `twangboy`_, `whiteinge`_)
+ 
+ 
+ Changelog for v2015.5.1..v2015.5.2
+diff --git a/doc/topics/releases/2015.5.3.rst b/doc/topics/releases/2015.5.3.rst
+index 05eb41c..dd7c847 100644
+--- a/doc/topics/releases/2015.5.3.rst
++++ b/doc/topics/releases/2015.5.3.rst
+@@ -14,7 +14,16 @@ Statistics
+ - Total Issue References: **69**
+ - Total PR References: **207**
+ 
+-- Contributors: **62** (`CameronNemo`_, `Lanzaa`_, `Starblade42`_, `The-Loeki`_, `TheScriptSage`_, `aboe76`_, `ahus1`_, `aneeshusa`_, `anlutro`_, `arthurlogilab`_, `basepi`_, `borutmrak`_, `cachedout`_, `cgtx`_, `codertux`_, `cro`_, `dkiser`_, `driskell`_, `eliasp`_, `garethgreenaway`_, `grischa`_, `gthb`_, `heewa`_, `infestdead`_, `jacksontj`_, `jacobhammons`_, `jayeshka`_, `jeanpralo`_, `jfindlay`_, `jodv`_, `joejulian`_, `justinta`_, `kartiksubbarao`_, `kev009`_, `kiorky`_, `lorengordon`_, `msciciel`_, `msteed`_, `nmadhok`_, `notpeter`_, `obestwalter`_, `pengyao`_, `pille`_, `porterjamesj`_, `pruiz`_, `quixoten`_, `rallytime`_, `rhertzog`_, `ruzarowski`_, `ryan-lane`_, `steverweber`_, `tankywoo`_, `tbaker57`_, `techhat`_, `terminalmage`_, `thatch45`_, `thenewwazoo`_, `trevor-h`_, `twangboy`_, `variia`_, `zefrog`_, `zhujinhe`_)
++- Contributors: **62** (`CameronNemo`_, `Lanzaa`_, `Starblade42`_, `The-Loeki`_, `TheScriptSage`_,
++  `aboe76`_, `ahus1`_, `aneeshusa`_, `anlutro`_, `arthurlogilab`_, `basepi`_, `borutmrak`_,
++  `cachedout`_, `cgtx`_, `codertux`_, `cro`_, `dkiser`_, `driskell`_, `eliasp`_,
++  `garethgreenaway`_, `grischa`_, `gthb`_, `heewa`_, `infestdead`_, `jacksontj`_, `jacobhammons`_,
++  `jayeshka`_, `jeanpralo`_, `jfindlay`_, `jodv`_, `joejulian`_, `justinta`_, `kartiksubbarao`_,
++  `kev009`_, `kiorky`_, `lorengordon`_, `msciciel`_, `msteed`_, `nmadhok`_, `notpeter`_,
++  `obestwalter`_, `pengyao`_, `pille`_, `porterjamesj`_, `pruiz`_, `quixoten`_, `rallytime`_,
++  `rhertzog`_, `ruzarowski`_, `ryan-lane`_, `steverweber`_, `tankywoo`_, `tbaker57`_, `techhat`_,
++  `terminalmage`_, `thatch45`_, `thenewwazoo`_, `trevor-h`_, `twangboy`_, `variia`_, `zefrog`_,
++  `zhujinhe`_)
+ 
+ 
+ Changelog for v2015.5.2..v2015.5.3
+diff --git a/doc/topics/releases/2015.5.4.rst b/doc/topics/releases/2015.5.4.rst
+index 69e2ca9..c9ad7db 100644
+--- a/doc/topics/releases/2015.5.4.rst
++++ b/doc/topics/releases/2015.5.4.rst
+@@ -14,7 +14,20 @@ Statistics
+ - Total Issue References: **138**
+ - Total PR References: **312**
+ 
+-- Contributors: **92** (`0xf10e`_, `AkhterAli`_, `BretFisher`_, `DmitryKuzmenko`_, `EvaSDK`_, `GideonRed-zz`_, `JohannesEbke`_, `Oro`_, `TheBigBear`_, `TronPaul`_, `UtahDave`_, `ahus1`_, `alekti`_, `alexandrsushko`_, `amontalban`_, `andre-luiz-dos-santos`_, `aneeshusa`_, `anlutro`_, `asyncsrc`_, `attiasr`_, `babilen`_, `basepi`_, `bbinet`_, `bclermont`_, `bechtoldt`_, `blackduckx`_, `bobrik`_, `cachedout`_, `colekowalski`_, `cro`_, `d--j`_, `davidjb`_, `denmat`_, `derBroBro`_, `dkiser`_, `driskell`_, `egarbi`_, `fleaflicker`_, `garethgreenaway`_, `gmcwhistler`_, `gtmanfred`_, `hasues`_, `isbm`_, `jacksontj`_, `jacobhammons`_, `jahamn`_, `jarpy`_, `jasonkeene`_, `jayeshka`_, `jfindlay`_, `jleroy`_, `jmdcal`_, `jodv`_, `joejulian`_, `jquast`_, `justinta`_, `kev009`_, `klyr`_, `l2ol33rt`_, `loa`_, `lomeroe`_, `martinhoefling`_, `mgwilliams`_, `nicholascapo`_, `niq000`_, `nmadhok`_, `nyushi`_, `oeuftete`_, `opdude`_, `pcdummy`_, `pcn`_, `peterdemin`_, `puneetk`_, `rallytime`_, `rmatulat`_, `s0undt3ch`_, `silenius`_, `sjorge`_, `stanislavb`_, `steverweber`_, `supertom`_, `t0rrant`_, `tankywoo`_, `techhat`_, `terminalmage`_, `thatch45`_, `tony-cocco`_, `twangboy`_, `uvsmtid`_, `vr-jack`_, `yanatan16`_, `zyio`_)
++- Contributors: **92** (`0xf10e`_, `AkhterAli`_, `BretFisher`_, `DmitryKuzmenko`_, `EvaSDK`_,
++  `GideonRed-zz`_, `JohannesEbke`_, `Oro`_, `TheBigBear`_, `TronPaul`_, `UtahDave`_, `ahus1`_,
++  `alekti`_, `alexandrsushko`_, `amontalban`_, `andre-luiz-dos-santos`_, `aneeshusa`_, `anlutro`_,
++  `asyncsrc`_, `attiasr`_, `babilen`_, `basepi`_, `bbinet`_, `bclermont`_, `bechtoldt`_,
++  `blackduckx`_, `bobrik`_, `cachedout`_, `colekowalski`_, `cro`_, `d--j`_, `davidjb`_, `denmat`_,
++  `derBroBro`_, `dkiser`_, `driskell`_, `egarbi`_, `fleaflicker`_, `garethgreenaway`_,
++  `gmcwhistler`_, `gtmanfred`_, `hasues`_, `isbm`_, `jacksontj`_, `jacobhammons`_, `jahamn`_,
++  `jarpy`_, `jasonkeene`_, `jayeshka`_, `jfindlay`_, `jleroy`_, `jmdcal`_, `jodv`_, `joejulian`_,
++  `jquast`_, `justinta`_, `kev009`_, `klyr`_, `l2ol33rt`_, `loa`_, `lomeroe`_, `martinhoefling`_,
++  `mgwilliams`_, `nicholascapo`_, `niq000`_, `nmadhok`_, `nyushi`_, `oeuftete`_, `opdude`_,
++  `pcdummy`_, `pcn`_, `peterdemin`_, `puneetk`_, `rallytime`_, `rmatulat`_, `s0undt3ch`_,
++  `silenius`_, `sjorge`_, `stanislavb`_, `steverweber`_, `supertom`_, `t0rrant`_, `tankywoo`_,
++  `techhat`_, `terminalmage`_, `thatch45`_, `tony-cocco`_, `twangboy`_, `uvsmtid`_, `vr-jack`_,
++  `yanatan16`_, `zyio`_)
+ 
+ 
+ Bug Fixes
+diff --git a/doc/topics/releases/2015.5.5.rst b/doc/topics/releases/2015.5.5.rst
+index beffe4e..9a18a6a 100644
+--- a/doc/topics/releases/2015.5.5.rst
++++ b/doc/topics/releases/2015.5.5.rst
+@@ -14,7 +14,10 @@ Statistics
+ - Total Issue References: **28**
+ - Total PR References: **39**
+ 
+-- Contributors: **20** (`TheBigBear`_, `arthurlogilab`_, `basepi`_, `bastiaanb`_, `cachedout`_, `driskell`_, `garethgreenaway`_, `jacobhammons`_, `jahamn`_, `jfindlay`_, `rallytime`_, `s0undt3ch`_, `scottjpack`_, `silenius`_, `sixninetynine`_, `stanislavb`_, `terminalmage`_, `thusoy`_, `twangboy`_, `vr-jack`_)
++- Contributors: **20** (`TheBigBear`_, `arthurlogilab`_, `basepi`_, `bastiaanb`_, `cachedout`_,
++  `driskell`_, `garethgreenaway`_, `jacobhammons`_, `jahamn`_, `jfindlay`_, `rallytime`_,
++  `s0undt3ch`_, `scottjpack`_, `silenius`_, `sixninetynine`_, `stanislavb`_, `terminalmage`_,
++  `thusoy`_, `twangboy`_, `vr-jack`_)
+ 
+ 
+ Changelog for v2015.5.4..v2015.5.5
+diff --git a/doc/topics/releases/2015.5.6.rst b/doc/topics/releases/2015.5.6.rst
+index 582a2e8..792ddac 100644
+--- a/doc/topics/releases/2015.5.6.rst
++++ b/doc/topics/releases/2015.5.6.rst
+@@ -14,7 +14,14 @@ Statistics
+ - Total Issue References: **71**
+ - Total PR References: **178**
+ 
+-- Contributors: **53** (`Arabus`_, `JensRantil`_, `PierreR`_, `SaltyCharles`_, `TheBigBear`_, `abh`_, `aboe76`_, `anlutro`_, `arthurlogilab`_, `aspyatkin`_, `basepi`_, `benhosmer`_, `bersace`_, `cachedout`_, `carlpett`_, `damonzheng`_, `derphilipp`_, `dmyerscough`_, `dsumsky`_, `efficks`_, `eguven`_, `garethgreenaway`_, `hexedpackets`_, `jacksontj`_, `jacobhammons`_, `jfindlay`_, `joejulian`_, `johanek`_, `julianbrost`_, `kev009`_, `lorengordon`_, `madprog`_, `marccardinal`_, `netroby`_, `nmadhok`_, `plastikos`_, `rallytime`_, `serge-p`_, `spudfkc`_, `stanislavb`_, `styro`_, `systembell`_, `tankywoo`_, `techhat`_, `terminalmage`_, `thatch45`_, `tjstansell`_, `twangboy`_, `vakulich`_, `vtek21`_, `whiteinge`_, `zmalone`_, `zyio`_)
++- Contributors: **53** (`Arabus`_, `JensRantil`_, `PierreR`_, `SaltyCharles`_, `TheBigBear`_,
++  `abh`_, `aboe76`_, `anlutro`_, `arthurlogilab`_, `aspyatkin`_, `basepi`_, `benhosmer`_,
++  `bersace`_, `cachedout`_, `carlpett`_, `damonzheng`_, `derphilipp`_, `dmyerscough`_, `dsumsky`_,
++  `efficks`_, `eguven`_, `garethgreenaway`_, `hexedpackets`_, `jacksontj`_, `jacobhammons`_,
++  `jfindlay`_, `joejulian`_, `johanek`_, `julianbrost`_, `kev009`_, `lorengordon`_, `madprog`_,
++  `marccardinal`_, `netroby`_, `nmadhok`_, `plastikos`_, `rallytime`_, `serge-p`_, `spudfkc`_,
++  `stanislavb`_, `styro`_, `systembell`_, `tankywoo`_, `techhat`_, `terminalmage`_, `thatch45`_,
++  `tjstansell`_, `twangboy`_, `vakulich`_, `vtek21`_, `whiteinge`_, `zmalone`_, `zyio`_)
+ 
+ 
+ Security Fixes
+diff --git a/doc/topics/releases/2015.5.7.rst b/doc/topics/releases/2015.5.7.rst
+index 26bc574..f5a248a 100644
+--- a/doc/topics/releases/2015.5.7.rst
++++ b/doc/topics/releases/2015.5.7.rst
+@@ -14,7 +14,14 @@ Statistics
+ - Total Issue References: **66**
+ - Total PR References: **135**
+ 
+-- Contributors: **46** (`0xf10e`_, `JaseFace`_, `MasterNayru`_, `MrCitron`_, `Sacro`_, `ajacoutot`_, `arthurlogilab`_, `basepi`_, `belvedere-trading`_, `beverlcl`_, `blast-hardcheese`_, `blueyed`_, `bogdanr`_, `cachedout`_, `cbuechler`_, `chrigl`_, `dmyerscough`_, `eguven`_, `eliasp`_, `erchn`_, `eyj`_, `garethgreenaway`_, `gashev`_, `gnubyexample`_, `gracinet`_, `gravyboat`_, `gwaters`_, `hedinfaok`_, `iggy`_, `jacksontj`_, `jacobhammons`_, `jfindlay`_, `lorengordon`_, `mbologna`_, `msciciel`_, `nmadhok`_, `pass-by-value`_, `plastikos`_, `rallytime`_, `rominf`_, `s0undt3ch`_, `silenius`_, `sjmh`_, `stephen144`_, `terminalmage`_, `twangboy`_)
++- Contributors: **46** (`0xf10e`_, `JaseFace`_, `MasterNayru`_, `MrCitron`_, `Sacro`_,
++  `ajacoutot`_, `arthurlogilab`_, `basepi`_, `belvedere-trading`_, `beverlcl`_,
++  `blast-hardcheese`_, `blueyed`_, `bogdanr`_, `cachedout`_, `cbuechler`_, `chrigl`_,
++  `dmyerscough`_, `eguven`_, `eliasp`_, `erchn`_, `eyj`_, `garethgreenaway`_, `gashev`_,
++  `gnubyexample`_, `gracinet`_, `gravyboat`_, `gwaters`_, `hedinfaok`_, `iggy`_, `jacksontj`_,
++  `jacobhammons`_, `jfindlay`_, `lorengordon`_, `mbologna`_, `msciciel`_, `nmadhok`_,
++  `pass-by-value`_, `plastikos`_, `rallytime`_, `rominf`_, `s0undt3ch`_, `silenius`_, `sjmh`_,
++  `stephen144`_, `terminalmage`_, `twangboy`_)
+ 
+ 
+ .. important::
+diff --git a/doc/topics/releases/2015.5.8.rst b/doc/topics/releases/2015.5.8.rst
+index d4b6a69..02aa39a 100644
+--- a/doc/topics/releases/2015.5.8.rst
++++ b/doc/topics/releases/2015.5.8.rst
+@@ -16,7 +16,8 @@ Statistics
+ - Total Issue References: **12**
+ - Total PR References: **27**
+ 
+-- Contributors: **12** (`MasterNayru`_, `TronPaul`_, `basepi`_, `cachedout`_, `cxmcc`_, `jfindlay`_, `kevinlondon`_, `messa`_, `rallytime`_, `tehmaspc`_, `twangboy`_, `whiteinge`_)
++- Contributors: **12** (`MasterNayru`_, `TronPaul`_, `basepi`_, `cachedout`_, `cxmcc`_,
++  `jfindlay`_, `kevinlondon`_, `messa`_, `rallytime`_, `tehmaspc`_, `twangboy`_, `whiteinge`_)
+ 
+ 
+ Security Fix
+diff --git a/doc/topics/releases/2015.5.9.rst b/doc/topics/releases/2015.5.9.rst
+index f2cacd0..b1828bd 100644
+--- a/doc/topics/releases/2015.5.9.rst
++++ b/doc/topics/releases/2015.5.9.rst
+@@ -14,7 +14,10 @@ Statistics
+ - Total Issue References: **21**
+ - Total PR References: **48**
+ 
+-- Contributors: **21** (`abednarik`_, `aletourneau`_, `attiasr`_, `basepi`_, `cachedout`_, `clan`_, `clarkperkins`_, `cro`_, `dmyerscough`_, `jacobhammons`_, `jfindlay`_, `jsutton`_, `justinta`_, `lorengordon`_, `markckimball`_, `mpreziuso`_, `rallytime`_, `terminalmage`_, `titilambert`_, `twangboy`_, `zmalone`_)
++- Contributors: **21** (`abednarik`_, `aletourneau`_, `attiasr`_, `basepi`_, `cachedout`_, `clan`_,
++  `clarkperkins`_, `cro`_, `dmyerscough`_, `jacobhammons`_, `jfindlay`_, `jsutton`_, `justinta`_,
++  `lorengordon`_, `markckimball`_, `mpreziuso`_, `rallytime`_, `terminalmage`_, `titilambert`_,
++  `twangboy`_, `zmalone`_)
+ 
+ 
+ Changelog for v2015.5.8..v2015.5.9
+diff --git a/doc/topics/releases/2015.8.1.rst b/doc/topics/releases/2015.8.1.rst
+index eb125aa..4b75c0a 100644
+--- a/doc/topics/releases/2015.8.1.rst
++++ b/doc/topics/releases/2015.8.1.rst
+@@ -12,7 +12,13 @@ Statistics
+ - Total Issue References: **39**
+ - Total PR References: **135**
+ 
+-- Contributors: **40** (`DmitryKuzmenko`_, `The-Loeki`_, `TheBigBear`_, `basepi`_, `bechtoldt`_, `bernieke`_, `blueyed`_, `cachedout`_, `cedwards`_, `clinta`_, `cro`_, `deuscapturus`_, `dmurphy18`_, `dsumsky`_, `eliasp`_, `flowhamster`_, `isbm`_, `jacksontj`_, `jacobhammons`_, `jfindlay`_, `justinta`_, `l2ol33rt`_, `macgyver13`_, `meggiebot`_, `msteed`_, `multani`_, `nasenbaer13`_, `perfinion`_, `pprkut`_, `rallytime`_, `rhealitycheck`_, `ruzarowski`_, `ryan-lane`_, `s0undt3ch`_, `systembell`_, `techhat`_, `terminalmage`_, `ticosax`_, `twangboy`_, `whiteinge`_)
++- Contributors: **40** (`DmitryKuzmenko`_, `The-Loeki`_, `TheBigBear`_, `basepi`_, `bechtoldt`_,
++  `bernieke`_, `blueyed`_, `cachedout`_, `cedwards`_, `clinta`_, `cro`_, `deuscapturus`_,
++  `dmurphy18`_, `dsumsky`_, `eliasp`_, `flowhamster`_, `isbm`_, `jacksontj`_, `jacobhammons`_,
++  `jfindlay`_, `justinta`_, `l2ol33rt`_, `macgyver13`_, `meggiebot`_, `msteed`_, `multani`_,
++  `nasenbaer13`_, `perfinion`_, `pprkut`_, `rallytime`_, `rhealitycheck`_, `ruzarowski`_,
++  `ryan-lane`_, `s0undt3ch`_, `systembell`_, `techhat`_, `terminalmage`_, `ticosax`_, `twangboy`_,
++  `whiteinge`_)
+ 
+ 
+ Security Fixes
+diff --git a/doc/topics/releases/2015.8.11.rst b/doc/topics/releases/2015.8.11.rst
+index 8847cc4..f91b658 100644
+--- a/doc/topics/releases/2015.8.11.rst
++++ b/doc/topics/releases/2015.8.11.rst
+@@ -12,7 +12,14 @@ Statistics
+ - Total Issue References: **70**
+ - Total PR References: **221**
+ 
+-- Contributors: **48** (`AAbouZaid`_, `BlaineAtAffirm`_, `DmitryKuzmenko`_, `The-Loeki`_, `abednarik`_, `babilen`_, `bebehei`_, `cachedout`_, `clinta`_, `complexsplit`_, `cro`_, `danslimmon`_, `dcolish`_, `dincamihai`_, `edgan`_, `gerhardqux`_, `ghedo`_, `isbm`_, `jacobhammons`_, `jfindlay`_, `jodv`_, `justinta`_, `l13t`_, `lomeroe`_, `lorengordon`_, `lvg01`_, `mcalmer`_, `meaksh`_, `morganwillcock`_, `oeuftete`_, `opdude`_, `phistrom`_, `rallytime`_, `rmarcinik`_, `ryan-lane`_, `sacren`_, `steverweber`_, `techhat`_, `tegbert`_, `terminalmage`_, `thatch45`_, `the-glu`_, `thegoodduke`_, `ticosax`_, `tveastman`_, `twangboy`_, `vutny`_, `zer0def`_)
++- Contributors: **48** (`AAbouZaid`_, `BlaineAtAffirm`_, `DmitryKuzmenko`_, `The-Loeki`_,
++  `abednarik`_, `babilen`_, `bebehei`_, `cachedout`_, `clinta`_, `complexsplit`_, `cro`_,
++  `danslimmon`_, `dcolish`_, `dincamihai`_, `edgan`_, `gerhardqux`_, `ghedo`_, `isbm`_,
++  `jacobhammons`_, `jfindlay`_, `jodv`_, `justinta`_, `l13t`_, `lomeroe`_, `lorengordon`_,
++  `lvg01`_, `mcalmer`_, `meaksh`_, `morganwillcock`_, `oeuftete`_, `opdude`_, `phistrom`_,
++  `rallytime`_, `rmarcinik`_, `ryan-lane`_, `sacren`_, `steverweber`_, `techhat`_, `tegbert`_,
++  `terminalmage`_, `thatch45`_, `the-glu`_, `thegoodduke`_, `ticosax`_, `tveastman`_, `twangboy`_,
++  `vutny`_, `zer0def`_)
+ 
+ 
+ Ubuntu 16.04 Packages
+diff --git a/doc/topics/releases/2015.8.12.rst b/doc/topics/releases/2015.8.12.rst
+index 585b936..fcafc02 100644
+--- a/doc/topics/releases/2015.8.12.rst
++++ b/doc/topics/releases/2015.8.12.rst
+@@ -12,7 +12,11 @@ Statistics
+ - Total Issue References: **43**
+ - Total PR References: **117**
+ 
+-- Contributors: **29** (`Azidburn`_, `Ch3LL`_, `UtahDave`_, `bobrik`_, `cachedout`_, `cedwards`_, `deepakhj`_, `dere`_, `gongled`_, `gtmanfred`_, `hrumph`_, `hu-dabao`_, `isbm`_, `jacobhammons`_, `jfindlay`_, `jmesquita`_, `junovitch`_, `justinta`_, `kev009`_, `martinhoefling`_, `multani`_, `rallytime`_, `randomed`_, `sjorge`_, `terminalmage`_, `thatch45`_, `theothergraham`_, `twangboy`_, `whiteinge`_)
++- Contributors: **29** (`Azidburn`_, `Ch3LL`_, `UtahDave`_, `bobrik`_, `cachedout`_, `cedwards`_,
++  `deepakhj`_, `dere`_, `gongled`_, `gtmanfred`_, `hrumph`_, `hu-dabao`_, `isbm`_, `jacobhammons`_,
++  `jfindlay`_, `jmesquita`_, `junovitch`_, `justinta`_, `kev009`_, `martinhoefling`_, `multani`_,
++  `rallytime`_, `randomed`_, `sjorge`_, `terminalmage`_, `thatch45`_, `theothergraham`_,
++  `twangboy`_, `whiteinge`_)
+ 
+ 
+ Changelog for v2015.8.11..v2015.8.12
+diff --git a/doc/topics/releases/2015.8.2.rst b/doc/topics/releases/2015.8.2.rst
+index a849c9b..1a2a915 100644
+--- a/doc/topics/releases/2015.8.2.rst
++++ b/doc/topics/releases/2015.8.2.rst
+@@ -12,7 +12,19 @@ Statistics
+ - Total Issue References: **138**
+ - Total PR References: **351**
+ 
+-- Contributors: **83** (`DmitryKuzmenko`_, `JaseFace`_, `LoveIsGrief`_, `MasterNayru`_, `Oro`_, `SmithSamuelM`_, `The-Loeki`_, `TheBigBear`_, `aboe76`_, `ajacoutot`_, `anlutro`_, `avinassh`_, `basepi`_, `bdrung`_, `bechtoldt`_, `bernieke`_, `blueyed`_, `cachedout`_, `cbuechler`_, `cedwards`_, `clarkperkins`_, `cro`_, `dkiser`_, `douglas-vaz`_, `dr4Ke`_, `eguven`_, `eliasp`_, `erchn`_, `eyj`_, `favadi`_, `flavio`_, `garethgreenaway`_, `gravyboat`_, `gtmanfred`_, `hedinfaok`_, `hexedpackets`_, `hyn-salt`_, `isbm`_, `itsamenathan`_, `jacksontj`_, `jacobhammons`_, `jeffreyctang`_, `jejenone`_, `jfindlay`_, `johnsocp`_, `justinta`_, `keesbos`_, `lathama`_, `ldobson`_, `lomeroe`_, `martinhoefling`_, `mbarrien`_, `mbologna`_, `merll`_, `mrosedale`_, `msteed`_, `multani`_, `nasenbaer13`_, `nmadhok`_, `notpeter`_, `opdude`_, `papertigers`_, `pass-by-value`_, `plastikos`_, `quantonganh`_, `rallytime`_, `redmcg`_, `rowillia`_, `ruzarowski`_, `ryan-lane`_, `s0undt3ch`_, `sdm24`_, `sjansen`_, `skizunov`_, `srkunze`_, `techhat`_, `terminalmage`_, `ticosax`_, `tkwilliams`_, `toddtomkinson`_, `twangboy`_, `twellspring`_, `whiteinge`_)
++- Contributors: **83** (`DmitryKuzmenko`_, `JaseFace`_, `LoveIsGrief`_, `MasterNayru`_, `Oro`_,
++  `SmithSamuelM`_, `The-Loeki`_, `TheBigBear`_, `aboe76`_, `ajacoutot`_, `anlutro`_, `avinassh`_,
++  `basepi`_, `bdrung`_, `bechtoldt`_, `bernieke`_, `blueyed`_, `cachedout`_, `cbuechler`_,
++  `cedwards`_, `clarkperkins`_, `cro`_, `dkiser`_, `douglas-vaz`_, `dr4Ke`_, `eguven`_, `eliasp`_,
++  `erchn`_, `eyj`_, `favadi`_, `flavio`_, `garethgreenaway`_, `gravyboat`_, `gtmanfred`_,
++  `hedinfaok`_, `hexedpackets`_, `hyn-salt`_, `isbm`_, `itsamenathan`_, `jacksontj`_,
++  `jacobhammons`_, `jeffreyctang`_, `jejenone`_, `jfindlay`_, `johnsocp`_, `justinta`_, `keesbos`_,
++  `lathama`_, `ldobson`_, `lomeroe`_, `martinhoefling`_, `mbarrien`_, `mbologna`_, `merll`_,
++  `mrosedale`_, `msteed`_, `multani`_, `nasenbaer13`_, `nmadhok`_, `notpeter`_, `opdude`_,
++  `papertigers`_, `pass-by-value`_, `plastikos`_, `quantonganh`_, `rallytime`_, `redmcg`_,
++  `rowillia`_, `ruzarowski`_, `ryan-lane`_, `s0undt3ch`_, `sdm24`_, `sjansen`_, `skizunov`_,
++  `srkunze`_, `techhat`_, `terminalmage`_, `ticosax`_, `tkwilliams`_, `toddtomkinson`_,
++  `twangboy`_, `twellspring`_, `whiteinge`_)
+ 
+ 
+ .. important::
+diff --git a/doc/topics/releases/2015.8.3.rst b/doc/topics/releases/2015.8.3.rst
+index 8a6d0d6..a0fa618 100644
+--- a/doc/topics/releases/2015.8.3.rst
++++ b/doc/topics/releases/2015.8.3.rst
+@@ -14,7 +14,11 @@ Statistics
+ - Total Issue References: **26**
+ - Total PR References: **64**
+ 
+-- Contributors: **30** (`DmitryKuzmenko`_, `RealKelsar`_, `alexproca`_, `anlutro`_, `basepi`_, `bogdanr`_, `cachedout`_, `cedwards`_, `chrigl`_, `cro`_, `fcrozat`_, `gtmanfred`_, `isbm`_, `jfindlay`_, `kiorky`_, `kt97679`_, `lomeroe`_, `lorengordon`_, `mhoogendoorn`_, `nmadhok`_, `optix2000`_, `paulnivin`_, `quantonganh`_, `rallytime`_, `s0undt3ch`_, `schwing`_, `sjorge`_, `tampakrap`_, `terminalmage`_, `ticosax`_)
++- Contributors: **30** (`DmitryKuzmenko`_, `RealKelsar`_, `alexproca`_, `anlutro`_, `basepi`_,
++  `bogdanr`_, `cachedout`_, `cedwards`_, `chrigl`_, `cro`_, `fcrozat`_, `gtmanfred`_, `isbm`_,
++  `jfindlay`_, `kiorky`_, `kt97679`_, `lomeroe`_, `lorengordon`_, `mhoogendoorn`_, `nmadhok`_,
++  `optix2000`_, `paulnivin`_, `quantonganh`_, `rallytime`_, `s0undt3ch`_, `schwing`_, `sjorge`_,
++  `tampakrap`_, `terminalmage`_, `ticosax`_)
+ 
+ 
+ Security Fix
+diff --git a/doc/topics/releases/2015.8.4.rst b/doc/topics/releases/2015.8.4.rst
+index 7a12ae5..b5860dc 100644
+--- a/doc/topics/releases/2015.8.4.rst
++++ b/doc/topics/releases/2015.8.4.rst
+@@ -14,7 +14,18 @@ Statistics
+ - Total Issue References: **120**
+ - Total PR References: **312**
+ 
+-- Contributors: **78** (`AkhterAli`_, `DmitryKuzmenko`_, `MadsRC`_, `Oro`_, `The-Loeki`_, `abednarik`_, `akissa`_, `anlutro`_, `basepi`_, `bastiaanb`_, `bdrung`_, `borgstrom`_, `cachedout`_, `clan`_, `clinta`_, `cournape`_, `cro`_, `ctrlrsf`_, `dmacvicar`_, `dmurphy18`_, `dnd`_, `dr4Ke`_, `eliasp`_, `fcrozat`_, `frioux`_, `galet`_, `garethgreenaway`_, `gqgunhed`_, `gtmanfred`_, `hexedpackets`_, `isbm`_, `jacksontj`_, `jacobhammons`_, `jfindlay`_, `jleimbach`_, `job`_, `joejulian`_, `julianbrost`_, `justinta`_, `kingsquirrel152`_, `kiorky`_, `l2ol33rt`_, `lagesag`_, `lorengordon`_, `mbarrien`_, `mpreziuso`_, `multani`_, `nmadhok`_, `oeuftete`_, `opdude`_, `optix2000`_, `pass-by-value`_, `paulnivin`_, `plastikos`_, `pritambaral`_, `rallytime`_, `rasathus`_, `rmatulat`_, `ruxandraburtica`_, `ryan-lane`_, `s0undt3ch`_, `seanjnkns`_, `serge-p`_, `sjorge`_, `stanislavb`_, `tbaker57`_, `techhat`_, `terminalmage`_, `thatch45`_, `thegoodduke`_, `thomaso-mirodin`_, `ticosax`_, `timcharper`_, `tkunicki`_, `trevor-h`_, `twangboy`_, `whiteinge`_, `whytewolf`_)
++- Contributors: **78** (`AkhterAli`_, `DmitryKuzmenko`_, `MadsRC`_, `Oro`_, `The-Loeki`_,
++  `abednarik`_, `akissa`_, `anlutro`_, `basepi`_, `bastiaanb`_, `bdrung`_, `borgstrom`_,
++  `cachedout`_, `clan`_, `clinta`_, `cournape`_, `cro`_, `ctrlrsf`_, `dmacvicar`_, `dmurphy18`_,
++  `dnd`_, `dr4Ke`_, `eliasp`_, `fcrozat`_, `frioux`_, `galet`_, `garethgreenaway`_, `gqgunhed`_,
++  `gtmanfred`_, `hexedpackets`_, `isbm`_, `jacksontj`_, `jacobhammons`_, `jfindlay`_, `jleimbach`_,
++  `job`_, `joejulian`_, `julianbrost`_, `justinta`_, `kingsquirrel152`_, `kiorky`_, `l2ol33rt`_,
++  `lagesag`_, `lorengordon`_, `mbarrien`_, `mpreziuso`_, `multani`_, `nmadhok`_, `oeuftete`_,
++  `opdude`_, `optix2000`_, `pass-by-value`_, `paulnivin`_, `plastikos`_, `pritambaral`_,
++  `rallytime`_, `rasathus`_, `rmatulat`_, `ruxandraburtica`_, `ryan-lane`_, `s0undt3ch`_,
++  `seanjnkns`_, `serge-p`_, `sjorge`_, `stanislavb`_, `tbaker57`_, `techhat`_, `terminalmage`_,
++  `thatch45`_, `thegoodduke`_, `thomaso-mirodin`_, `ticosax`_, `timcharper`_, `tkunicki`_,
++  `trevor-h`_, `twangboy`_, `whiteinge`_, `whytewolf`_)
+ 
+ 
+ Known Issues
+diff --git a/doc/topics/releases/2015.8.8.rst b/doc/topics/releases/2015.8.8.rst
+index d812e2a..7baa5f5 100644
+--- a/doc/topics/releases/2015.8.8.rst
++++ b/doc/topics/releases/2015.8.8.rst
+@@ -17,7 +17,17 @@ Statistics
+ - Total Issue References: **146**
+ - Total PR References: **312**
+ 
+-- Contributors: **74** (`Ch3LL`_, `DmitryKuzmenko`_, `JohannesEbke`_, `RabidCicada`_, `Talkless`_, `The-Loeki`_, `abednarik`_, `anlutro`_, `basepi`_, `bdrung`_, `cachedout`_, `captaininspiration`_, `clarkperkins`_, `clinta`_, `cro`_, `darix`_, `dmacvicar`_, `dr4Ke`_, `dschaller`_, `edencrane`_, `garethgreenaway`_, `gladiatr72`_, `gtmanfred`_, `iacopo-papalini`_, `isbm`_, `jacksontj`_, `jacobhammons`_, `jakehilton`_, `jespada`_, `jfindlay`_, `joejulian`_, `justinta`_, `kiorky`_, `kraney`_, `llua`_, `mcalmer`_, `mchugh19`_, `mew1033`_, `mlalpho`_, `moltob`_, `multani`_, `myii`_, `opdude`_, `paiou`_, `pass-by-value`_, `peripatetic-sojourner`_, `pprince`_, `rallytime`_, `redmcg`_, `replicant0wnz`_, `rhansen`_, `rmtmckenzie`_, `s0undt3ch`_, `sakateka`_, `sbreidba`_, `seanjnkns`_, `sjmh`_, `sjorge`_, `skizunov`_, `szeestraten`_, `tbaker57`_, `techhat`_, `terminalmage`_, `thusoy`_, `ticosax`_, `twangboy`_, `virtualguy`_, `vutny`_, `whiteinge`_, `xmj`_, `xopher-mc`_, `yannis666`_, `youngnick`_, `zygiss`_)
++- Contributors: **74** (`Ch3LL`_, `DmitryKuzmenko`_, `JohannesEbke`_, `RabidCicada`_, `Talkless`_,
++  `The-Loeki`_, `abednarik`_, `anlutro`_, `basepi`_, `bdrung`_, `cachedout`_,
++  `captaininspiration`_, `clarkperkins`_, `clinta`_, `cro`_, `darix`_, `dmacvicar`_, `dr4Ke`_,
++  `dschaller`_, `edencrane`_, `garethgreenaway`_, `gladiatr72`_, `gtmanfred`_, `iacopo-papalini`_,
++  `isbm`_, `jacksontj`_, `jacobhammons`_, `jakehilton`_, `jespada`_, `jfindlay`_, `joejulian`_,
++  `justinta`_, `kiorky`_, `kraney`_, `llua`_, `mcalmer`_, `mchugh19`_, `mew1033`_, `mlalpho`_,
++  `moltob`_, `multani`_, `myii`_, `opdude`_, `paiou`_, `pass-by-value`_, `peripatetic-sojourner`_,
++  `pprince`_, `rallytime`_, `redmcg`_, `replicant0wnz`_, `rhansen`_, `rmtmckenzie`_, `s0undt3ch`_,
++  `sakateka`_, `sbreidba`_, `seanjnkns`_, `sjmh`_, `sjorge`_, `skizunov`_, `szeestraten`_,
++  `tbaker57`_, `techhat`_, `terminalmage`_, `thusoy`_, `ticosax`_, `twangboy`_, `virtualguy`_,
++  `vutny`_, `whiteinge`_, `xmj`_, `xopher-mc`_, `yannis666`_, `youngnick`_, `zygiss`_)
+ 
+ 
+ Security Fix
+diff --git a/doc/topics/releases/2015.8.9.rst b/doc/topics/releases/2015.8.9.rst
+index 02ce11d..56496df 100644
+--- a/doc/topics/releases/2015.8.9.rst
++++ b/doc/topics/releases/2015.8.9.rst
+@@ -14,7 +14,17 @@ Statistics
+ - Total Issue References: **110**
+ - Total PR References: **264**
+ 
+-- Contributors: **71** (`Ch3LL`_, `DmitryKuzmenko`_, `DylanFrese`_, `Ferbla`_, `Kurocon`_, `Lothiraldan`_, `RuriRyan`_, `Talkless`_, `The-Loeki`_, `UtahDave`_, `Xiami2012`_, `abednarik`_, `afletch`_, `ahammond`_, `ahus1`_, `aletourneau`_, `alxf`_, `amontalban`_, `anlutro`_, `arthurlogilab`_, `atengler`_, `basepi`_, `bdrung`_, `bradthurber`_, `cachedout`_, `captaininspiration`_, `cedwards`_, `clarkperkins`_, `clinta`_, `cro`_, `dmurphy18`_, `exowaucka`_, `garethgreenaway`_, `guettli`_, `idonin`_, `isbm`_, `jacobhammons`_, `jbonachera`_, `jfindlay`_, `jfray`_, `junster1`_, `justinta`_, `krak3n`_, `lalmeras`_, `lloydoliver`_, `lomeroe`_, `mcalmer`_, `mitar`_, `mrproper`_, `multani`_, `nmadhok`_, `notpeter`_, `onorua`_, `paclat`_, `papertigers`_, `rallytime`_, `rkgrunt`_, `sakateka`_, `sbreidba`_, `schancel`_, `sjorge`_, `stk0vrfl0w`_, `techhat`_, `terminalmage`_, `thatch45`_, `ticosax`_, `tomlaredo`_, `twangboy`_, `twellspring`_, `vutny`_, `whiteinge`_)
++- Contributors: **71** (`Ch3LL`_, `DmitryKuzmenko`_, `DylanFrese`_, `Ferbla`_, `Kurocon`_,
++  `Lothiraldan`_, `RuriRyan`_, `Talkless`_, `The-Loeki`_, `UtahDave`_, `Xiami2012`_, `abednarik`_,
++  `afletch`_, `ahammond`_, `ahus1`_, `aletourneau`_, `alxf`_, `amontalban`_, `anlutro`_,
++  `arthurlogilab`_, `atengler`_, `basepi`_, `bdrung`_, `bradthurber`_, `cachedout`_,
++  `captaininspiration`_, `cedwards`_, `clarkperkins`_, `clinta`_, `cro`_, `dmurphy18`_,
++  `exowaucka`_, `garethgreenaway`_, `guettli`_, `idonin`_, `isbm`_, `jacobhammons`_, `jbonachera`_,
++  `jfindlay`_, `jfray`_, `junster1`_, `justinta`_, `krak3n`_, `lalmeras`_, `lloydoliver`_,
++  `lomeroe`_, `mcalmer`_, `mitar`_, `mrproper`_, `multani`_, `nmadhok`_, `notpeter`_, `onorua`_,
++  `paclat`_, `papertigers`_, `rallytime`_, `rkgrunt`_, `sakateka`_, `sbreidba`_, `schancel`_,
++  `sjorge`_, `stk0vrfl0w`_, `techhat`_, `terminalmage`_, `thatch45`_, `ticosax`_, `tomlaredo`_,
++  `twangboy`_, `twellspring`_, `vutny`_, `whiteinge`_)
+ 
+ 
+ Important Post-Upgrade Instructions for Linux Mint
+diff --git a/doc/topics/releases/2016.11.1.rst b/doc/topics/releases/2016.11.1.rst
+index d1c999d..ca19060 100644
+--- a/doc/topics/releases/2016.11.1.rst
++++ b/doc/topics/releases/2016.11.1.rst
+@@ -12,7 +12,11 @@ Statistics
+ - Total Issue References: **29**
+ - Total PR References: **83**
+ 
+-- Contributors: **30** (`Ch3LL`_, `Da-Juan`_, `DmitryKuzmenko`_, `MTecknology`_, `adelcast`_, `attiasr`_, `bbinet`_, `cachedout`_, `cro`_, `dmurphy18`_, `gtmanfred`_, `isbm`_, `jeanpralo`_, `kraney`_, `kstreee`_, `lorengordon`_, `mateiw`_, `mirceaulinic`_, `morsik`_, `mschneider82`_, `rallytime`_, `rbjorklin`_, `scott-w`_, `sjorge`_, `skizunov`_, `techhat`_, `terminalmage`_, `thatch45`_, `ticosax`_, `whiteinge`_)
++- Contributors: **30** (`Ch3LL`_, `Da-Juan`_, `DmitryKuzmenko`_, `MTecknology`_, `adelcast`_,
++  `attiasr`_, `bbinet`_, `cachedout`_, `cro`_, `dmurphy18`_, `gtmanfred`_, `isbm`_, `jeanpralo`_,
++  `kraney`_, `kstreee`_, `lorengordon`_, `mateiw`_, `mirceaulinic`_, `morsik`_, `mschneider82`_,
++  `rallytime`_, `rbjorklin`_, `scott-w`_, `sjorge`_, `skizunov`_, `techhat`_, `terminalmage`_,
++  `thatch45`_, `ticosax`_, `whiteinge`_)
+ 
+ 
+ Changelog for v2016.11.0..v2016.11.1
+diff --git a/doc/topics/releases/2016.11.2.rst b/doc/topics/releases/2016.11.2.rst
+index 91ffeca..903d63c 100644
+--- a/doc/topics/releases/2016.11.2.rst
++++ b/doc/topics/releases/2016.11.2.rst
+@@ -12,7 +12,13 @@ Statistics
+ - Total Issue References: **34**
+ - Total PR References: **116**
+ 
+-- Contributors: **45** (`Ch3LL`_, `Cybolic`_, `DmitryKuzmenko`_, `UtahDave`_, `Vaelatern`_, `alex-zel`_, `alxwr`_, `amendlik`_, `anlutro`_, `aosagie`_, `basdusee`_, `bbinet`_, `benediktwerner`_, `cachedout`_, `clinta`_, `cro`_, `dereckson`_, `disaster123`_, `ewapptus`_, `ezh`_, `folti`_, `gmacon`_, `gqgunhed`_, `gtmanfred`_, `kkoppel`_, `lorengordon`_, `martintamare`_, `mcalmer`_, `meaksh`_, `mirceaulinic`_, `mostafahussein`_, `mvdwalle`_, `rallytime`_, `rbjorklin`_, `scthi`_, `sjorge`_, `techhat`_, `terminalmage`_, `tsaridas`_, `twangboy`_, `vutny`_, `wolfpackmars2`_, `yhekma`_, `yopito`_, `yue9944882`_)
++- Contributors: **45** (`Ch3LL`_, `Cybolic`_, `DmitryKuzmenko`_, `UtahDave`_, `Vaelatern`_,
++  `alex-zel`_, `alxwr`_, `amendlik`_, `anlutro`_, `aosagie`_, `basdusee`_, `bbinet`_,
++  `benediktwerner`_, `cachedout`_, `clinta`_, `cro`_, `dereckson`_, `disaster123`_, `ewapptus`_,
++  `ezh`_, `folti`_, `gmacon`_, `gqgunhed`_, `gtmanfred`_, `kkoppel`_, `lorengordon`_,
++  `martintamare`_, `mcalmer`_, `meaksh`_, `mirceaulinic`_, `mostafahussein`_, `mvdwalle`_,
++  `rallytime`_, `rbjorklin`_, `scthi`_, `sjorge`_, `techhat`_, `terminalmage`_, `tsaridas`_,
++  `twangboy`_, `vutny`_, `wolfpackmars2`_, `yhekma`_, `yopito`_, `yue9944882`_)
+ 
+ 
+ Security Fixes
+diff --git a/doc/topics/releases/2016.11.3.rst b/doc/topics/releases/2016.11.3.rst
+index dab7042..9f7a95f 100644
+--- a/doc/topics/releases/2016.11.3.rst
++++ b/doc/topics/releases/2016.11.3.rst
+@@ -12,7 +12,13 @@ Statistics
+ - Total Issue References: **49**
+ - Total PR References: **130**
+ 
+-- Contributors: **47** (`Ch3LL`_, `DmitryKuzmenko`_, `MTecknology`_, `The-Loeki`_, `UtahDave`_, `anlutro`_, `arthru`_, `axmetishe`_, `bailsman`_, `bobrik`_, `cachedout`_, `clinta`_, `corywright`_, `cro`_, `dmaziuk`_, `dmitrievav`_, `dmurphy18`_, `eliasp`_, `eradman`_, `ezh`_, `gtmanfred`_, `hu-dabao`_, `hujunya`_, `isbm`_, `jak3kaj`_, `janhorstmann`_, `joe-niland`_, `kevinanderson1`_, `kstreee`_, `l2ol33rt`_, `lomeroe`_, `mcalmer`_, `meaksh`_, `mirceaulinic`_, `morganwillcock`_, `nasenbaer13`_, `nicholasmhughes`_, `rallytime`_, `sakateka`_, `sergeizv`_, `sjorge`_, `techhat`_, `terminalmage`_, `thatch45`_, `toanju`_, `twangboy`_, `vutny`_)
++- Contributors: **47** (`Ch3LL`_, `DmitryKuzmenko`_, `MTecknology`_, `The-Loeki`_, `UtahDave`_,
++  `anlutro`_, `arthru`_, `axmetishe`_, `bailsman`_, `bobrik`_, `cachedout`_, `clinta`_,
++  `corywright`_, `cro`_, `dmaziuk`_, `dmitrievav`_, `dmurphy18`_, `eliasp`_, `eradman`_, `ezh`_,
++  `gtmanfred`_, `hu-dabao`_, `hujunya`_, `isbm`_, `jak3kaj`_, `janhorstmann`_, `joe-niland`_,
++  `kevinanderson1`_, `kstreee`_, `l2ol33rt`_, `lomeroe`_, `mcalmer`_, `meaksh`_, `mirceaulinic`_,
++  `morganwillcock`_, `nasenbaer13`_, `nicholasmhughes`_, `rallytime`_, `sakateka`_, `sergeizv`_,
++  `sjorge`_, `techhat`_, `terminalmage`_, `thatch45`_, `toanju`_, `twangboy`_, `vutny`_)
+ 
+ 
+ Changelog for v2016.11.2..v2016.11.3
+diff --git a/doc/topics/releases/2016.11.4.rst b/doc/topics/releases/2016.11.4.rst
+index 50f4578..de5607f 100644
+--- a/doc/topics/releases/2016.11.4.rst
++++ b/doc/topics/releases/2016.11.4.rst
+@@ -12,7 +12,16 @@ Statistics
+ - Total Issue References: **63**
+ - Total PR References: **223**
+ 
+-- Contributors: **62** (`Ch3LL`_, `DennisHarper`_, `DmitryKuzmenko`_, `L4rS6`_, `MasterNayru`_, `Seb-Solon`_, `The-Loeki`_, `UtahDave`_, `aabognah`_, `alankrita`_, `amontalban`_, `ardakuyumcu`_, `attiasr`_, `bdrung`_, `bewing`_, `cachedout`_, `cro`_, `defanator`_, `discountbin`_, `dmurphy18`_, `drawsmcgraw`_, `eldadru`_, `garethgreenaway`_, `githubcdr`_, `gtmanfred`_, `hkrist`_, `isbm`_, `jbadson`_, `jeanpralo`_, `jettero`_, `jinm`_, `joe-niland`_, `kaszuba`_, `lomeroe`_, `lorengordon`_, `mateiw`_, `mcalmer`_, `mchugh19`_, `meaksh`_, `mirceaulinic`_, `mlalpho`_, `narendraingale2`_, `nmadhok`_, `rallytime`_, `redbaron4`_, `roaldnefs`_, `s0undt3ch`_, `skazi0`_, `skizunov`_, `smarsching`_, `sofixa`_, `sp1r`_, `sthrasher`_, `techhat`_, `terminalmage`_, `thatch45`_, `thor`_, `ticosax`_, `twangboy`_, `vutny`_, `whiteinge`_, `zer0def`_)
++- Contributors: **62** (`Ch3LL`_, `DennisHarper`_, `DmitryKuzmenko`_, `L4rS6`_, `MasterNayru`_,
++  `Seb-Solon`_, `The-Loeki`_, `UtahDave`_, `aabognah`_, `alankrita`_, `amontalban`_,
++  `ardakuyumcu`_, `attiasr`_, `bdrung`_, `bewing`_, `cachedout`_, `cro`_, `defanator`_,
++  `discountbin`_, `dmurphy18`_, `drawsmcgraw`_, `eldadru`_, `garethgreenaway`_, `githubcdr`_,
++  `gtmanfred`_, `hkrist`_, `isbm`_, `jbadson`_, `jeanpralo`_, `jettero`_, `jinm`_, `joe-niland`_,
++  `kaszuba`_, `lomeroe`_, `lorengordon`_, `mateiw`_, `mcalmer`_, `mchugh19`_, `meaksh`_,
++  `mirceaulinic`_, `mlalpho`_, `narendraingale2`_, `nmadhok`_, `rallytime`_, `redbaron4`_,
++  `roaldnefs`_, `s0undt3ch`_, `skazi0`_, `skizunov`_, `smarsching`_, `sofixa`_, `sp1r`_,
++  `sthrasher`_, `techhat`_, `terminalmage`_, `thatch45`_, `thor`_, `ticosax`_, `twangboy`_,
++  `vutny`_, `whiteinge`_, `zer0def`_)
+ 
+ 
+ AIX Support Expanded
+diff --git a/doc/topics/releases/2016.11.5.rst b/doc/topics/releases/2016.11.5.rst
+index 3830410..0ee6c93 100644
+--- a/doc/topics/releases/2016.11.5.rst
++++ b/doc/topics/releases/2016.11.5.rst
+@@ -12,7 +12,11 @@ Statistics
+ - Total Issue References: **23**
+ - Total PR References: **80**
+ 
+-- Contributors: **32** (`BenoitKnecht`_, `Ch3LL`_, `DmitryKuzmenko`_, `Enquier`_, `SolarisYan`_, `UtahDave`_, `alexproca`_, `benediktwerner`_, `bobrik`_, `brd`_, `cachedout`_, `clinta`_, `corywright`_, `cro`_, `danlsgiga`_, `drawsmcgraw`_, `ezh`_, `gtmanfred`_, `isbm`_, `jf`_, `jleproust`_, `lorengordon`_, `nevins-b`_, `oeuftete`_, `peter-funktionIT`_, `rallytime`_, `rkgrunt`_, `senthilkumar-e`_, `sjorge`_, `skizunov`_, `terminalmage`_, `twangboy`_)
++- Contributors: **32** (`BenoitKnecht`_, `Ch3LL`_, `DmitryKuzmenko`_, `Enquier`_, `SolarisYan`_,
++  `UtahDave`_, `alexproca`_, `benediktwerner`_, `bobrik`_, `brd`_, `cachedout`_, `clinta`_,
++  `corywright`_, `cro`_, `danlsgiga`_, `drawsmcgraw`_, `ezh`_, `gtmanfred`_, `isbm`_, `jf`_,
++  `jleproust`_, `lorengordon`_, `nevins-b`_, `oeuftete`_, `peter-funktionIT`_, `rallytime`_,
++  `rkgrunt`_, `senthilkumar-e`_, `sjorge`_, `skizunov`_, `terminalmage`_, `twangboy`_)
+ 
+ 
+ Patched Packages
+diff --git a/doc/topics/releases/2016.11.6.rst b/doc/topics/releases/2016.11.6.rst
+index f7e559e..bb56146 100644
+--- a/doc/topics/releases/2016.11.6.rst
++++ b/doc/topics/releases/2016.11.6.rst
+@@ -12,7 +12,14 @@ Statistics
+ - Total Issue References: **58**
+ - Total PR References: **153**
+ 
+-- Contributors: **49** (`BenoitKnecht`_, `Ch3LL`_, `Enquier`_, `F30`_, `Foxlik`_, `The-Loeki`_, `UtahDave`_, `abednarik`_, `alex-zel`_, `arif-ali`_, `automate-solutions`_, `axmetishe`_, `bdrung`_, `cachedout`_, `cro`_, `darenjacobs`_, `dmurphy18`_, `dschaller`_, `epcim`_, `garethgreenaway`_, `github-abcde`_, `gtmanfred`_, `isbm`_, `jettero`_, `jmarinaro`_, `kiorky`_, `lomeroe`_, `lordcirth`_, `lorengordon`_, `lubyou`_, `mcalmer`_, `moio`_, `onlyanegg`_, `peter-funktionIT`_, `pkazmierczak`_, `pprkut`_, `rallytime`_, `ricohouse`_, `seanjnkns`_, `sebw`_, `skizunov`_, `svinota`_, `t0fik`_, `terminalmage`_, `tmeneau`_, `tonybaloney`_, `twangboy`_, `whiteinge`_, `yannj-fr`_)
++- Contributors: **49** (`BenoitKnecht`_, `Ch3LL`_, `Enquier`_, `F30`_, `Foxlik`_, `The-Loeki`_,
++  `UtahDave`_, `abednarik`_, `alex-zel`_, `arif-ali`_, `automate-solutions`_, `axmetishe`_,
++  `bdrung`_, `cachedout`_, `cro`_, `darenjacobs`_, `dmurphy18`_, `dschaller`_, `epcim`_,
++  `garethgreenaway`_, `github-abcde`_, `gtmanfred`_, `isbm`_, `jettero`_, `jmarinaro`_, `kiorky`_,
++  `lomeroe`_, `lordcirth`_, `lorengordon`_, `lubyou`_, `mcalmer`_, `moio`_, `onlyanegg`_,
++  `peter-funktionIT`_, `pkazmierczak`_, `pprkut`_, `rallytime`_, `ricohouse`_, `seanjnkns`_,
++  `sebw`_, `skizunov`_, `svinota`_, `t0fik`_, `terminalmage`_, `tmeneau`_, `tonybaloney`_,
++  `twangboy`_, `whiteinge`_, `yannj-fr`_)
+ 
+ 
+ Changelog for v2016.11.5..v2016.11.6
+diff --git a/doc/topics/releases/2016.11.8.rst b/doc/topics/releases/2016.11.8.rst
+index ccf1bbe..4aa81e3 100644
+--- a/doc/topics/releases/2016.11.8.rst
++++ b/doc/topics/releases/2016.11.8.rst
+@@ -12,7 +12,16 @@ Statistics
+ - Total Issue References: **68**
+ - Total PR References: **202**
+ 
+-- Contributors: **61** (`AFriemann`_, `Ch3LL`_, `CorvinM`_, `Da-Juan`_, `DmitryKuzmenko`_, `UtahDave`_, `abulford`_, `amalleo25`_, `amendlik`_, `aneeshusa`_, `aogier`_, `arount`_, `arthurlogilab`_, `astronouth7303`_, `binocvlar`_, `blarghmatey`_, `cachedout`_, `clem-compilatio`_, `corywright`_, `cri-epita`_, `damon-atkins`_, `davidjb`_, `dglloyd`_, `dmurphy18`_, `ferringb`_, `garethgreenaway`_, `gdubroeucq`_, `gilbsgilbs`_, `goten4`_, `gtmanfred`_, `isbm`_, `jagguli`_, `kevinanderson1`_, `kojiromike`_, `kstreee`_, `leeclemens`_, `lomeroe`_, `lorengordon`_, `lubyou`_, `mcarlton00`_, `meaksh`_, `morganwillcock`_, `nhavens`_, `pabloh007`_, `rallytime`_, `remijouannet`_, `renner`_, `root360-AndreasUlm`_, `s-sebastian`_, `sarcasticadmin`_, `sbojarski`_, `shengis`_, `tdutrion`_, `terminalmage`_, `toanju`_, `twangboy`_, `ushmodin`_, `viktorkrivak`_, `vutny`_, `whiteinge`_, `xiaoanyunfei`_)
++- Contributors: **61** (`AFriemann`_, `Ch3LL`_, `CorvinM`_, `Da-Juan`_, `DmitryKuzmenko`_,
++  `UtahDave`_, `abulford`_, `amalleo25`_, `amendlik`_, `aneeshusa`_, `aogier`_, `arount`_,
++  `arthurlogilab`_, `astronouth7303`_, `binocvlar`_, `blarghmatey`_, `cachedout`_,
++  `clem-compilatio`_, `corywright`_, `cri-epita`_, `damon-atkins`_, `davidjb`_, `dglloyd`_,
++  `dmurphy18`_, `ferringb`_, `garethgreenaway`_, `gdubroeucq`_, `gilbsgilbs`_, `goten4`_,
++  `gtmanfred`_, `isbm`_, `jagguli`_, `kevinanderson1`_, `kojiromike`_, `kstreee`_, `leeclemens`_,
++  `lomeroe`_, `lorengordon`_, `lubyou`_, `mcarlton00`_, `meaksh`_, `morganwillcock`_, `nhavens`_,
++  `pabloh007`_, `rallytime`_, `remijouannet`_, `renner`_, `root360-AndreasUlm`_, `s-sebastian`_,
++  `sarcasticadmin`_, `sbojarski`_, `shengis`_, `tdutrion`_, `terminalmage`_, `toanju`_,
++  `twangboy`_, `ushmodin`_, `viktorkrivak`_, `vutny`_, `whiteinge`_, `xiaoanyunfei`_)
+ 
+ 
+ Security Fix
+diff --git a/doc/topics/releases/2016.11.9.rst b/doc/topics/releases/2016.11.9.rst
+index 990ba9b..34996c4 100644
+--- a/doc/topics/releases/2016.11.9.rst
++++ b/doc/topics/releases/2016.11.9.rst
+@@ -12,7 +12,15 @@ Statistics
+ - Total Issue References: **60**
+ - Total PR References: **167**
+ 
+-- Contributors: **54** (`Ch3LL`_, `UtahDave`_, `VertigoRay`_, `akissa`_, `aogier`_, `arthtux`_, `austinpapp`_, `basepi`_, `benediktwerner`_, `bobrik`_, `brejoc`_, `cachedout`_, `cetanu`_, `corywright`_, `creideiki`_, `cro`_, `cruscio`_, `damon-atkins`_, `dayid`_, `defanator`_, `dereckson`_, `dijit`_, `doesitblend`_, `garethgreenaway`_, `gtmanfred`_, `gurubert`_, `gvengel`_, `jfindlay`_, `johnj`_, `jubrad`_, `junovitch`_, `lomeroe`_, `lordcirth`_, `lorengordon`_, `mattLLVW`_, `meaksh`_, `moio`_, `msummers42`_, `mtkennerly`_, `nicholasmhughes`_, `oeuftete`_, `rallytime`_, `rasathus`_, `roaldnefs`_, `rossengeorgiev`_, `seanjnkns`_, `senthilkumar-e`_, `techhat`_, `terminalmage`_, `twangboy`_, `vernondcole`_, `vutny`_, `whiteinge`_, `whytewolf`_)
++- Contributors: **54** (`Ch3LL`_, `UtahDave`_, `VertigoRay`_, `akissa`_, `aogier`_, `arthtux`_,
++  `austinpapp`_, `basepi`_, `benediktwerner`_, `bobrik`_, `brejoc`_, `cachedout`_, `cetanu`_,
++  `corywright`_, `creideiki`_, `cro`_, `cruscio`_, `damon-atkins`_, `dayid`_, `defanator`_,
++  `dereckson`_, `dijit`_, `doesitblend`_, `garethgreenaway`_, `gtmanfred`_, `gurubert`_,
++  `gvengel`_, `jfindlay`_, `johnj`_, `jubrad`_, `junovitch`_, `lomeroe`_, `lordcirth`_,
++  `lorengordon`_, `mattLLVW`_, `meaksh`_, `moio`_, `msummers42`_, `mtkennerly`_,
++  `nicholasmhughes`_, `oeuftete`_, `rallytime`_, `rasathus`_, `roaldnefs`_, `rossengeorgiev`_,
++  `seanjnkns`_, `senthilkumar-e`_, `techhat`_, `terminalmage`_, `twangboy`_, `vernondcole`_,
++  `vutny`_, `whiteinge`_, `whytewolf`_)
+ 
+ 
+ Windows Changes
+diff --git a/doc/topics/releases/2016.3.1.rst b/doc/topics/releases/2016.3.1.rst
+index 9c5ded3..ef0b7dc 100644
+--- a/doc/topics/releases/2016.3.1.rst
++++ b/doc/topics/releases/2016.3.1.rst
+@@ -12,7 +12,10 @@ Statistics
+ - Total Issue References: **23**
+ - Total PR References: **58**
+ 
+-- Contributors: **25** (`abednarik`_, `amontalban`_, `anlutro`_, `babilen`_, `cachedout`_, `clburlison`_, `danslimmon`_, `eliasp`_, `glomium`_, `jacobhammons`_, `jfindlay`_, `kev009`_, `lomeroe`_, `michalsuba`_, `neil-williamson`_, `onorua`_, `opdude`_, `rallytime`_, `sjorge`_, `terminalmage`_, `thatch45`_, `ticosax`_, `tomlaredo`_, `twangboy`_, `zigarn`_)
++- Contributors: **25** (`abednarik`_, `amontalban`_, `anlutro`_, `babilen`_, `cachedout`_,
++  `clburlison`_, `danslimmon`_, `eliasp`_, `glomium`_, `jacobhammons`_, `jfindlay`_, `kev009`_,
++  `lomeroe`_, `michalsuba`_, `neil-williamson`_, `onorua`_, `opdude`_, `rallytime`_, `sjorge`_,
++  `terminalmage`_, `thatch45`_, `ticosax`_, `tomlaredo`_, `twangboy`_, `zigarn`_)
+ 
+ 
+ Final Release of Debian 7 Packages
+diff --git a/doc/topics/releases/2016.3.2.rst b/doc/topics/releases/2016.3.2.rst
+index 12d516f..6c3c3f2 100644
+--- a/doc/topics/releases/2016.3.2.rst
++++ b/doc/topics/releases/2016.3.2.rst
+@@ -12,7 +12,14 @@ Statistics
+ - Total Issue References: **66**
+ - Total PR References: **177**
+ 
+-- Contributors: **52** (`Ch3LL`_, `DarkKnightCZ`_, `DmitryKuzmenko`_, `Inveracity`_, `abalashov`_, `abednarik`_, `adelcast`_, `ajacoutot`_, `amendlik`_, `anlutro`_, `aphor`_, `artxki`_, `bbinet`_, `bensherman`_, `cachedout`_, `christoe`_, `clinta`_, `cro`_, `dmurphy18`_, `dongweiming`_, `eliasp`_, `eradman`_, `farcaller`_, `garethgreenaway`_, `glomium`_, `gtmanfred`_, `isbm`_, `jacobhammons`_, `jacobweinstock`_, `jfindlay`_, `jmacfar`_, `jnhmcknight`_, `justinta`_, `l2ol33rt`_, `lomeroe`_, `meaksh`_, `nulfox`_, `opdude`_, `peterdemin`_, `rallytime`_, `s0undt3ch`_, `secumod`_, `sjmh`_, `sjorge`_, `terminalmage`_, `thatch45`_, `themalkolm`_, `ticosax`_, `tmehlinger`_, `twangboy`_, `vutny`_, `whiteinge`_)
++- Contributors: **52** (`Ch3LL`_, `DarkKnightCZ`_, `DmitryKuzmenko`_, `Inveracity`_, `abalashov`_,
++  `abednarik`_, `adelcast`_, `ajacoutot`_, `amendlik`_, `anlutro`_, `aphor`_, `artxki`_, `bbinet`_,
++  `bensherman`_, `cachedout`_, `christoe`_, `clinta`_, `cro`_, `dmurphy18`_, `dongweiming`_,
++  `eliasp`_, `eradman`_, `farcaller`_, `garethgreenaway`_, `glomium`_, `gtmanfred`_, `isbm`_,
++  `jacobhammons`_, `jacobweinstock`_, `jfindlay`_, `jmacfar`_, `jnhmcknight`_, `justinta`_,
++  `l2ol33rt`_, `lomeroe`_, `meaksh`_, `nulfox`_, `opdude`_, `peterdemin`_, `rallytime`_,
++  `s0undt3ch`_, `secumod`_, `sjmh`_, `sjorge`_, `terminalmage`_, `thatch45`_, `themalkolm`_,
++  `ticosax`_, `tmehlinger`_, `twangboy`_, `vutny`_, `whiteinge`_)
+ 
+ 
+ Returner Changes
+diff --git a/doc/topics/releases/2016.3.3.rst b/doc/topics/releases/2016.3.3.rst
+index e3e4ccc..abdd76e 100644
+--- a/doc/topics/releases/2016.3.3.rst
++++ b/doc/topics/releases/2016.3.3.rst
+@@ -12,7 +12,12 @@ Statistics
+ - Total Issue References: **26**
+ - Total PR References: **115**
+ 
+-- Contributors: **36** (`The-Loeki`_, `abednarik`_, `cachedout`_, `cro`_, `deniszh`_, `dkruger`_, `dmurphy18`_, `eliasp`_, `farcaller`_, `galet`_, `gtmanfred`_, `hu-dabao`_, `isbm`_, `jacobhammons`_, `jacobweinstock`_, `jfindlay`_, `justinta`_, `kstreee`_, `lubyou`_, `markuskramerIgitt`_, `meaksh`_, `miihael`_, `mzupan`_, `nishigori`_, `rallytime`_, `s0undt3ch`_, `skizunov`_, `tankywoo`_, `terminalmage`_, `thatch45`_, `theredcat`_, `ticosax`_, `tonybaloney`_, `twangboy`_, `vutny`_, `whiteinge`_)
++- Contributors: **36** (`The-Loeki`_, `abednarik`_, `cachedout`_, `cro`_, `deniszh`_, `dkruger`_,
++  `dmurphy18`_, `eliasp`_, `farcaller`_, `galet`_, `gtmanfred`_, `hu-dabao`_, `isbm`_,
++  `jacobhammons`_, `jacobweinstock`_, `jfindlay`_, `justinta`_, `kstreee`_, `lubyou`_,
++  `markuskramerIgitt`_, `meaksh`_, `miihael`_, `mzupan`_, `nishigori`_, `rallytime`_, `s0undt3ch`_,
++  `skizunov`_, `tankywoo`_, `terminalmage`_, `thatch45`_, `theredcat`_, `ticosax`_, `tonybaloney`_,
++  `twangboy`_, `vutny`_, `whiteinge`_)
+ 
+ 
+ Known Issues
+diff --git a/doc/topics/releases/2016.3.4.rst b/doc/topics/releases/2016.3.4.rst
+index 8a0561f..b206685 100644
+--- a/doc/topics/releases/2016.3.4.rst
++++ b/doc/topics/releases/2016.3.4.rst
+@@ -12,7 +12,18 @@ Statistics
+ - Total Issue References: **119**
+ - Total PR References: **374**
+ 
+-- Contributors: **80** (`BenoitKnecht`_, `Ch3LL`_, `DavidWittman`_, `DmitryKuzmenko`_, `Jlin317`_, `Kimamisa`_, `UtahDave`_, `aaronm-cloudtek`_, `abednarik`_, `ahammond`_, `alertedsnake`_, `alexander-bauer`_, `amontalban`_, `basepi`_, `bl4ckcontact`_, `bx2`_, `cachedout`_, `clarkperkins`_, `clinta`_, `cro`_, `damon-atkins`_, `danlsgiga`_, `darkalia`_, `dmurphy18`_, `do3meli`_, `edhgoose`_, `efficks`_, `eliasp`_, `eradman`_, `fix7`_, `galet`_, `goestin`_, `gtmanfred`_, `hrumph`_, `hu-dabao`_, `isbm`_, `jackywu`_, `jacobhammons`_, `jbonachera`_, `jf`_, `jfindlay`_, `jizhilong`_, `justinta`_, `kstreee`_, `l2ol33rt`_, `lomeroe`_, `lorengordon`_, `maximeguillet`_, `meaksh`_, `mikeadamz`_, `mirceaulinic`_, `morganwillcock`_, `mrproper`_, `multani`_, `nvtkaszpir`_, `oba11`_, `onorua`_, `opdude`_, `orymate`_, `oz123`_, `pass-by-value`_, `pbdeuchler`_, `rallytime`_, `roosri`_, `silenius`_, `skizunov`_, `slinn0`_, `stanislavb`_, `swiftgist`_, `techhat`_, `terminalmage`_, `thatch45`_, `theredcat`_, `ticosax`_, `twangboy`_, `vutny`_, `whiteinge`_, `xbglowx`_, `xiaoanyunfei`_, `yhekma`_)
++- Contributors: **80** (`BenoitKnecht`_, `Ch3LL`_, `DavidWittman`_, `DmitryKuzmenko`_, `Jlin317`_,
++  `Kimamisa`_, `UtahDave`_, `aaronm-cloudtek`_, `abednarik`_, `ahammond`_, `alertedsnake`_,
++  `alexander-bauer`_, `amontalban`_, `basepi`_, `bl4ckcontact`_, `bx2`_, `cachedout`_,
++  `clarkperkins`_, `clinta`_, `cro`_, `damon-atkins`_, `danlsgiga`_, `darkalia`_, `dmurphy18`_,
++  `do3meli`_, `edhgoose`_, `efficks`_, `eliasp`_, `eradman`_, `fix7`_, `galet`_, `goestin`_,
++  `gtmanfred`_, `hrumph`_, `hu-dabao`_, `isbm`_, `jackywu`_, `jacobhammons`_, `jbonachera`_, `jf`_,
++  `jfindlay`_, `jizhilong`_, `justinta`_, `kstreee`_, `l2ol33rt`_, `lomeroe`_, `lorengordon`_,
++  `maximeguillet`_, `meaksh`_, `mikeadamz`_, `mirceaulinic`_, `morganwillcock`_, `mrproper`_,
++  `multani`_, `nvtkaszpir`_, `oba11`_, `onorua`_, `opdude`_, `orymate`_, `oz123`_,
++  `pass-by-value`_, `pbdeuchler`_, `rallytime`_, `roosri`_, `silenius`_, `skizunov`_, `slinn0`_,
++  `stanislavb`_, `swiftgist`_, `techhat`_, `terminalmage`_, `thatch45`_, `theredcat`_, `ticosax`_,
++  `twangboy`_, `vutny`_, `whiteinge`_, `xbglowx`_, `xiaoanyunfei`_, `yhekma`_)
+ 
+ 
+ Known Issues
+diff --git a/doc/topics/releases/2016.3.5.rst b/doc/topics/releases/2016.3.5.rst
+index 1ab6da0..012ea78 100644
+--- a/doc/topics/releases/2016.3.5.rst
++++ b/doc/topics/releases/2016.3.5.rst
+@@ -12,7 +12,17 @@ Statistics
+ - Total Issue References: **112**
+ - Total PR References: **281**
+ 
+-- Contributors: **74** (`Ch3LL`_, `DmitryKuzmenko`_, `Firewire2002`_, `Mrten`_, `Talkless`_, `TronPaul`_, `UtahDave`_, `aaronm-cloudtek`_, `alex-zel`_, `alexandr-orlov`_, `alexbleotu`_, `attiasr`_, `basepi`_, `bdrung`_, `bshelton229`_, `cachedout`_, `calve`_, `clan`_, `clinta`_, `cro`_, `dere`_, `dereckson`_, `dhaines`_, `dincamihai`_, `do3meli`_, `dragon788`_, `edgan`_, `fedusia`_, `fj40crawler`_, `genuss`_, `gtmanfred`_, `haeac`_, `heewa`_, `hu-dabao`_, `jeanpralo`_, `jfindlay`_, `jinm`_, `kevinquinnyo`_, `kontrolld`_, `laleocen`_, `lorengordon`_, `m03`_, `mcalmer`_, `mchugh19`_, `meaksh`_, `mikejford`_, `moio`_, `multani`_, `nevins-b`_, `pass-by-value`_, `rallytime`_, `rbjorklin`_, `siccrusher`_, `silenius`_, `sjmh`_, `sjorge`_, `skizunov`_, `slinn0`_, `sofixa`_, `techhat`_, `tedski`_, `terminalmage`_, `thatch45`_, `thusoy`_, `toanju`_, `tobithiel`_, `twangboy`_, `tyhunt99`_, `vutny`_, `wanparo`_, `whiteinge`_, `xiaoanyunfei`_, `yhekma`_, `zwo-bot`_)
++- Contributors: **74** (`Ch3LL`_, `DmitryKuzmenko`_, `Firewire2002`_, `Mrten`_, `Talkless`_,
++  `TronPaul`_, `UtahDave`_, `aaronm-cloudtek`_, `alex-zel`_, `alexandr-orlov`_, `alexbleotu`_,
++  `attiasr`_, `basepi`_, `bdrung`_, `bshelton229`_, `cachedout`_, `calve`_, `clan`_, `clinta`_,
++  `cro`_, `dere`_, `dereckson`_, `dhaines`_, `dincamihai`_, `do3meli`_, `dragon788`_, `edgan`_,
++  `fedusia`_, `fj40crawler`_, `genuss`_, `gtmanfred`_, `haeac`_, `heewa`_, `hu-dabao`_,
++  `jeanpralo`_, `jfindlay`_, `jinm`_, `kevinquinnyo`_, `kontrolld`_, `laleocen`_, `lorengordon`_,
++  `m03`_, `mcalmer`_, `mchugh19`_, `meaksh`_, `mikejford`_, `moio`_, `multani`_, `nevins-b`_,
++  `pass-by-value`_, `rallytime`_, `rbjorklin`_, `siccrusher`_, `silenius`_, `sjmh`_, `sjorge`_,
++  `skizunov`_, `slinn0`_, `sofixa`_, `techhat`_, `tedski`_, `terminalmage`_, `thatch45`_,
++  `thusoy`_, `toanju`_, `tobithiel`_, `twangboy`_, `tyhunt99`_, `vutny`_, `wanparo`_, `whiteinge`_,
++  `xiaoanyunfei`_, `yhekma`_, `zwo-bot`_)
+ 
+ 
+ Security Fixes
+diff --git a/doc/topics/releases/2016.3.6.rst b/doc/topics/releases/2016.3.6.rst
+index 5c66fc3..5bf580a 100644
+--- a/doc/topics/releases/2016.3.6.rst
++++ b/doc/topics/releases/2016.3.6.rst
+@@ -12,7 +12,13 @@ Statistics
+ - Total Issue References: **52**
+ - Total PR References: **163**
+ 
+-- Contributors: **43** (`Adaephon-GH`_, `Ch3LL`_, `DmitryKuzmenko`_, `Foxlik`_, `GideonRed-zz`_, `The-Loeki`_, `UtahDave`_, `alexbleotu`_, `anlutro`_, `bobrik`_, `cachedout`_, `cro`_, `dincamihai`_, `drawsmcgraw`_, `fboismenu`_, `galet`_, `garethgreenaway`_, `grep4linux`_, `gtmanfred`_, `jacobhammons`_, `jfindlay`_, `joe-niland`_, `lvg01`_, `mbom2004`_, `mcalmer`_, `mchugh19`_, `meaksh`_, `mirceaulinic`_, `morganwillcock`_, `narendraingale2`_, `nasenbaer13`_, `ni3mm4nd`_, `rallytime`_, `s0undt3ch`_, `sergeizv`_, `smarsching`_, `techhat`_, `terminalmage`_, `thatch45`_, `twangboy`_, `velom`_, `vutny`_, `yue9944882`_)
++- Contributors: **43** (`Adaephon-GH`_, `Ch3LL`_, `DmitryKuzmenko`_, `Foxlik`_, `GideonRed-zz`_,
++  `The-Loeki`_, `UtahDave`_, `alexbleotu`_, `anlutro`_, `bobrik`_, `cachedout`_, `cro`_,
++  `dincamihai`_, `drawsmcgraw`_, `fboismenu`_, `galet`_, `garethgreenaway`_, `grep4linux`_,
++  `gtmanfred`_, `jacobhammons`_, `jfindlay`_, `joe-niland`_, `lvg01`_, `mbom2004`_, `mcalmer`_,
++  `mchugh19`_, `meaksh`_, `mirceaulinic`_, `morganwillcock`_, `narendraingale2`_, `nasenbaer13`_,
++  `ni3mm4nd`_, `rallytime`_, `s0undt3ch`_, `sergeizv`_, `smarsching`_, `techhat`_, `terminalmage`_,
++  `thatch45`_, `twangboy`_, `velom`_, `vutny`_, `yue9944882`_)
+ 
+ 
+ Security Fix
+diff --git a/doc/topics/releases/2017.7.1.rst b/doc/topics/releases/2017.7.1.rst
+index 6283d15..fb8c60e 100644
+--- a/doc/topics/releases/2017.7.1.rst
++++ b/doc/topics/releases/2017.7.1.rst
+@@ -12,7 +12,8 @@ Statistics
+ - Total Issue References: **12**
+ - Total PR References: **31**
+ 
+-- Contributors: **11** (`Ch3LL`_, `TiteiKo`_, `garethgreenaway`_, `gtmanfred`_, `llua`_, `rallytime`_, `seedickcode`_, `skizunov`_, `terminalmage`_, `twangboy`_, `whiteinge`_)
++- Contributors: **11** (`Ch3LL`_, `TiteiKo`_, `garethgreenaway`_, `gtmanfred`_, `llua`_,
++  `rallytime`_, `seedickcode`_, `skizunov`_, `terminalmage`_, `twangboy`_, `whiteinge`_)
+ 
+ 
+ Security Fix
+diff --git a/doc/topics/releases/2017.7.2.rst b/doc/topics/releases/2017.7.2.rst
+index d911fcc..64780f8 100644
+--- a/doc/topics/releases/2017.7.2.rst
++++ b/doc/topics/releases/2017.7.2.rst
+@@ -12,7 +12,14 @@ Statistics
+ - Total Issue References: **73**
+ - Total PR References: **236**
+ 
+-- Contributors: **47** (`Ch3LL`_, `CorvinM`_, `DmitryKuzmenko`_, `Giandom`_, `Mapel88`_, `Mareo`_, `SuperPommeDeTerre`_, `The-Loeki`_, `abulford`_, `amendlik`_, `blarghmatey`_, `brejoc`_, `cachedout`_, `carsonoid`_, `cro`_, `damon-atkins`_, `darcoli`_, `dmurphy18`_, `frankiexyz`_, `garethgreenaway`_, `gtmanfred`_, `hibbert`_, `isbm`_, `ixs`_, `jettero`_, `jmarinaro`_, `justincbeard`_, `kkoppel`_, `llua`_, `lomeroe`_, `m03`_, `mcalmer`_, `mirceaulinic`_, `morganwillcock`_, `nhavens`_, `pabloh007`_, `rallytime`_, `seedickcode`_, `shengis`_, `skizunov`_, `terminalmage`_, `the-glu`_, `thusoy`_, `twangboy`_, `vitaliyf`_, `vutny`_, `whiteinge`_)
++- Contributors: **47** (`Ch3LL`_, `CorvinM`_, `DmitryKuzmenko`_, `Giandom`_, `Mapel88`_, `Mareo`_,
++  `SuperPommeDeTerre`_, `The-Loeki`_, `abulford`_, `amendlik`_, `blarghmatey`_, `brejoc`_,
++  `cachedout`_, `carsonoid`_, `cro`_, `damon-atkins`_, `darcoli`_, `dmurphy18`_, `frankiexyz`_,
++  `garethgreenaway`_, `gtmanfred`_, `hibbert`_, `isbm`_, `ixs`_, `jettero`_, `jmarinaro`_,
++  `justincbeard`_, `kkoppel`_, `llua`_, `lomeroe`_, `m03`_, `mcalmer`_, `mirceaulinic`_,
++  `morganwillcock`_, `nhavens`_, `pabloh007`_, `rallytime`_, `seedickcode`_, `shengis`_,
++  `skizunov`_, `terminalmage`_, `the-glu`_, `thusoy`_, `twangboy`_, `vitaliyf`_, `vutny`_,
++  `whiteinge`_)
+ 
+ 
+ Security Fix
+diff --git a/doc/topics/releases/2017.7.3.rst b/doc/topics/releases/2017.7.3.rst
+index 5312a2b..398c327 100644
+--- a/doc/topics/releases/2017.7.3.rst
++++ b/doc/topics/releases/2017.7.3.rst
+@@ -12,7 +12,19 @@ Statistics
+ - Total Issue References: **94**
+ - Total PR References: **423**
+ 
+-- Contributors: **86** (`3add3287`_, `BenoitKnecht`_, `Ch3LL`_, `CorvinM`_, `Da-Juan`_, `DmitryKuzmenko`_, `Giandom`_, `The-Loeki`_, `UtahDave`_, `adelcast`_, `amendlik`_, `angeloudy`_, `anlutro`_, `arthurlogilab`_, `basepi`_, `benediktwerner`_, `brejoc`_, `cachedout`_, `campbellmc`_, `chnrxn`_, `clan`_, `corywright`_, `damon-atkins`_, `dincamihai`_, `dmurphy18`_, `eliasp`_, `eradman`_, `forksaber`_, `frogunder`_, `gaborn57`_, `garethgreenaway`_, `golmaal`_, `gracinet`_, `gtmanfred`_, `haam3r`_, `isbm`_, `jettero`_, `jf`_, `jubrad`_, `keesbos`_, `kris-anderson`_, `lomeroe`_, `mateiw`_, `mattLLVW`_, `mephi42`_, `mirceaulinic`_, `mkurtak`_, `morganwillcock`_, `msummers42`_, `mtorromeo`_, `multani`_, `mvivaldi`_, `mz-bmcqueen`_, `nasenbaer13`_, `nicholasmhughes`_, `oarmstrong`_, `pkruk`_, `pratik705`_, `psagers`_, `rallytime`_, `rbjorklin`_, `rcallphin`_, `renner`_, `rhoths`_, `richardsimko`_, `rklaren`_, `roaldnefs`_, `s0undt3ch`_, `samodid`_, `skizunov`_, `skjaro`_, `steverweber`_, `sumeetisp`_, `t0fik`_, `techhat`_, `terminalmage`_, `timfreund`_, `timka`_, `tkwilliams`_, `twangboy`_, `unthought`_, `vernondcole`_, `vutny`_, `wedge-jarrad`_, `whytewolf`_, `xuhcc`_)
++- Contributors: **86** (`3add3287`_, `BenoitKnecht`_, `Ch3LL`_, `CorvinM`_, `Da-Juan`_,
++  `DmitryKuzmenko`_, `Giandom`_, `The-Loeki`_, `UtahDave`_, `adelcast`_, `amendlik`_, `angeloudy`_,
++  `anlutro`_, `arthurlogilab`_, `basepi`_, `benediktwerner`_, `brejoc`_, `cachedout`_,
++  `campbellmc`_, `chnrxn`_, `clan`_, `corywright`_, `damon-atkins`_, `dincamihai`_, `dmurphy18`_,
++  `eliasp`_, `eradman`_, `forksaber`_, `frogunder`_, `gaborn57`_, `garethgreenaway`_, `golmaal`_,
++  `gracinet`_, `gtmanfred`_, `haam3r`_, `isbm`_, `jettero`_, `jf`_, `jubrad`_, `keesbos`_,
++  `kris-anderson`_, `lomeroe`_, `mateiw`_, `mattLLVW`_, `mephi42`_, `mirceaulinic`_, `mkurtak`_,
++  `morganwillcock`_, `msummers42`_, `mtorromeo`_, `multani`_, `mvivaldi`_, `mz-bmcqueen`_,
++  `nasenbaer13`_, `nicholasmhughes`_, `oarmstrong`_, `pkruk`_, `pratik705`_, `psagers`_,
++  `rallytime`_, `rbjorklin`_, `rcallphin`_, `renner`_, `rhoths`_, `richardsimko`_, `rklaren`_,
++  `roaldnefs`_, `s0undt3ch`_, `samodid`_, `skizunov`_, `skjaro`_, `steverweber`_, `sumeetisp`_,
++  `t0fik`_, `techhat`_, `terminalmage`_, `timfreund`_, `timka`_, `tkwilliams`_, `twangboy`_,
++  `unthought`_, `vernondcole`_, `vutny`_, `wedge-jarrad`_, `whytewolf`_, `xuhcc`_)
+ 
+ 
+ Windows Changes
+diff --git a/doc/topics/releases/2017.7.5.rst b/doc/topics/releases/2017.7.5.rst
+index 6449d75..0aab2f7 100644
+--- a/doc/topics/releases/2017.7.5.rst
++++ b/doc/topics/releases/2017.7.5.rst
+@@ -12,7 +12,14 @@ Statistics
+ - Total Issue References: **58**
+ - Total PR References: **202**
+ 
+-- Contributors: **52** (`Ch3LL`_, `DmitryKuzmenko`_, `GwiYeong`_, `L4rS6`_, `SteffenKockel`_, `The-Loeki`_, `amendlik`_, `andreaspe`_, `angeloudy`_, `aphor`_, `bdrung`_, `cebe`_, `ciiqr`_, `damon-atkins`_, `danlsgiga`_, `ddoh94`_, `dmurphy18`_, `dwoz`_, `eliasp`_, `frogunder`_, `garethgreenaway`_, `gclinch`_, `gtmanfred`_, `jfindlay`_, `kstreee`_, `marccardinal`_, `mcalmer`_, `mchugh19`_, `meaksh`_, `michelsen`_, `nullify005`_, `oarmstrong`_, `oeuftete`_, `philpep`_, `racker-markh`_, `rallytime`_, `redbaron4`_, `roaldnefs`_, `rongshengfang`_, `rongzeng54`_, `rrroo`_, `samilaine`_, `samodid`_, `skizunov`_, `terminalmage`_, `tintoy`_, `twangboy`_, `viktordaniel`_, `vutny`_, `while0pass`_, `whytewolf`_, `zer0def`_)
++- Contributors: **52** (`Ch3LL`_, `DmitryKuzmenko`_, `GwiYeong`_, `L4rS6`_, `SteffenKockel`_,
++  `The-Loeki`_, `amendlik`_, `andreaspe`_, `angeloudy`_, `aphor`_, `bdrung`_, `cebe`_, `ciiqr`_,
++  `damon-atkins`_, `danlsgiga`_, `ddoh94`_, `dmurphy18`_, `dwoz`_, `eliasp`_, `frogunder`_,
++  `garethgreenaway`_, `gclinch`_, `gtmanfred`_, `jfindlay`_, `kstreee`_, `marccardinal`_,
++  `mcalmer`_, `mchugh19`_, `meaksh`_, `michelsen`_, `nullify005`_, `oarmstrong`_, `oeuftete`_,
++  `philpep`_, `racker-markh`_, `rallytime`_, `redbaron4`_, `roaldnefs`_, `rongshengfang`_,
++  `rongzeng54`_, `rrroo`_, `samilaine`_, `samodid`_, `skizunov`_, `terminalmage`_, `tintoy`_,
++  `twangboy`_, `viktordaniel`_, `vutny`_, `while0pass`_, `whytewolf`_, `zer0def`_)
+ 
+ 
+ Changes to :py:func:`file.blockreplace <salt.states.file.blockreplace>` State
+diff --git a/doc/topics/releases/2017.7.6.rst b/doc/topics/releases/2017.7.6.rst
+index 1c54ffd..c17f754 100644
+--- a/doc/topics/releases/2017.7.6.rst
++++ b/doc/topics/releases/2017.7.6.rst
+@@ -11,7 +11,13 @@ Statistics
+ - Total Issue References: **60**
+ - Total PR References: **217**
+ 
+-- Contributors: **47** (`Ch3LL`_, `DmitryKuzmenko`_, `GwiYeong`_, `Quarky9`_, `RichardW42`_, `UtahDave`_, `amaclean199`_, `arif-ali`_, `baniobloom`_, `bdrung`_, `benediktwerner`_, `bmiguel-teixeira`_, `cachedout`_, `dafenko`_, `damon-atkins`_, `dwoz`_, `ezh`_, `folti`_, `fpicot`_, `frogunder`_, `garethgreenaway`_, `gtmanfred`_, `isbm`_, `jeroennijhof`_, `jfindlay`_, `jfoboss`_, `kstreee`_, `lomeroe`_, `mattp-`_, `meaksh`_, `mirceaulinic`_, `myinitialsarepm`_, `mzbroch`_, `nages13`_, `paclat`_, `pcjeff`_, `pruiz`_, `psyer`_, `rallytime`_, `s0undt3ch`_, `skizunov`_, `smitty42`_, `terminalmage`_, `twangboy`_, `vutny`_, `yagnik`_, `yannj-fr`_)
++- Contributors: **47** (`Ch3LL`_, `DmitryKuzmenko`_, `GwiYeong`_, `Quarky9`_, `RichardW42`_,
++  `UtahDave`_, `amaclean199`_, `arif-ali`_, `baniobloom`_, `bdrung`_, `benediktwerner`_,
++  `bmiguel-teixeira`_, `cachedout`_, `dafenko`_, `damon-atkins`_, `dwoz`_, `ezh`_, `folti`_,
++  `fpicot`_, `frogunder`_, `garethgreenaway`_, `gtmanfred`_, `isbm`_, `jeroennijhof`_, `jfindlay`_,
++  `jfoboss`_, `kstreee`_, `lomeroe`_, `mattp-`_, `meaksh`_, `mirceaulinic`_, `myinitialsarepm`_,
++  `mzbroch`_, `nages13`_, `paclat`_, `pcjeff`_, `pruiz`_, `psyer`_, `rallytime`_, `s0undt3ch`_,
++  `skizunov`_, `smitty42`_, `terminalmage`_, `twangboy`_, `vutny`_, `yagnik`_, `yannj-fr`_)
+ 
+ Tornado 5.0 Support for Python 2 Only
+ -------------------------------------
+diff --git a/doc/topics/releases/2017.7.8.rst b/doc/topics/releases/2017.7.8.rst
+index 891a2ad..9f413f1 100644
+--- a/doc/topics/releases/2017.7.8.rst
++++ b/doc/topics/releases/2017.7.8.rst
+@@ -11,7 +11,14 @@ Statistics
+ - Total Issue References: **48**
+ - Total PR References: **279**
+ 
+-- Contributors: **52** (`AVeenstra`_, `Ch3LL`_, `Circuitsoft`_, `DmitryKuzmenko`_, `KaiSforza`_, `Martin819`_, `OrlandoArcapix`_, `UtahDave`_, `Vaelatern`_, `abednarik`_, `asnell`_, `b1naryth1ef`_, `baniobloom`_, `basepi`_, `bdrung`_, `beornf`_, `bmcorser`_, `bowmanjd-lms`_, `damon-atkins`_, `darkpixel`_, `discogestalt`_, `doesitblend`_, `dqminh`_, `dubb-b`_, `dwoz`_, `frankiexyz`_, `frogunder`_, `fzipi`_, `garethgreenaway`_, `grokrecursion`_, `gtmanfred`_, `jacksontj`_, `jagguli`_, `lejambon`_, `lomeroe`_, `lordcirth`_, `lusche`_, `mbunkus`_, `meaksh`_, `mirceaulinic`_, `nbraud`_, `pritambaral`_, `ralex`_, `rallytime`_, `rmcintosh`_, `slaws`_, `terminalmage`_, `twangboy`_, `twellspring`_, `wyardley`_, `xetix`_, `zer0def`_)
++- Contributors: **52** (`AVeenstra`_, `Ch3LL`_, `Circuitsoft`_, `DmitryKuzmenko`_, `KaiSforza`_,
++  `Martin819`_, `OrlandoArcapix`_, `UtahDave`_, `Vaelatern`_, `abednarik`_, `asnell`_,
++  `b1naryth1ef`_, `baniobloom`_, `basepi`_, `bdrung`_, `beornf`_, `bmcorser`_, `bowmanjd-lms`_,
++  `damon-atkins`_, `darkpixel`_, `discogestalt`_, `doesitblend`_, `dqminh`_, `dubb-b`_, `dwoz`_,
++  `frankiexyz`_, `frogunder`_, `fzipi`_, `garethgreenaway`_, `grokrecursion`_, `gtmanfred`_,
++  `jacksontj`_, `jagguli`_, `lejambon`_, `lomeroe`_, `lordcirth`_, `lusche`_, `mbunkus`_,
++  `meaksh`_, `mirceaulinic`_, `nbraud`_, `pritambaral`_, `ralex`_, `rallytime`_, `rmcintosh`_,
++  `slaws`_, `terminalmage`_, `twangboy`_, `twellspring`_, `wyardley`_, `xetix`_, `zer0def`_)
+ 
+ Security Fix
+ ============
+diff --git a/doc/topics/releases/2018.3.1.rst b/doc/topics/releases/2018.3.1.rst
+index f4deb9d..0134d21 100644
+--- a/doc/topics/releases/2018.3.1.rst
++++ b/doc/topics/releases/2018.3.1.rst
+@@ -11,7 +11,14 @@ Statistics
+ - Total Issue References: **74**
+ - Total PR References: **255**
+ 
+-- Contributors: **55** (`Ch3LL`_, `DmitryKuzmenko`_, `Giandom`_, `Kimol`_, `L4rS6`_, `LukeCarrier`_, `OrlandoArcapix`_, `TamCore`_, `The-Loeki`_, `UtahDave`_, `aesposito91`_, `bbinet`_, `bdrung`_, `boltronics`_, `bosatsu`_, `clan`_, `corywright`_, `damon-atkins`_, `dincamihai`_, `dmurphy18`_, `dnABic`_, `douglasjreynolds`_, `dwoz`_, `edgan`_, `ejparker12`_, `esell`_, `ezh`_, `femnad`_, `folti`_, `garethgreenaway`_, `gtmanfred`_, `isbm`_, `jasperla`_, `johnj`_, `mateiw`_, `mcalmer`_, `mirceaulinic`_, `morganwillcock`_, `opdude`_, `pcn`_, `pruiz`_, `psagers`_, `psyer`_, `rallytime`_, `robinro`_, `s0undt3ch`_, `samodid`_, `shengis`_, `skjaro`_, `tankywoo`_, `terminalmage`_, `twangboy`_, `vutny`_, `yannj-fr`_, `zmedico`_)
++- Contributors: **55** (`Ch3LL`_, `DmitryKuzmenko`_, `Giandom`_, `Kimol`_, `L4rS6`_,
++  `LukeCarrier`_, `OrlandoArcapix`_, `TamCore`_, `The-Loeki`_, `UtahDave`_, `aesposito91`_,
++  `bbinet`_, `bdrung`_, `boltronics`_, `bosatsu`_, `clan`_, `corywright`_, `damon-atkins`_,
++  `dincamihai`_, `dmurphy18`_, `dnABic`_, `douglasjreynolds`_, `dwoz`_, `edgan`_, `ejparker12`_,
++  `esell`_, `ezh`_, `femnad`_, `folti`_, `garethgreenaway`_, `gtmanfred`_, `isbm`_, `jasperla`_,
++  `johnj`_, `mateiw`_, `mcalmer`_, `mirceaulinic`_, `morganwillcock`_, `opdude`_, `pcn`_, `pruiz`_,
++  `psagers`_, `psyer`_, `rallytime`_, `robinro`_, `s0undt3ch`_, `samodid`_, `shengis`_, `skjaro`_,
++  `tankywoo`_, `terminalmage`_, `twangboy`_, `vutny`_, `yannj-fr`_, `zmedico`_)
+ 
+ 
+ .. warning::
+diff --git a/doc/topics/releases/2018.3.3.rst b/doc/topics/releases/2018.3.3.rst
+index d63b961..837a9d3 100644
+--- a/doc/topics/releases/2018.3.3.rst
++++ b/doc/topics/releases/2018.3.3.rst
+@@ -11,7 +11,14 @@ Statistics
+ - Total Issue References: **69**
+ - Total PR References: **341**
+ 
+-- Contributors: **55** (`Ch3LL`_, `FedericoCeratto`_, `KaiSforza`_, `L4rS6`_, `Lutseslav`_, `The-Loeki`_, `Vaelatern`_, `admd`_, `aesposito91`_, `asenci`_, `astorath`_, `azelezni`_, `babs`_, `bbczeuz`_, `bbinet`_, `brejoc`_, `cro`_, `daa`_, `dmurphy18`_, `dubb-b`_, `dwoz`_, `eliasp`_, `ezh`_, `garethgreenaway`_, `gtmanfred`_, `isbm`_, `jeduardo`_, `kt97679`_, `kuetrzi`_, `linoplt`_, `lomeroe`_, `lusche`_, `mateiw`_, `max-arnold`_, `maxim-sermin`_, `meaksh`_, `mmulqueen`_, `morganwillcock`_, `mtorromeo`_, `nullify005`_, `paulcollinsiii`_, `pritambaral`_, `rallytime`_, `rares-pop`_, `rmarchei`_, `rosscdh`_, `sizgiyaev`_, `sjorge`_, `t0fik`_, `terminalmage`_, `travispaul`_, `twangboy`_, `vinian`_, `weswhet`_, `zerthimon`_)
++- Contributors: **55** (`Ch3LL`_, `FedericoCeratto`_, `KaiSforza`_, `L4rS6`_, `Lutseslav`_,
++  `The-Loeki`_, `Vaelatern`_, `admd`_, `aesposito91`_, `asenci`_, `astorath`_, `azelezni`_,
++  `babs`_, `bbczeuz`_, `bbinet`_, `brejoc`_, `cro`_, `daa`_, `dmurphy18`_, `dubb-b`_, `dwoz`_,
++  `eliasp`_, `ezh`_, `garethgreenaway`_, `gtmanfred`_, `isbm`_, `jeduardo`_, `kt97679`_,
++  `kuetrzi`_, `linoplt`_, `lomeroe`_, `lusche`_, `mateiw`_, `max-arnold`_, `maxim-sermin`_,
++  `meaksh`_, `mmulqueen`_, `morganwillcock`_, `mtorromeo`_, `nullify005`_, `paulcollinsiii`_,
++  `pritambaral`_, `rallytime`_, `rares-pop`_, `rmarchei`_, `rosscdh`_, `sizgiyaev`_, `sjorge`_,
++  `t0fik`_, `terminalmage`_, `travispaul`_, `twangboy`_, `vinian`_, `weswhet`_, `zerthimon`_)
+ 
+ 
+ .. warning::
+diff --git a/doc/topics/releases/2018.3.4.rst b/doc/topics/releases/2018.3.4.rst
+index 39bf123..b8894ee 100644
+--- a/doc/topics/releases/2018.3.4.rst
++++ b/doc/topics/releases/2018.3.4.rst
+@@ -18,7 +18,18 @@ Statistics
+ - Total Issue References: **111**
+ - Total PR References: **412**
+ 
+-- Contributors: **76** (`5uper5hoot`_, `Ch3LL`_, `ClaudiuPID`_, `Giandom`_, `KaiSforza`_, `MTecknology`_, `ManicoW`_, `OrangeDog`_, `ShantonRU`_, `The-Loeki`_, `Yxnt`_, `aarnaud`_, `amendlik`_, `angeloudy`_, `bartlaarhoven`_, `bbh-kmd`_, `bbinet`_, `bdrung`_, `bergmannf`_, `bluesliverx`_, `bornwitbugs`_, `brejoc`_, `cachedout`_, `casselt`_, `cro`_, `cstarke`_, `dgmorrisjr`_, `dmurphy18`_, `dubb-b`_, `dwoz`_, `frogunder`_, `garethgreenaway`_, `gtmanfred`_, `isbm`_, `jacobweinstock`_, `jgleissner`_, `jodok`_, `jpsv`_, `jyurdal`_, `kiemlicz`_, `kunal-bajpai`_, `lexvella`_, `lomeroe`_, `m03`_, `madrisan`_, `mat813`_, `mattp-`_, `max-arnold`_, `mchugh19`_, `meaksh`_, `michaelgibson`_, `nhavens`_, `pirogoeth`_, `rallytime`_, `rkrieger`_, `rmarcinik`_, `rongzeng54`_, `rwaweber`_, `s0undt3ch`_, `sathieu`_, `sheagcraig`_, `silenius`_, `sunyq`_, `t0fik`_, `terminalmage`_, `terrible-broom`_, `thebluesnevrdie`_, `thetaurean`_, `tlemarchand`_, `tonybaloney`_, `twangboy`_, `waynew`_, `weswhet`_, `whytewolf`_, `yosnoop`_, `zwo-bot`_)
++- Contributors: **76** (`5uper5hoot`_, `Ch3LL`_, `ClaudiuPID`_, `Giandom`_, `KaiSforza`_,
++  `MTecknology`_, `ManicoW`_, `OrangeDog`_, `ShantonRU`_, `The-Loeki`_, `Yxnt`_, `aarnaud`_,
++  `amendlik`_, `angeloudy`_, `bartlaarhoven`_, `bbh-kmd`_, `bbinet`_, `bdrung`_, `bergmannf`_,
++  `bluesliverx`_, `bornwitbugs`_, `brejoc`_, `cachedout`_, `casselt`_, `cro`_, `cstarke`_,
++  `dgmorrisjr`_, `dmurphy18`_, `dubb-b`_, `dwoz`_, `frogunder`_, `garethgreenaway`_, `gtmanfred`_,
++  `isbm`_, `jacobweinstock`_, `jgleissner`_, `jodok`_, `jpsv`_, `jyurdal`_, `kiemlicz`_,
++  `kunal-bajpai`_, `lexvella`_, `lomeroe`_, `m03`_, `madrisan`_, `mat813`_, `mattp-`_,
++  `max-arnold`_, `mchugh19`_, `meaksh`_, `michaelgibson`_, `nhavens`_, `pirogoeth`_, `rallytime`_,
++  `rkrieger`_, `rmarcinik`_, `rongzeng54`_, `rwaweber`_, `s0undt3ch`_, `sathieu`_, `sheagcraig`_,
++  `silenius`_, `sunyq`_, `t0fik`_, `terminalmage`_, `terrible-broom`_, `thebluesnevrdie`_,
++  `thetaurean`_, `tlemarchand`_, `tonybaloney`_, `twangboy`_, `waynew`_, `weswhet`_, `whytewolf`_,
++  `yosnoop`_, `zwo-bot`_)
+ 
+ 
+ Changelog for v2018.3.3..v2018.3.4
+diff --git a/doc/topics/releases/2019.2.1.rst b/doc/topics/releases/2019.2.1.rst
+index 8045b3c..290a514 100644
+--- a/doc/topics/releases/2019.2.1.rst
++++ b/doc/topics/releases/2019.2.1.rst
+@@ -60,7 +60,14 @@ Statistics
+ - Total Issue References: **70**
+ - Total PR References: **355**
+ 
+-- Contributors: **49** (`Akm0d`_, `Ch3LL`_, `DmitryKuzmenko`_, `Ethyling`_, `FireGrace`_, `KChandrashekhar`_, `ScoreUnder`_, `amendlik`_, `aplanas`_, `arsiesys`_, `bbinet`_, `bryceml`_, `cbosdo`_, `cdalvaro`_, `chdamianos`_, `cmcmarrow`_, `cro`_, `damianosSemmle`_, `dmurphy18`_, `doesitblend`_, `dwoz`_, `felippeb`_, `frogunder`_, `garethgreenaway`_, `github-abcde`_, `isbm`_, `jfindlay`_, `lomeroe`_, `mattLLVW`_, `mattp-`_, `mirceaulinic`_, `nicholasmhughes`_, `rbthomp`_, `rombert`_, `rsmekala`_, `s0undt3ch`_, `sathieu`_, `sbrennan4`_, `sdodsley`_, `simonflood`_, `sjorge`_, `soer7022`_, `stratusjerry`_, `tanlingyun2005`_, `terminalmage`_, `twangboy`_, `waynew`_, `weswhet`_, `xuhcc`_)
++- Contributors: **49** (`Akm0d`_, `Ch3LL`_, `DmitryKuzmenko`_, `Ethyling`_, `FireGrace`_,
++  `KChandrashekhar`_, `ScoreUnder`_, `amendlik`_, `aplanas`_, `arsiesys`_, `bbinet`_, `bryceml`_,
++  `cbosdo`_, `cdalvaro`_, `chdamianos`_, `cmcmarrow`_, `cro`_, `damianosSemmle`_, `dmurphy18`_,
++  `doesitblend`_, `dwoz`_, `felippeb`_, `frogunder`_, `garethgreenaway`_, `github-abcde`_, `isbm`_,
++  `jfindlay`_, `lomeroe`_, `mattLLVW`_, `mattp-`_, `mirceaulinic`_, `nicholasmhughes`_, `rbthomp`_,
++  `rombert`_, `rsmekala`_, `s0undt3ch`_, `sathieu`_, `sbrennan4`_, `sdodsley`_, `simonflood`_,
++  `sjorge`_, `soer7022`_, `stratusjerry`_, `tanlingyun2005`_, `terminalmage`_, `twangboy`_,
++  `waynew`_, `weswhet`_, `xuhcc`_)
+ 
+ Changelog for v2019.2.0..v2019.2.1
+ ==================================
+diff --git a/doc/topics/releases/2019.2.2.rst b/doc/topics/releases/2019.2.2.rst
+index e527f44..242ac07 100644
+--- a/doc/topics/releases/2019.2.2.rst
++++ b/doc/topics/releases/2019.2.2.rst
+@@ -13,7 +13,8 @@ Statistics
+ - Total Issue References: **12**
+ - Total PR References: **26**
+ 
+-- Contributors: **13** (`Akm0d`_, `Ch3LL`_, `Oloremo`_, `OrlandoArcapix`_, `bryceml`_, `dhiltonp`_, `dwoz`_, `frogunder`_, `garethgreenaway`_, `javierbertoli`_, `pizzapanther`_, `s0undt3ch`_, `twangboy`_)
++- Contributors: **13** (`Akm0d`_, `Ch3LL`_, `Oloremo`_, `OrlandoArcapix`_, `bryceml`_, `dhiltonp`_, `dwoz`_,
++  `frogunder`_, `garethgreenaway`_, `javierbertoli`_, `pizzapanther`_, `s0undt3ch`_, `twangboy`_)
+ 
+ Changelog for v2019.2.1..v2019.2.2
+ ==================================
+diff --git a/doc/topics/releases/3000.1.rst b/doc/topics/releases/3000.1.rst
+index 086a2cc..a8e7f2a 100644
+--- a/doc/topics/releases/3000.1.rst
++++ b/doc/topics/releases/3000.1.rst
+@@ -13,7 +13,9 @@ Statistics
+ - Total Issue References: **15**
+ - Total PR References: **54**
+ 
+-- Contributors: **16** (`Ch3LL`_, `UtahDave`_, `bryceml`_, `cmcmarrow`_, `dwoz`_, `frogunder`_, `garethgreenaway`_, `lorengordon`_, `mchugh19`_, `oeuftete`_, `raddessi`_, `s0undt3ch`_, `sjorge`_, `terminalmage`_, `twangboy`_, `waynew`_)
++- Contributors: **16** (`Ch3LL`_, `UtahDave`_, `bryceml`_, `cmcmarrow`_, `dwoz`_, `frogunder`_,
++  `garethgreenaway`_, `lorengordon`_, `mchugh19`_, `oeuftete`_, `raddessi`_, `s0undt3ch`_,
++  `sjorge`_, `terminalmage`_, `twangboy`_, `waynew`_)
+ 
+ Changelog for v3000..v3000.1
+ ============================

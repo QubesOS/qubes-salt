@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+if test "$1" = "configure"; then
+    if dpkg --compare-versions "$2" lt-nl "2017.7.3~"; then
+        # Move salt-minion pki directory (unless configured by the user)
+        if test -d /etc/salt/pki/minion && ! grep -rq "^\s*pki_dir:" /etc/salt/minion /etc/salt/minion.d/; then
+            mkdir -p /var/lib/salt/pki
+            mv /etc/salt/pki/minion /var/lib/salt/pki
+        fi
+    fi
+fi
+
+#DEBHELPER#

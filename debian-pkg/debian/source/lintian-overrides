@@ -1,0 +1,7 @@
+source-contains-prebuilt-javascript-object doc/_themes/saltstack/static/js/vendor/bootstrap.min.js
+source-contains-prebuilt-javascript-object doc/_themes/saltstack/static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js
+# Long link in comment (Lintian bug #813013)
+very-long-line-length-in-source-file doc/_themes/saltstack/static/js/vendor/modernizr-2.6.2-respond-1.1.0.js line * is 606 characters long (>512)
+# SSH keys have long line lengths
+very-long-line-length-in-source-file tests/integration/files/file/base/git_pillar/ssh/user/files/authorized_keys *
+very-long-line-length-in-source-file tests/integration/files/file/base/git_pillar/ssh/user/files/*.pub *

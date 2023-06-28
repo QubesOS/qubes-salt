@@ -1,0 +1,26 @@
+From: Benjamin Drung <bdrung@debian.org>
+Date: Sat, 16 Apr 2022 00:33:51 +0200
+Subject: Mark test_list_available_packages requiring network
+
+`test_list_available_packages` calls pip which needs Internet access.
+Mark this test with `requires_network` to avoid breakage in case there
+is no Internet access.
+
+Forwarded: https://github.com/saltstack/salt/pull/61953
+Signed-off-by: Benjamin Drung <bdrung@debian.org>
+---
+ tests/pytests/functional/modules/test_pip.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/pytests/functional/modules/test_pip.py b/tests/pytests/functional/modules/test_pip.py
+index c749e10..38bb80b 100644
+--- a/tests/pytests/functional/modules/test_pip.py
++++ b/tests/pytests/functional/modules/test_pip.py
+@@ -13,6 +13,7 @@ from tests.support.helpers import VirtualEnv
+         "pip>=21.0",
+     ),
+ )
++@pytest.mark.requires_network
+ def test_list_available_packages(modules, pip_version, tmp_path):
+     if sys.version_info < (3, 6) and pip_version == "pip>=21.0":
+         pytest.skip("{} is not available on Py3.5".format(pip_version))

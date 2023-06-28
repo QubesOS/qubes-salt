@@ -1,0 +1,51 @@
+#!/usr/bin/make -f
+
+#export DH_VERBOSE=1
+
+include /usr/share/dpkg/pkg-info.mk
+
+RELEASE = $(shell echo '$(DEB_VERSION_UPSTREAM)' | sed -e 's/+dfsg[0-9]*$$//')
+
+%:
+	dh $@ --buildsystem pybuild --with bash-completion,python3,sphinxdoc
+
+override_dh_auto_build:
+	dh_auto_build
+	rm -f doc/_themes/saltstack/static/css/*.min.css doc/_themes/saltstack/static/js/vendor/*.js
+	ln -s /usr/share/javascript/bootstrap/js/bootstrap.min.js doc/_themes/saltstack/static/js/vendor/bootstrap.min.js
+	ln -s /usr/share/javascript/modernizr/modernizr.min.js doc/_themes/saltstack/static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js
+ifeq (,$(filter nodoc,$(DEB_BUILD_OPTIONS)))
+	HTML_THEME=saltstack LATEST_RELEASE=$(RELEASE) make -C doc html SPHINXBUILD=/usr/share/sphinx/scripts/python3/sphinx-build SPHINXOPTS=-T
+	HTML_THEME=saltstack LATEST_RELEASE=$(RELEASE) make -C doc man SPHINXBUILD=/usr/share/sphinx/scripts/python3/sphinx-build SPHINXOPTS=-T
+	# Replace duplicate image by symlinks
+	for image in doc/_build/html/_images/*.png; do ln -sf ../_images/$${image##*/} doc/_build/html/_static/$${image##*/}; done
+endif
+
+override_dh_auto_install:
+	# Work around missing global options support: https://bugs.debian.org/890906
+	HOME=$(wildcard .pybuild/pythonX.Y_3*) python3 ./setup.py --salt-state-dir=/var/lib/salt install --install-layout deb --root $(CURDIR)/debian/tmp
+
+override_dh_auto_clean:
+	make -C doc clean
+	dh_auto_clean
+
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	mkdir -p /tmp/salt-tests-tmpdir # Workaround for https://github.com/saltstack/salt/issues/61134
+	LC_ALL=C.UTF-8 NO_INTERNET=1 python3 -m pytest -ra tests/unit tests/pytests/functional tests/pytests/integration tests/pytests/unit
+endif
+
+override_dh_install:
+	dh_install -X/usr/share/man/man
+
+override_dh_compress:
+	dh_compress -X.ico
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod -x debian/salt-common/usr/lib/python3/dist-packages/salt/templates/git/ssh-id-wrapper.bat
+	chmod 2750 debian/salt-common/var/log/salt
+	chown root:adm debian/salt-common/var/log/salt
+
+override_dh_missing:
+	dh_missing -X/usr/share/man/man --fail-missing

@@ -1,0 +1,102 @@
+From: Benjamin Drung <benjamin.drung@ionos.com>
+Date: Wed, 12 Jan 2022 16:59:02 +0100
+Subject: Fix test cases with PermissionError on /var/cache
+
+Some test cases fail when run without root permission, because they want
+to read/write to `/var/cache`:
+
+```
+python3 -m pytest -ra tests/pytests/unit/state/test_state_format_slots.py tests/unit/utils/test_parsers.py
+```
+
+`test_format_slots_parallel` fails with:
+
+```
+Process ParallelState(always-changes-and-succeeds):
+Traceback (most recent call last):
+  File "/usr/lib/python3.9/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "salt/utils/process.py", line 996, in wrapped_run_func
+    return run_func()
+  File "/usr/lib/python3.9/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "salt/state.py", line 2023, in _call_parallel_target
+    with salt.utils.files.fopen(tfile, "wb+") as fp_:
+  File "salt/utils/files.py", line 385, in fopen
+    f_handle = open(*args, **kwargs)  # pylint: disable=resource-leakage
+FileNotFoundError: [Errno 2] No such file or directory: '/var/cache/salt/minion/123/174993d470c5f21b548d929d1904021966cb279f'
+```
+
+Similar for `tests/unit/utils/test_parsers.py`:
+
+```
+FAILED tests/unit/utils/test_parsers.py::SaltRunOptionParserTestCase::test_jid_option - salt.exceptions.SaltSystemExit: No permissions to access "/var/log/salt/master", are you running as the correct user?
+FAILED tests/unit/utils/test_parsers.py::SaltRunOptionParserTestCase::test_jid_option_invalid - salt.exceptions.SaltSystemExit: No permissions to access "/var/log/salt/master", are you running as the correct user?
+FAILED tests/unit/utils/test_parsers.py::SaltSSHOptionParserTestCase::test_jid_option - salt.exceptions.SaltSystemExit: No permissions to access "/var/log/salt/ssh", are you running as the correct user?
+FAILED tests/unit/utils/test_parsers.py::SaltSSHOptionParserTestCase::test_jid_option_invalid - salt.exceptions.SaltSystemExit: No permissions to access "/var/log/salt/ssh", are you running as the correct user?
+```
+
+fixes #61148
+Forwarded: https://github.com/saltstack/salt/pull/61449
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ tests/pytests/unit/state/test_state_format_slots.py | 3 ++-
+ tests/unit/utils/test_parsers.py                    | 8 ++++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/tests/pytests/unit/state/test_state_format_slots.py b/tests/pytests/unit/state/test_state_format_slots.py
+index 57b7bb2..dc4c2a8 100644
+--- a/tests/pytests/unit/state/test_state_format_slots.py
++++ b/tests/pytests/unit/state/test_state_format_slots.py
+@@ -16,9 +16,10 @@ log = logging.getLogger(__name__)
+ 
+ 
+ @pytest.fixture
+-def state_obj():
++def state_obj(tmp_path):
+     with patch("salt.state.State._gather_pillar"):
+         minion_opts = salt.config.DEFAULT_MINION_OPTS.copy()
++        minion_opts["cachedir"] = str(tmp_path)
+         yield salt.state.State(minion_opts)
+ 
+ 
+diff --git a/tests/unit/utils/test_parsers.py b/tests/unit/utils/test_parsers.py
+index 907c67f..64dd6ff 100644
+--- a/tests/unit/utils/test_parsers.py
++++ b/tests/unit/utils/test_parsers.py
+@@ -985,7 +985,7 @@ class SaltRunOptionParserTestCase(ParserBase, TestCase):
+ 
+     def test_jid_option(self):
+         jid = salt.utils.jid.gen_jid({})
+-        args = ["--jid", jid]
++        args = ["--jid", jid, "--log-file", self.log_file]
+ 
+         parser = self.parser()
+         parser.parse_args(args)
+@@ -993,7 +993,7 @@ class SaltRunOptionParserTestCase(ParserBase, TestCase):
+ 
+     def test_jid_option_invalid(self):
+         jid = salt.utils.jid.gen_jid({}) + "A"
+-        args = ["--jid", jid]
++        args = ["--jid", jid, "--log-file", self.log_file]
+ 
+         parser = self.parser()
+         mock_err = ErrorMock()
+@@ -1043,7 +1043,7 @@ class SaltSSHOptionParserTestCase(ParserBase, TestCase):
+ 
+     def test_jid_option(self):
+         jid = salt.utils.jid.gen_jid({})
+-        args = ["--jid", jid] + self.args
++        args = ["--jid", jid, "--log-file", self.log_file] + self.args
+ 
+         parser = self.parser()
+         parser.parse_args(args)
+@@ -1051,7 +1051,7 @@ class SaltSSHOptionParserTestCase(ParserBase, TestCase):
+ 
+     def test_jid_option_invalid(self):
+         jid = salt.utils.jid.gen_jid({}) + "A"
+-        args = ["--jid", jid] + self.args
++        args = ["--jid", jid, "--log-file", self.log_file] + self.args
+ 
+         parser = self.parser()
+         mock_err = ErrorMock()

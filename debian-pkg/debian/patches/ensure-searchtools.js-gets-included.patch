@@ -1,0 +1,36 @@
+From: Steffen Kockel <steffen.kockel@profitbricks.com>
+Date: Wed, 13 Oct 2021 20:00:36 +0200
+Subject: doc: Ensure searchtools.js gets included
+
+Searchtools did not get included with Debian > stretch and
+Sphinx > 1.6.7.
+
+Sphinx 3.4.0 also needs `language_data.js` to properly search.
+See https://github.com/readthedocs/sphinx_rtd_theme/pull/1021
+
+`searchtools.js` and `language_data.js` are only needed by
+`search.html`. So maybe better just add `search.html` to the template.
+
+Forwarded: no
+Signed-off-by: Benjamin Drung <benjamin.drung@ionos.com>
+---
+ doc/_themes/saltstack/layout.html | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/doc/_themes/saltstack/layout.html b/doc/_themes/saltstack/layout.html
+index 8dbfe0b..02cbe73 100644
+--- a/doc/_themes/saltstack/layout.html
++++ b/doc/_themes/saltstack/layout.html
+@@ -27,6 +27,12 @@
+ {% set script_files = [
+     '_static/js/vendor/bootstrap.min.js',
+ ] + script_files %}
++{%- if not '_static/searchtools.js' in script_files %}
++{%- set script_files = script_files + ['_static/searchtools.js'] %}
++{%- endif %}
++{%- if not '_static/language_data.js' in script_files %}
++{%- set script_files = script_files + ['_static/language_data.js'] %}
++{%- endif %}
+ 
+ {%- macro relbar() %}
+     <div class="related">
