@@ -42,9 +42,9 @@ index 6a88573..84b2b26 100644
          "homepage:${Homepage}\\n"
          "status:${db:Status-Abbrev}\\n"
 +        "install_date:${db-fsys:Last-Modified}\\n"
-         "======\\n"
          "description:${Description}\\n"
-         "------\\n'"
+         "\\n*/~^\\\\*\\n'"
+     )
 @@ -294,11 +295,17 @@ def _get_pkg_info(*packages, **kwargs):
              el.strip() for el in pkg_info.split(os.linesep) if el.strip()
          ]:
@@ -63,7 +63,7 @@ index 6a88573..84b2b26 100644
 -            install_date = _get_pkg_install_time(pkg_data.get("package"))
 -            if install_date:
 -                pkg_data["install_date"] = install_date
-         pkg_data["description"] = pkg_descr.split(":", 1)[-1]
+         pkg_data["description"] = pkg_descr
          ret.append(pkg_data)
  
 @@ -324,26 +331,6 @@ def _get_pkg_license(pkg):
@@ -102,9 +102,9 @@ index d00fc46..29d3335 100644
                          "homepage:http://tiswww.case.edu/php/chet/bash/bashtop.html",
                          "status:ii ",
 +                        "install_date:1560199259",
-                         "======",
                          "description:GNU Bourne Again SHell",
                          " Bash is an sh-compatible command language interpreter that"
+                         " executes",
 @@ -317,8 +318,6 @@ class DpkgTestCase(TestCase, LoaderModuleMockMixin):
              dpkg.__grains__, {"os": "Ubuntu", "osrelease_info": (18, 4)}
          ), patch("salt.utils.path.which", MagicMock(return_value=False)), patch(

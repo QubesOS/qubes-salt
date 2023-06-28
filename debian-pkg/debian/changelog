@@ -1,3 +1,10 @@
+salt (3006.1-1) unstable; urgency=medium
+
+  [ Marek Marczykowski-Górecki ]
+  * update to 3006.1
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Thu, 29 Jun 2023 01:34:34 +0200
+
 salt (3004.1+dfsg-2) unstable; urgency=medium
 
   * Replace HgPillarTestCase patch with upstream commit

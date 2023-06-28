@@ -1,3 +1,4 @@
 usr/bin/salt-call
+usr/bin/salt-pip
 usr/bin/spm
 usr/lib/

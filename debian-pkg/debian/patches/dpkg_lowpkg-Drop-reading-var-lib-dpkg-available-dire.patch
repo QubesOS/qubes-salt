@@ -189,7 +189,7 @@ index 84b2b26..f7c4ff9 100644
 @@ -307,118 +340,11 @@ def _get_pkg_info(*packages, **kwargs):
              if value:
                  pkg_data[key] = value
-         pkg_data["description"] = pkg_descr.split(":", 1)[-1]
+         pkg_data["description"] = pkg_descr
 -        ret.append(pkg_data)
 -
 -    return ret
@@ -206,7 +206,7 @@ index 84b2b26..f7c4ff9 100644
 -    licenses = set()
 -    cpr = "/usr/share/doc/{}/copyright".format(pkg)
 -    if os.path.exists(cpr):
--        with salt.utils.files.fopen(cpr) as fp_:
+-        with salt.utils.files.fopen(cpr, errors="ignore") as fp_:
 -            for line in salt.utils.stringutils.to_unicode(fp_.read()).split(os.linesep):
 -                if line.startswith("License:"):
 -                    licenses.add(line.split(":", 1)[1].strip())

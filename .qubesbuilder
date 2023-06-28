@@ -10,6 +10,10 @@ vm-fc38:
   rpm:
     build:
     - salt.spec
+vm-bookworm:
+  deb:
+    build:
+    - debian-pkg/debian
 source:
   files:
   - url: https://files.pythonhosted.org/packages/source/s/salt/salt-@VERSION@.tar.gz
