@@ -1,7 +1,7 @@
 Make-the-Salt-Proxy-environment-aware.patch
 doc-Exclude-documentation_options.js-from-default-th.patch
 remove-privacy-breach.patch
-run-salt-master-as-salt-user.patch
+#run-salt-master-as-salt-user.patch
 doc-fix-logo-link.patch
 Use-jquery.js-from-sphinx.patch
 ensure-searchtools.js-gets-included.patch
