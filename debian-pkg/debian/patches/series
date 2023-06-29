@@ -7,3 +7,9 @@ Use-jquery.js-from-sphinx.patch
 ensure-searchtools.js-gets-included.patch
 dpkg_lowpkg-Do-not-access-var-lib-dpkg-info-package-.patch
 dpkg_lowpkg-Drop-reading-var-lib-dpkg-available-dire.patch
+0001-Backport-locale.getdefaultlocale-into-Salt.-It-s-get.patch
+0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
+0003-Stop-using-the-deprecated-cgi-module.patch
+0004-Fixed-committed-reviewer-suggestion.patch
+0005-Stop-using-the-deprecated-pipes-module.patch
+0006-Fix-salt-ssh-state.-commands-retcode-for-render-fail.patch
