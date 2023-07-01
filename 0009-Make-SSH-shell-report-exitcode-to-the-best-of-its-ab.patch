@@ -1,0 +1,46 @@
+From 30cc2b7bff38e99025ef467dae5006bd06e24359 Mon Sep 17 00:00:00 2001
+From: jeanluc <lkubb@protonmail.com>
+Date: Fri, 30 Jun 2023 20:39:56 +0200
+Subject: [PATCH 3/3] Make SSH shell report exitcode to the best of its ability
+
+---
+ changelog/64588.fixed.md |  1 +
+ salt/client/ssh/shell.py | 15 ++++++++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
+ create mode 100644 changelog/64588.fixed.md
+
+diff --git a/changelog/64588.fixed.md b/changelog/64588.fixed.md
+new file mode 100644
+index 0000000000..bf9def4eb4
+--- /dev/null
++++ b/changelog/64588.fixed.md
+@@ -0,0 +1 @@
++Fixed SSH shell seldomly fails to report any exit code
+diff --git a/salt/client/ssh/shell.py b/salt/client/ssh/shell.py
+index cfa82d13c2..2df328ed1f 100644
+--- a/salt/client/ssh/shell.py
++++ b/salt/client/ssh/shell.py
+@@ -464,6 +464,19 @@ class Shell:
+                 if stdout:
+                     old_stdout = stdout
+                 time.sleep(0.01)
+-            return ret_stdout, ret_stderr, term.exitstatus
+         finally:
+             term.close(terminate=True, kill=True)
++        # Ensure term.close is called before querying the exitstatus, otherwise
++        # it might still be None.
++        ret_status = term.exitstatus
++        if ret_status is None:
++            if term.signalstatus is not None:
++                # The process died because of an unhandled signal, report
++                # a non-zero exitcode bash-style.
++                ret_status = 128 + term.signalstatus
++            else:
++                log.warning(
++                    "VT reported both exitstatus and signalstatus as None. "
++                    "This is likely a bug."
++                )
++        return ret_stdout, ret_stderr, ret_status
+-- 
+2.41.0
+

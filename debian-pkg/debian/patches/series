@@ -13,3 +13,6 @@ dpkg_lowpkg-Drop-reading-var-lib-dpkg-available-dire.patch
 0004-Fixed-committed-reviewer-suggestion.patch
 0005-Stop-using-the-deprecated-pipes-module.patch
 0006-Fix-salt-ssh-state.-commands-retcode-for-render-fail.patch
+0007-Fix-salt-ssh-stacktrace-when-retcode-is-not-an-integ.patch
+0008-Add-tests-for-issue-64588.patch
+0009-Make-SSH-shell-report-exitcode-to-the-best-of-its-ab.patch
