@@ -1,3 +1,14 @@
+salt (3006.1-2) unstable; urgency=medium
+
+  * Build for fc38 too
+  * Commit unmodified Debian's salt 3004.1+dfsg-2
+  * Update Debian packaging to 3006.1-1
+  * debian: include backports from Fedora package
+  * debian: drop non-standard user patch
+  * Backport more patches to fix regression
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Mon, 03 Jul 2023 13:48:26 +0200
+
 salt (3006.1-1) unstable; urgency=medium
 
   [ Marek Marczykowski-Górecki ]
