@@ -1,3 +1,9 @@
+salt (3006.2-2) unstable; urgency=medium
+
+  * version 3006.2-2
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Wed, 23 Aug 2023 13:03:18 +0200
+
 salt (3006.1-2) unstable; urgency=medium
 
   * Build for fc38 too
