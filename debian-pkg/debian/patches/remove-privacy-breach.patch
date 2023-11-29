@@ -27,9 +27,9 @@ index 4fbd92b..06deb7b 100644
 -   :alt: PyPi Package Downloads
 -   :target: https://lgtm.com/projects/g/saltstack/salt/context:python
 -
--.. image:: https://img.shields.io/badge/slack-@saltstackcommunity-blue.svg?logo=slack
+-.. image:: https://img.shields.io/badge/slack-SaltProject-blue.svg?logo=slack
 -   :alt: Salt Project Slack Community
--   :target: https://join.slack.com/t/saltstackcommunity/shared_invite/zt-3av8jjyf-oBQ2M0vhXOhJpNpRkPWBvg
+-   :target: https://via.vmw.com/salt-slack
 -
 -.. image:: https://img.shields.io/twitch/status/saltprojectoss
 -   :alt: Salt Project Twitch Channel

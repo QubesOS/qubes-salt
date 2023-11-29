@@ -73,9 +73,9 @@ index 2be96ab195..9d9d0c094c 100644
  pytestmark = [
      pytest.mark.skip_if_binaries_missing("ssh", "ssh-keygen", check_all=True),
 @@ -339,3 +339,60 @@ def test_extra_filerefs(tmp_path, opts):
-     with patch("salt.roster.get_roster_file", MagicMock(return_value=roster)):
-         ssh_obj = client._prep_ssh(**ssh_opts)
-         assert ssh_obj.opts.get("extra_filerefs", None) == "salt://foobar"
+     ret = client.key_deploy(host, ssh_ret)
+     assert ret == ssh_ret
+     assert mock_key_run.call_count == 0
 +
 +
 +@pytest.mark.parametrize("retcode,expected", [("null", None), ('"foo"', "foo")])
