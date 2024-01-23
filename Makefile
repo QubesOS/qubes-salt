@@ -12,7 +12,7 @@ BUILDER_DIR ?= ../..
 SRC_DIR ?= qubes-src
 
 SRC_URLS := \
-            https://files.pythonhosted.org/packages/source/s/salt/salt-$(VERSION).tar.gz \
+            https://github.com/saltstack/salt/releases/download/v$(VERSION)/salt-$(VERSION).tar.gz \
 
 UNTRUSTED_SUFF := .UNTRUSTED
 
@@ -24,6 +24,22 @@ ifeq ($(FETCH_CMD),)
 $(error "You can not run this Makefile without having FETCH_CMD defined")
 endif
 
+keyring := salt-trustedkeys.gpg
+keyring-file := $(if $(GNUPGHOME), $(GNUPGHOME)/, $(HOME)/.gnupg/)$(keyring)
+keyring-import := gpg -q --no-auto-check-trustdb --no-default-keyring --import
+
+$(keyring-file): SALT-PROJECT-GPG-PUBKEY-2023.pub
+	@rm -f $(keyring-file) && $(keyring-import) --keyring $(keyring) $^
+
+salt-%.tar.gz.asc:
+	@$(FETCH_CMD) $@ $(filter %/$(patsubst %.asc,%,$@),$(SRC_URLS)).asc
+
+%: %.asc $(keyring-file)
+	@$(FETCH_CMD) $@$(UNTRUSTED_SUFF) $(filter %/$@,$(SRC_URLS))
+	@gpgv --keyring $(keyring) $< $@$(UNTRUSTED_SUFF) 2>/dev/null || \
+		{ echo "Wrong signature on $@$(UNTRUSTED_SUFF)!"; exit 1; }
+	@mv $@$(UNTRUSTED_SUFF) $@
+	
 %: %.sha512
 	@$(FETCH_CMD) $@$(UNTRUSTED_SUFF) -- $(filter %/$@,$(SRC_URLS))
 	@sha512sum --status -c <(printf "$$(cat $<)  -\n") <$@$(UNTRUSTED_SUFF) || \

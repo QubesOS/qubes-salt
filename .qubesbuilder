@@ -20,5 +20,7 @@ vm-trixie:
     - debian-pkg/debian
 source:
   files:
-  - url: https://files.pythonhosted.org/packages/source/s/salt/salt-@VERSION@.tar.gz
-    sha512: salt-@VERSION@.tar.gz.sha512
+  - url: https://github.com/saltstack/salt/releases/download/v@VERSION@/salt-@VERSION@.tar.gz
+    signature: https://github.com/saltstack/salt/releases/download/v@VERSION@/salt-@VERSION@.tar.gz.asc
+    pubkeys:
+    - SALT-PROJECT-GPG-PUBKEY-2023.pub
