@@ -41,9 +41,6 @@ Source21: %{name}-syndic.fish
 
 Patch0: contextvars.patch
 Patch2: 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
-Patch7: 0007-Fix-salt-ssh-stacktrace-when-retcode-is-not-an-integ.patch
-Patch8: 0008-Add-tests-for-issue-64588.patch
-Patch9: 0009-Make-SSH-shell-report-exitcode-to-the-best-of-its-ab.patch
 BuildArch: noarch
 
 %ifarch %{ix86} x86_64

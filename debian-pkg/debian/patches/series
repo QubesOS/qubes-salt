@@ -8,6 +8,3 @@ ensure-searchtools.js-gets-included.patch
 dpkg_lowpkg-Do-not-access-var-lib-dpkg-info-package-.patch
 dpkg_lowpkg-Drop-reading-var-lib-dpkg-available-dire.patch
 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
-0007-Fix-salt-ssh-stacktrace-when-retcode-is-not-an-integ.patch
-0008-Add-tests-for-issue-64588.patch
-0009-Make-SSH-shell-report-exitcode-to-the-best-of-its-ab.patch
