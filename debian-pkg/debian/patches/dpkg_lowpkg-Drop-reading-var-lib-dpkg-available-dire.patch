@@ -204,7 +204,7 @@ index 84b2b26..f7c4ff9 100644
 -    :return:
 -    """
 -    licenses = set()
--    cpr = "/usr/share/doc/{}/copyright".format(pkg)
+-    cpr = f"/usr/share/doc/{pkg}/copyright"
 -    if os.path.exists(cpr):
 -        with salt.utils.files.fopen(cpr, errors="ignore") as fp_:
 -            for line in salt.utils.stringutils.to_unicode(fp_.read()).split(os.linesep):
@@ -311,13 +311,13 @@ index 84b2b26..f7c4ff9 100644
      return ret
 diff --git a/tests/unit/modules/test_dpkg_lowpkg.py b/tests/unit/modules/test_dpkg_lowpkg.py
 index 29d3335..dd5c0f3 100644
---- a/tests/unit/modules/test_dpkg_lowpkg.py
-+++ b/tests/unit/modules/test_dpkg_lowpkg.py
+--- a/tests/pytests/unit/modules/test_dpkg_lowpkg.py
++++ b/tests/pytests/unit/modules/test_dpkg_lowpkg.py
 @@ -282,7 +282,6 @@ class DpkgTestCase(TestCase, LoaderModuleMockMixin):
-                         "source:bash",
-                         "version:4.4.18-2ubuntu1",
-                         "section:shells",
--                        "installed_size:1588",
-                         "size:",
-                         "MD5:",
-                         "SHA1:",
+                     "source:bash",
+                     "version:4.4.18-2ubuntu1",
+                     "section:shells",
+-                    "installed_size:1588",
+                     "size:",
+                     "MD5:",
+                     "SHA1:",

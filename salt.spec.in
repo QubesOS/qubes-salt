@@ -40,6 +40,7 @@ Source20: %{name}-run.fish
 Source21: %{name}-syndic.fish
 
 Patch0: contextvars.patch
+Patch1: match_hostname.patch
 Patch2: 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
 BuildArch: noarch
 
