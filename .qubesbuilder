@@ -2,6 +2,10 @@ host-fc37:
   rpm:
     build:
     - salt.spec
+host-fc41:
+  rpm:
+    build:
+    - salt.spec
 vm-fc37:
   rpm:
     build:
