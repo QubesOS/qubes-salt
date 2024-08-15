@@ -42,6 +42,7 @@ Source21: %{name}-syndic.fish
 Patch0: contextvars.patch
 Patch1: match_hostname.patch
 Patch2: 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
+Patch3: 0001-Drop-versioned-certifi-dependency.patch
 BuildArch: noarch
 
 %ifarch %{ix86} x86_64
