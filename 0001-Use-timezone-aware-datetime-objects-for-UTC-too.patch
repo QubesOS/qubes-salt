@@ -1,0 +1,147 @@
+From 4e015640d283ced576bd59925f9a81b2901c860c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
+Date: Thu, 15 Aug 2024 14:57:01 +0200
+Subject: [PATCH] Use timezone-aware datetime objects, for UTC too
+
+datetime.datetime.utcnow() is deprecated in Python 3.12, and it's
+recommended to switch to timezone-aware objects, so do this. It also
+simplifies local time handling, as .astimezone() method can be used
+instead of calculating timezone_delta manually.
+
+Part of #65604
+---
+ salt/grains/core.py   |  4 ++--
+ salt/state.py         | 34 ++++++++++++++--------------------
+ salt/utils/jid.py     |  2 +-
+ salt/utils/pkg/rpm.py |  2 +-
+ 4 files changed, 18 insertions(+), 24 deletions(-)
+
+diff --git a/salt/grains/core.py b/salt/grains/core.py
+index 529c3dff2f..e7709fb703 100644
+--- a/salt/grains/core.py
++++ b/salt/grains/core.py
+@@ -2905,12 +2905,12 @@ def ip_fqdn():
+         if not ret["ipv" + ipv_num]:
+             ret[key] = []
+         else:
+-            start_time = datetime.datetime.utcnow()
++            start_time = datetime.datetime.now(tz=datetime.timezone.utc)
+             try:
+                 info = socket.getaddrinfo(_fqdn, None, socket_type)
+                 ret[key] = list({item[4][0] for item in info})
+             except (OSError, UnicodeError):
+-                timediff = datetime.datetime.utcnow() - start_time
++                timediff = datetime.datetime.now(tz=datetime.timezone.utc) - start_time
+                 if timediff.seconds > 5 and __opts__["__role"] == "master":
+                     log.warning(
+                         'Unable to find IPv%s record for "%s" causing a %s '
+diff --git a/salt/state.py b/salt/state.py
+index b5006807ea..7446a5739a 100644
+--- a/salt/state.py
++++ b/salt/state.py
+@@ -171,11 +171,9 @@ def _calculate_fake_duration():
+     Generate a NULL duration for when states do not run
+     but we want the results to be consistent.
+     """
+-    utc_start_time = datetime.datetime.utcnow()
+-    local_start_time = utc_start_time - (
+-        datetime.datetime.utcnow() - datetime.datetime.now()
+-    )
+-    utc_finish_time = datetime.datetime.utcnow()
++    utc_start_time = datetime.datetime.now(tz=datetime.timezone.utc)
++    local_start_time = utc_start_time.astimezone()
++    utc_finish_time = datetime.datetime.now(tz=datetime.timezone.utc)
+     start_time = local_start_time.time().isoformat()
+     delta = utc_finish_time - utc_start_time
+     # duration in milliseconds.microseconds
+@@ -2152,7 +2150,7 @@ class State:
+             instance = cls(**init_kwargs)
+         # we need to re-record start/end duration here because it is impossible to
+         # correctly calculate further down the chain
+-        utc_start_time = datetime.datetime.utcnow()
++        utc_start_time = datetime.datetime.now(tz=datetime.zoneinfo.utc)
+ 
+         instance.format_slots(cdata)
+         tag = _gen_tag(low)
+@@ -2172,10 +2170,9 @@ class State:
+                 "comment": f"An exception occurred in this state: {trb}",
+             }
+ 
+-        utc_finish_time = datetime.datetime.utcnow()
+-        timezone_delta = datetime.datetime.utcnow() - datetime.datetime.now()
+-        local_finish_time = utc_finish_time - timezone_delta
+-        local_start_time = utc_start_time - timezone_delta
++        utc_finish_time = datetime.datetime.now(tz=datetime.zoneinfo.utc)
++        local_finish_time = utc_finish_time.astimezone()
++        local_start_time = utc_start_time.astimezone()
+         ret["start_time"] = local_start_time.time().isoformat()
+         delta = utc_finish_time - utc_start_time
+         # duration in milliseconds.microseconds
+@@ -2205,8 +2202,8 @@ class State:
+                         *cdata["args"], **cdata["kwargs"]
+                     )
+ 
+-                    utc_start_time = datetime.datetime.utcnow()
+-                    utc_finish_time = datetime.datetime.utcnow()
++                    utc_start_time = datetime.datetime.now(tz=datetime.timezone.utc)
++                    utc_finish_time = datetime.datetime.now(tz=datetime.timezone.utc)
+                     delta = utc_finish_time - utc_start_time
+                     duration = (delta.seconds * 1000000 + delta.microseconds) / 1000.0
+                     retry_ret["duration"] = duration
+@@ -2293,10 +2290,8 @@ class State:
+         Call a state directly with the low data structure, verify data
+         before processing.
+         """
+-        utc_start_time = datetime.datetime.utcnow()
+-        local_start_time = utc_start_time - (
+-            datetime.datetime.utcnow() - datetime.datetime.now()
+-        )
++        utc_start_time = datetime.datetime.now(tz=datetime.timezone.utc)
++        local_start_time = utc_start_time.astimezone()
+         log.info(
+             "Running state [%s] at time %s",
+             low["name"].strip() if isinstance(low["name"], str) else low["name"],
+@@ -2485,10 +2480,9 @@ class State:
+         self.__run_num += 1
+         format_log(ret)
+         self.check_refresh(low, ret)
+-        utc_finish_time = datetime.datetime.utcnow()
+-        timezone_delta = datetime.datetime.utcnow() - datetime.datetime.now()
+-        local_finish_time = utc_finish_time - timezone_delta
+-        local_start_time = utc_start_time - timezone_delta
++        utc_finish_time = datetime.datetime.now(tz=datetime.timezone.utc)
++        local_finish_time = utc_finish_time.astimezone()
++        local_start_time = utc_start_time.astimezone()
+         ret["start_time"] = local_start_time.time().isoformat()
+         delta = utc_finish_time - utc_start_time
+         # duration in milliseconds.microseconds
+diff --git a/salt/utils/jid.py b/salt/utils/jid.py
+index 69d926469b..84f5b3c4a3 100644
+--- a/salt/utils/jid.py
++++ b/salt/utils/jid.py
+@@ -16,7 +16,7 @@ def _utc_now():
+     """
+     Helper method so tests do not have to patch the built-in method.
+     """
+-    return datetime.datetime.utcnow()
++    return datetime.datetime.now(tz=datetime.timezone.utc)
+ 
+ 
+ def gen_jid(opts):
+diff --git a/salt/utils/pkg/rpm.py b/salt/utils/pkg/rpm.py
+index 7574a068e8..d8f7d20b06 100644
+--- a/salt/utils/pkg/rpm.py
++++ b/salt/utils/pkg/rpm.py
+@@ -130,7 +130,7 @@ def parse_pkginfo(line, osarch=None):
+ 
+     if install_time not in ("(none)", "0"):
+         install_date = (
+-            datetime.datetime.utcfromtimestamp(int(install_time)).isoformat() + "Z"
++            datetime.datetime.fromtimestamp(int(install_time), datetime.UTC).isoformat() + "Z"
+         )
+         install_date_time_t = int(install_time)
+     else:
+-- 
+2.45.2
+
