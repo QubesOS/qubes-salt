@@ -5,6 +5,7 @@ Date: Thu, 15 Aug 2024 03:46:12 +0200
 Subject: [PATCH] Drop versioned certifi dependency
 
 Let it pick the version from the distribution.
+Similarly for requests.
 ---
  requirements/base.txt | 2 --
  1 file changed, 2 deletions(-)
@@ -13,10 +14,13 @@ diff --git a/requirements/base.txt b/requirements/base.txt
 index de9cbaab17..bce14bc510 100644
 --- a/requirements/base.txt
 +++ b/requirements/base.txt
-@@ -7,8 +7,6 @@ PyYAML
+@@ -7,10 +7,7 @@ PyYAML
+ msgpack>=1.0.0
+ PyYAML
  MarkupSafe
- requests<2.32.0 ; python_version < '3.10'
- requests>=2.32.3 ; python_version >= '3.10'
+-requests<2.32.0 ; python_version < '3.10'
+-requests>=2.32.3 ; python_version >= '3.10'
++requests
 -certifi==2023.07.22; python_version < '3.10'
 -certifi>=2024.7.4; python_version >= '3.10'
  distro>=1.0.1
