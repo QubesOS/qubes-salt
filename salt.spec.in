@@ -44,6 +44,7 @@ Patch1: match_hostname.patch
 Patch2: 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
 Patch3: 0001-Drop-versioned-certifi-dependency.patch
 Patch4: 0001-Use-timezone-aware-datetime-objects-for-UTC-too.patch
+Patch5: 0001-Fix-Python3.13-compatibility-regarding-urllib.parse-.patch
 BuildArch: noarch
 
 %ifarch %{ix86} x86_64
