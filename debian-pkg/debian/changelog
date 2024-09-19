@@ -1,3 +1,12 @@
+salt (3006.9-2) unstable; urgency=medium
+
+  * Backport patch fixing Python 3.13 compat
+  * Include patched salt in VM too
+  * Relax 'requests' dependency
+  * ci: test installing in R4.2 dom0 too
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Thu, 19 Sep 2024 21:19:12 +0200
+
 salt (3006.9-1) unstable; urgency=medium
 
   * ci: add R4.3 drop R4.1
