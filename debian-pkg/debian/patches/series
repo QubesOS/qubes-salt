@@ -8,3 +8,4 @@ ensure-searchtools.js-gets-included.patch
 dpkg_lowpkg-Do-not-access-var-lib-dpkg-info-package-.patch
 dpkg_lowpkg-Drop-reading-var-lib-dpkg-available-dire.patch
 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
+match_hostname.patch

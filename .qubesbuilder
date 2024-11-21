@@ -6,18 +6,6 @@ host-fc41:
   rpm:
     build:
     - salt.spec
-vm-fc37:
-  rpm:
-    build:
-    - salt.spec
-vm-fc38:
-  rpm:
-    build:
-    - salt.spec
-vm-fc39:
-  rpm:
-    build:
-    - salt.spec
 vm-fc40:
   rpm:
     build:
@@ -31,6 +19,10 @@ vm-bookworm:
     build:
     - debian-pkg/debian
 vm-trixie:
+  deb:
+    build:
+    - debian-pkg/debian
+vm-noble:
   deb:
     build:
     - debian-pkg/debian
