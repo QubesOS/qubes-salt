@@ -1,0 +1,3 @@
+#Type Name   ID  GECOS   Home directory  Shell
+u     salt  -    "Salt"  /etc/salt       /bin/bash
+g     salt  -

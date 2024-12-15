@@ -14,7 +14,7 @@ Version: @VERSION@%{?__rc_ver}
 Release: @REL@%{?dist}
 Summary: A parallel remote execution system
 Group:   System Environment/Daemons
-License: ASL 2.0
+License: Apache-2.0
 URL:     https://saltproject.io/
 Source0: %{pypi_source}
 Source1: %{name}-proxy@.service
@@ -38,13 +38,19 @@ Source18: %{name}-master.fish
 Source19: %{name}-minion.fish
 Source20: %{name}-run.fish
 Source21: %{name}-syndic.fish
+Source22: %{name}.sysusers
 
 Patch0: contextvars.patch
-Patch1: match_hostname.patch
 Patch2: 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
-Patch3: 0001-Drop-versioned-certifi-dependency.patch
+Patch3: 0001-Drop-versioned-requests-dependency.patch
 Patch4: 0001-Use-timezone-aware-datetime-objects-for-UTC-too.patch
+# Fix urlib changes in python >= 3.12.6
+# https://github.com/saltstack/salt/issues/66898
 Patch5: 0001-Fix-Python3.13-compatibility-regarding-urllib.parse-.patch
+Patch6: 0001-Drop-versioned-dependencies.patch
+Patch7: 0002-Drop-Windows-dependencies.patch
+# Don't require rpm-vercmp, we can use python3-rpm
+Patch8: rpmvercmp.patch
 BuildArch: noarch
 
 %ifarch %{ix86} x86_64
@@ -159,6 +165,9 @@ Supports Python 3.
 %prep
 %autosetup -p1
 
+%if 0%{?fedora} < 39
+sed -i '/timelib/d' requirements/base.txt
+%endif
 
 %build
 %pyproject_wheel
@@ -189,6 +198,8 @@ install -d -m 0755 %{buildroot}%{_sysconfdir}/%{name}/proxy.d
 # Add the config files
 install -p -m 0640 conf/minion %{buildroot}%{_sysconfdir}/%{name}/minion
 install -p -m 0640 conf/master %{buildroot}%{_sysconfdir}/%{name}/master
+# Use salt user on nre master installations
+sed -i 's/#user: root/user: salt/g' %{buildroot}%{_sysconfdir}/%{name}/master
 install -p -m 0600 conf/cloud  %{buildroot}%{_sysconfdir}/%{name}/cloud
 install -p -m 0640 conf/roster %{buildroot}%{_sysconfdir}/%{name}/roster
 install -p -m 0640 conf/proxy  %{buildroot}%{_sysconfdir}/%{name}/proxy
@@ -226,6 +237,9 @@ install -p -m 0644  %{SOURCE21} %{buildroot}%{fish_dir}/%{name}-syndic.fish
 mkdir -p %{buildroot}%{zsh_dir}
 install -p -m 0644 pkg/common/%{name}.zsh %{buildroot}%{zsh_dir}/_%{name}
 
+# Salt user and group
+install -p -D -m 0644 %{SOURCE22} %{buildroot}%{_sysusersdir}/salt.conf
+mkdir -p %{buildroot}%{_sysconfdir}/%{name}/gpgkeys
 
 %check
 %pyproject_check_import -t
@@ -236,7 +250,7 @@ install -p -m 0644 pkg/common/%{name}.zsh %{buildroot}%{zsh_dir}/_%{name}
 %doc README.fedora
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{_sysconfdir}/bash_completion.d/%{name}.bash
-%{_var}/cache/%{name}
+%dir %{_var}/cache/%{name}/
 %{_var}/log/%{name}
 %{_bindir}/spm
 %doc %{_mandir}/man1/spm.1*
@@ -260,9 +274,11 @@ install -p -m 0644 pkg/common/%{name}.zsh %{buildroot}%{zsh_dir}/_%{name}
 %{_bindir}/%{name}-master
 %{_bindir}/%{name}-run
 %{_unitdir}/%{name}-master.service
-%config(noreplace) %{_sysconfdir}/%{name}/master
-%config(noreplace) %{_sysconfdir}/%{name}/master.d
-%config(noreplace) %{_sysconfdir}/%{name}/pki/master
+%{_sysusersdir}/salt.conf
+%config(noreplace) %attr(0750, salt, salt) %{_sysconfdir}/%{name}/master
+%config(noreplace) %attr(0750, salt, salt) %{_sysconfdir}/%{name}/master.d
+%config(noreplace) %attr(0750, salt, salt) %{_sysconfdir}/%{name}/pki/master
+%config(noreplace) %attr(0750, salt, salt) %{_sysconfdir}/%{name}/gpgkeys
 
 %files minion
 %doc %{_mandir}/man1/%{name}-call.1*
@@ -314,7 +330,11 @@ install -p -m 0644 pkg/common/%{name}.zsh %{buildroot}%{zsh_dir}/_%{name}
 %preun api
 %systemd_preun %{name}-api.service
 
+%pre master
+%sysusers_create_compat %{SOURCE22}
+
 %post master
+chown salt:salt %{_sysconfdir}/%{name}/gpgkeys -R
 %systemd_post %{name}-master.service
 
 %post syndic
