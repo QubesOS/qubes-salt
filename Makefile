@@ -31,8 +31,8 @@ keyring-import := gpg -q --no-auto-check-trustdb --no-default-keyring --import
 $(keyring-file): SALT-PROJECT-GPG-PUBKEY-2023.pub
 	@rm -f $(keyring-file) && $(keyring-import) --keyring $(keyring) $^
 
-salt-%.tar.gz.asc:
-	@$(FETCH_CMD) $@ $(filter %/$(patsubst %.asc,%,$@),$(SRC_URLS)).asc
+#salt-%.tar.gz.asc:
+#	@$(FETCH_CMD) $@ $(filter %/$(patsubst %.asc,%,$@),$(SRC_URLS)).asc
 
 %: %.asc $(keyring-file)
 	@$(FETCH_CMD) $@$(UNTRUSTED_SUFF) $(filter %/$@,$(SRC_URLS))

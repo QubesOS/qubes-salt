@@ -7,6 +7,8 @@ Subject: [PATCH 1/2] Drop versioned dependencies
 Upstream bumps version requirements arbitrarily, in most cases without
 any specific API or functional requirement.
 Use package version available in the distribution instead.
+
+And also cryptography was twice.
 ---
  requirements/base.txt   | 12 ++++++------
  requirements/zeromq.txt |  3 +--
@@ -16,19 +18,30 @@ diff --git a/requirements/base.txt b/requirements/base.txt
 index 0061087e35..a42ff50f7d 100644
 --- a/requirements/base.txt
 +++ b/requirements/base.txt
-@@ -10,21 +10,21 @@ distro>=1.0.1
- psutil>=5.0.0
- packaging>=21.3
+@@ -7,29 +7,27 @@
+ PyYAML
+ MarkupSafe
+-requests<2.32.0 ; python_version < '3.10'
+-requests>=2.32.3 ; python_version >= '3.10'
++requests
+-certifi==2023.07.22; python_version < '3.10'
+-certifi>=2024.7.4; python_version >= '3.10'
++certifi
+ distro>=1.0.1
+ psutil<6.0.0; python_version <= '3.9'
+ psutil>=5.0.0; python_version >= '3.10'
+ # Packaging 24.1 imports annotations from __future__ which breaks salt ssh
+ # tests on target hosts with older python versions.
+-packaging==24.0
++packaging>=21.3
  looseversion
--tornado>=6.3.3
+-tornado>=6.4.1
 -aiohttp>=3.9.0
 +tornado
 +aiohttp
- 
- # We need contextvars for salt-ssh.
- # Even on python versions which ships with contextvars in the standard library!
- contextvars
- 
+
+ croniter>=0.3.0,!=0.3.22; sys_platform != 'win32'
+
  setproctitle>=1.2.3
 -timelib>=0.2.5
 -pyopenssl>=24.0.0
@@ -40,9 +53,23 @@ index 0061087e35..a42ff50f7d 100644
  importlib-metadata>=3.3.0
 -cryptography>=42.0.0
 +cryptography
+
+ # From old windows.txt requirements file
+ gitpython>=3.1.37; sys_platform == 'win32'
+@@ -44,10 +43,7 @@
  
- # From old requirements/static/pkg/linux.in
- rpm-vercmp; sys_platform == 'linux'
+ # We need contextvars for salt-ssh
+
+-cryptography>=42.0.0
++urllib3
+
+-urllib3>=1.26.20,<2.0.0; python_version < '3.10'
+-urllib3>=2.5.0; python_version >= '3.10'
+-
+-jaraco.text>=4.0.0
+-jaraco.functools>=4.1.0
++jaraco.text
++jaraco.functools
 diff --git a/requirements/zeromq.txt b/requirements/zeromq.txt
 index 4000f5eb01..ec03558d33 100644
 --- a/requirements/zeromq.txt
@@ -55,4 +82,3 @@ index 4000f5eb01..ec03558d33 100644
 +pyzmq
 -- 
 2.46.0
-

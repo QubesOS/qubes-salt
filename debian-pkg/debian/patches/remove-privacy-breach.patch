@@ -14,7 +14,7 @@ diff --git a/README.rst b/README.rst
 index 4fbd92b..06deb7b 100644
 --- a/README.rst
 +++ b/README.rst
-@@ -1,38 +1,3 @@
+@@ -1,30 +1,3 @@
 -.. image:: https://img.shields.io/github/license/saltstack/salt
 -   :alt: Salt Project License: Apache v2.0
 -   :target: https://github.com/saltstack/salt/blob/master/LICENSE
@@ -23,17 +23,9 @@ index 4fbd92b..06deb7b 100644
 -   :alt: PyPi Package Downloads
 -   :target: https://pypi.org/project/salt
 -
--.. image:: https://img.shields.io/lgtm/grade/python/github/saltstack/salt
--   :alt: PyPi Package Downloads
--   :target: https://lgtm.com/projects/g/saltstack/salt/context:python
--
--.. image:: https://img.shields.io/badge/slack-SaltProject-blue.svg?logo=slack
--   :alt: Salt Project Slack Community
--   :target: https://via.vmw.com/salt-slack
--
--.. image:: https://img.shields.io/twitch/status/saltprojectoss
--   :alt: Salt Project Twitch Channel
--   :target: https://www.twitch.tv/saltprojectoss
+-.. image:: https://img.shields.io/badge/discord-SaltProject-blue.svg?logo=discord
+-   :alt: Salt Project Discord Community
+-   :target: https://discord.com/invite/J7b7EscrAs
 -
 -.. image:: https://img.shields.io/reddit/subreddit-subscribers/saltstack?style=social
 -   :alt: Salt Project subreddit

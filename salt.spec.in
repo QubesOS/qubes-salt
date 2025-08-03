@@ -41,16 +41,16 @@ Source21: %{name}-syndic.fish
 Source22: %{name}.sysusers
 
 Patch0: contextvars.patch
+# Don't require rpm-vercmp, we can use python3-rpm
+Patch1: rpmvercmp.patch
 Patch2: 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
-Patch3: 0001-Drop-versioned-requests-dependency.patch
 Patch4: 0001-Use-timezone-aware-datetime-objects-for-UTC-too.patch
 # Fix urlib changes in python >= 3.12.6
 # https://github.com/saltstack/salt/issues/66898
-Patch5: 0001-Fix-Python3.13-compatibility-regarding-urllib.parse-.patch
+Patch5: urllib.patch
 Patch6: 0001-Drop-versioned-dependencies.patch
 Patch7: 0002-Drop-Windows-dependencies.patch
-# Don't require rpm-vercmp, we can use python3-rpm
-Patch8: rpmvercmp.patch
+Patch9: 0001-Fix-Python3.13-compatibility-regarding-maxsplit.patch
 BuildArch: noarch
 
 %ifarch %{ix86} x86_64

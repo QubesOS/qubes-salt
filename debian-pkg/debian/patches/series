@@ -7,5 +7,10 @@ ensure-searchtools.js-gets-included.patch
 dpkg_lowpkg-Do-not-access-var-lib-dpkg-info-package-.patch
 dpkg_lowpkg-Drop-reading-var-lib-dpkg-available-dire.patch
 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
+contextvars.patch
+rpmvercmp.patch
 0001-Drop-versioned-dependencies.patch
 0002-Drop-Windows-dependencies.patch
+0001-Use-timezone-aware-datetime-objects-for-UTC-too.patch
+0001-Fix-Python3.13-compatibility-regarding-maxsplit.patch
+urllib.patch
