@@ -51,6 +51,7 @@ Patch5: urllib.patch
 Patch6: 0001-Drop-versioned-dependencies.patch
 Patch7: 0002-Drop-Windows-dependencies.patch
 Patch9: 0001-Fix-Python3.13-compatibility-regarding-maxsplit.patch
+Patch10: 0001-Prepare-salt.utils.process-for-python-3.14.patch
 BuildArch: noarch
 
 %ifarch %{ix86} x86_64
