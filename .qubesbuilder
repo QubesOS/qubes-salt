@@ -14,6 +14,14 @@ vm-fc41:
   rpm:
     build:
     - salt.spec
+vm-fc42:
+  rpm:
+    build:
+    - salt.spec
+vm-fc43:
+  rpm:
+    build:
+    - salt.spec
 vm-bookworm:
   deb:
     build:
