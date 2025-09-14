@@ -18,7 +18,13 @@ diff --git a/requirements/base.txt b/requirements/base.txt
 index 0061087e35..a42ff50f7d 100644
 --- a/requirements/base.txt
 +++ b/requirements/base.txt
-@@ -7,29 +7,27 @@
+@@ -1,35 +1,33 @@
+ --constraint=constraints.txt
+ 
+-Jinja2>=3.1.5
++Jinja2
+ jmespath
+ msgpack>=1.0.0
  PyYAML
  MarkupSafe
 -requests<2.32.0 ; python_version < '3.10'
@@ -36,7 +42,7 @@ index 0061087e35..a42ff50f7d 100644
 +packaging>=21.3
  looseversion
 -tornado>=6.4.1
--aiohttp>=3.9.0
+-aiohttp>=3.10.2
 +tornado
 +aiohttp
 
@@ -51,12 +57,14 @@ index 0061087e35..a42ff50f7d 100644
  python-gnupg>=0.4.7
  cherrypy>=18.6.1
  importlib-metadata>=3.3.0
+-zipp>=3.19.1
 -cryptography>=42.0.0
++zipp
 +cryptography
 
  # From old windows.txt requirements file
  gitpython>=3.1.37; sys_platform == 'win32'
-@@ -44,10 +43,7 @@
+@@ -44,14 +43,9 @@
  
  # We need contextvars for salt-ssh
 
@@ -70,6 +78,12 @@ index 0061087e35..a42ff50f7d 100644
 -jaraco.functools>=4.1.0
 +jaraco.text
 +jaraco.functools
+-timelib>=0.2.5; python_version < '3.11'
+-timelib>=0.3.0; python_version >= '3.11'
+-frozenlist>=1.3.0; python_version < '3.11'
+-frozenlist>=1.5.0; python_version >= '3.11'
++timelib
++frozenlist
 diff --git a/requirements/zeromq.txt b/requirements/zeromq.txt
 index 4000f5eb01..ec03558d33 100644
 --- a/requirements/zeromq.txt

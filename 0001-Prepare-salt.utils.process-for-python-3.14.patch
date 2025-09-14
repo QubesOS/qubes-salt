@@ -17,13 +17,6 @@ Change the condition to check for != 'fork' instead of == 'spawn'.
  salt/utils/process.py      | 2 +-
  2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/changelog/68148.changed.md b/changelog/68148.changed.md
-index 7964ffa5e02..3f6a8d7a0cb 100644
---- a/changelog/68148.changed.md
-+++ b/changelog/68148.changed.md
-@@ -1 +1,2 @@
- Update packaged python from 3.10 to 3.11
-+Fix salt.utils.process for python 3.14
 diff --git a/salt/utils/process.py b/salt/utils/process.py
 index eeac663c03a..fcc93147dbd 100644
 --- a/salt/utils/process.py
