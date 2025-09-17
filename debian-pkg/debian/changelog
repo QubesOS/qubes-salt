@@ -1,3 +1,11 @@
+salt (3007.7-1) unstable; urgency=medium
+
+  * Apply fix for Python 3.14
+  * Enable build for F42 and F43
+  * Update to 3007.7
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Wed, 17 Sep 2025 13:42:27 +0200
+
 salt (3007.6-2) unstable; urgency=medium
 
   * 
