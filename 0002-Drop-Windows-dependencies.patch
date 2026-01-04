@@ -13,7 +13,7 @@ index a42ff50f7d..73f058c5ff 100644
 --- a/requirements/base.txt
 +++ b/requirements/base.txt
 @@ -33,17 +33,6 @@ cryptography
- importlib-metadata>=3.3.0
+ importlib-metadata>=8.7.0
  zipp
  cryptography
 -

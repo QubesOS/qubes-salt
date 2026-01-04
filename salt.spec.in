@@ -295,7 +295,6 @@ mkdir -p %{buildroot}%{_sysconfdir}/%{name}/gpgkeys
 %{_bindir}/salt-pip
 
 %files master
-%doc %{_mandir}/man7/%{name}.7*
 %doc %{_mandir}/man1/%{name}.1*
 %doc %{_mandir}/man1/%{name}-cp.1*
 %doc %{_mandir}/man1/%{name}-key.1*
