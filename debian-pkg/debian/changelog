@@ -1,8 +1,11 @@
-salt (3007.10-1) unstable; urgency=medium
+salt (3007.13-1) unstable; urgency=medium
 
   * Update patches and packaging for 3007.10
+  * version 3007.10-1
+  * Fix conflict with stdlib
+  * version 3007.13-1
 
- -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Sun, 04 Jan 2026 05:21:04 +0100
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Mon, 23 Feb 2026 05:14:10 +0100
 
 salt (3007.8-1) unstable; urgency=medium
 

@@ -12,24 +12,46 @@ diff --git a/requirements/base.txt b/requirements/base.txt
 index a42ff50f7d..73f058c5ff 100644
 --- a/requirements/base.txt
 +++ b/requirements/base.txt
-@@ -33,17 +33,6 @@ cryptography
- importlib-metadata>=8.7.0
- zipp
+@@ -9,18 +9,15 @@
+ # cheroot 8.5.2 fails to build with modern setuptools due to setuptools_scm_git_archive dependency
+ cheroot>=10.0.1
+ cherrypy>=18.6.1
+-croniter>=0.3.0,!=0.3.22; sys_platform != 'win32'
  cryptography
--
--# From old windows.txt requirements file
+ distro>=1.0.1
+ frozenlist
 -gitpython>=3.1.37; sys_platform == 'win32'
+ importlib-metadata>=8.7.0
+ jaraco.functools
+ jaraco.text
+ Jinja2
+ jmespath
+ looseversion
 -lxml>=4.6.3; sys_platform == 'win32'
+ MarkupSafe<3.0.0
+ msgpack>=1.0.0
+ # Packaging 24.1 imports annotations from __future__ which breaks salt ssh
+@@ -28,13 +25,9 @@
+ packaging>=21.3
+ psutil<6.0.0; python_version <= '3.9'
+ psutil>=5.0.0; python_version >= '3.10'
 -pymssql>=2.2.11; sys_platform == 'win32'
 -pymysql>=1.0.2; sys_platform == 'win32'
+ pyopenssl
+ python-dateutil>=2.8.1
+ python-gnupg>=0.4.7
 -pythonnet>=3.0.1; sys_platform == 'win32'
 -pywin32>=305; sys_platform == 'win32'
+ PyYAML
+ requests
+ setproctitle>=1.2.3
+@@ -42,6 +35,4 @@
+ tornado
+ urllib3
+ virtualenv
 -wmi>=1.5.1; sys_platform == 'win32'
 -xmltodict>=0.13.0; sys_platform == 'win32'
--croniter>=0.3.0,!=0.3.22; sys_platform != 'win32'
- 
- # We need contextvars for salt-ssh
- 
+ zipp
 -- 
 2.46.0
 

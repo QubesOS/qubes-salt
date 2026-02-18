@@ -10,15 +10,13 @@ diff --git a/requirements/base.txt b/requirements/base.txt
 index 0061087e35..a42ff50f7d 100644
 --- a/requirements/base.txt
 +++ b/requirements/base.txt
-@@ -28,9 +28,6 @@
- importlib-metadata>=8.7.0
- zipp>=3.19.1
- cryptography>=42.0.0
--
--# From old requirements/static/pkg/linux.in
+@@ -40,7 +40,6 @@
+ PyYAML
+ requests<2.32.0 ; python_version < '3.10'
+ requests>=2.32.5 ; python_version >= '3.10'
 -rpm-vercmp; sys_platform == 'linux'
- 
- # From old windows.txt requirements file
- gitpython>=3.1.37; sys_platform == 'win32'
+ setproctitle>=1.2.3
+ timelib>=0.2.5; python_version < '3.11'
+ timelib>=0.3.0; python_version >= '3.11'
 -- 
 2.46.0
