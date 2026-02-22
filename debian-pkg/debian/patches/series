@@ -14,3 +14,4 @@ rpmvercmp.patch
 0001-Use-timezone-aware-datetime-objects-for-UTC-too.patch
 0001-Fix-Python3.13-compatibility-regarding-maxsplit.patch
 urllib.patch
+0001-Do-not-insert-local-paths-before-standard-library-pa.patch

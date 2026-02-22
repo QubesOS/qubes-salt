@@ -1,0 +1,72 @@
+From bdddbea8440a70c0bdb281f249f4261393bb4e06 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
+Date: Sat, 21 Feb 2026 15:57:21 +0100
+Subject: [PATCH] Do not insert local paths before standard library paths
+
+Inserting local paths like `salt/utils` before standard library makes
+many modules in utils conflict with standard library. This is especially
+relevant for salt-ssh. For example salt.utils.configparser - it tries to
+import configparser from stdlib, but due to salt/utils path being
+prepended to sys.path, it imports itself:
+
+    [ERROR   ] Failed to import fileserver gitfs, this is due most likely to a syntax error:
+    Traceback (most recent call last):
+      File "/var/tmp/.root_dd8a91_salt/pyall/salt/loader/lazy.py", line 902, in _load_module
+        self.run(spec.loader.exec_module, mod)
+        ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/var/tmp/.root_dd8a91_salt/pyall/salt/loader/lazy.py", line 1365, in run
+        return self._last_context.run(self._run_as, _func_or_method, *args, **kwargs)
+               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/var/tmp/.root_dd8a91_salt/pyall/salt/loader/lazy.py", line 1380, in _run_as
+        ret = _func_or_method(*args, **kwargs)
+      File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+      File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+      File "/var/tmp/.root_dd8a91_salt/pyall/salt/fileserver/gitfs.py", line 52, in <module>
+        import salt.utils.gitfs
+      File "/var/tmp/.root_dd8a91_salt/pyall/salt/utils/gitfs.py", line 31, in <module>
+        import salt.utils.configparser
+      File "/var/tmp/.root_dd8a91_salt/pyall/salt/utils/configparser.py", line 7, in <module>
+        from configparser import *  # pylint: disable=no-name-in-module,wildcard-import,unused-wildcard-import
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/var/tmp/.root_dd8a91_salt/running_data/var/cache/salt/minion/extmods/utils/configparser.py", line 12, in <module>
+        class GitConfigParser(RawConfigParser):
+                              ^^^^^^^^^^^^^^^
+    NameError: name 'RawConfigParser' is not defined
+
+On the other hand, places that try to use such duplicated modules from
+utils, import them via full name (as seen above: `import salt.utils.configparser`).
+
+Change the insert_system_path() function to not insert paths before
+standard library.
+
+Fixes #68755
+---
+ changelog/68755.fixed.md | 1 +
+ salt/config/__init__.py  | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+ create mode 100644 changelog/68755.fixed.md
+
+diff --git a/changelog/68755.fixed.md b/changelog/68755.fixed.md
+new file mode 100644
+index 00000000000..be6a5677bc6
+--- /dev/null
++++ b/changelog/68755.fixed.md
+@@ -0,0 +1 @@
++Fix salt.utils conflicting with standard library when using salt-ssh
+diff --git a/salt/config/__init__.py b/salt/config/__init__.py
+index 1a5068328e8..24ca6fec7cc 100644
+--- a/salt/config/__init__.py
++++ b/salt/config/__init__.py
+@@ -2309,7 +2309,7 @@ def insert_system_path(opts, paths):
+         path_options = {"path": path, "root_dir": opts["root_dir"]}
+         prepend_root_dir(path_options, path_options)
+         if os.path.isdir(path_options["path"]) and path_options["path"] not in sys.path:
+-            sys.path.insert(0, path_options["path"])
++            sys.path.append(path_options["path"])
+ 
+ 
+ def minion_config(
+-- 
+2.52.0
+
