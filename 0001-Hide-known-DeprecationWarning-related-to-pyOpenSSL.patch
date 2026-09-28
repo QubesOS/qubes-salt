@@ -1,0 +1,43 @@
+From 45f0d9a0df9c3a0ad6beee5d9e3e7df43ed721ce Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
+Date: Tue, 29 Sep 2026 01:49:36 +0200
+Subject: [PATCH] Hide known DeprecationWarning related to pyOpenSSL
+
+The code that checks for deprecated pyOpenSSL features itself triggers
+DeprecationWarning by using hasattr() on deprecated features. Hide the
+warning to not confuse users.
+---
+ salt/modules/tls.py | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/salt/modules/tls.py b/salt/modules/tls.py
+index a32bd165c3..ef3c22c823 100644
+--- a/salt/modules/tls.py
++++ b/salt/modules/tls.py
+@@ -105,6 +105,7 @@ import math
+ import os
+ import re
+ import time
++import warnings
+ from datetime import datetime, timedelta, timezone
+ 
+ import salt.utils.data
+@@ -130,9 +131,11 @@ try:
+     # construct v3 extensions through pyOpenSSL on those releases. The
+     # surrounding helpers fall back to a warn-and-continue path in that
+     # case.
+-    HAS_X509_EXTENSION = hasattr(OpenSSL.crypto, "X509Extension")
+-    # pyOpenSSL >= 26 also removed OpenSSL.crypto.CRL and load_crl.
+-    HAS_OPENSSL_CRL = hasattr(OpenSSL.crypto, "load_crl")
++    with warnings.catch_warnings():
++        warnings.filterwarnings("ignore",category=DeprecationWarning)
++        HAS_X509_EXTENSION = hasattr(OpenSSL.crypto, "X509Extension")
++        # pyOpenSSL >= 26 also removed OpenSSL.crypto.CRL and load_crl.
++        HAS_OPENSSL_CRL = hasattr(OpenSSL.crypto, "load_crl")
+ except ImportError:
+     HAS_X509_EXTENSION = False
+     HAS_OPENSSL_CRL = False
+-- 
+2.54.0
+

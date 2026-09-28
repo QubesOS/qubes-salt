@@ -44,6 +44,7 @@ Patch0: contextvars.patch
 # Don't require rpm-vercmp, we can use python3-rpm
 Patch1: rpmvercmp.patch
 Patch2: 0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
+Patch3: 0001-Hide-known-DeprecationWarning-related-to-pyOpenSSL.patch
 Patch6: 0001-Drop-versioned-dependencies.patch
 Patch7: 0002-Drop-Windows-dependencies.patch
 BuildArch: noarch
