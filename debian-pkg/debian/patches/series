@@ -4,8 +4,3 @@ remove-privacy-breach.patch
 doc-fix-logo-link.patch
 Use-jquery.js-from-sphinx.patch
 ensure-searchtools.js-gets-included.patch
-0002-Hide-known-DeprecationWarning-related-to-PEP-594.patch
-contextvars.patch
-rpmvercmp.patch
-0001-Drop-versioned-dependencies.patch
-0002-Drop-Windows-dependencies.patch

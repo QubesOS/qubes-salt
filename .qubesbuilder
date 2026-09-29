@@ -30,14 +30,23 @@ vm-bookworm:
   deb:
     build:
     - debian-pkg/debian
+    source:
+      commands:
+      - '@PLUGINS_DIR@/source_deb/scripts/debian-quilt @SOURCE_DIR@/debian-series.conf @BUILD_DIR@/debian/patches'
 vm-trixie:
   deb:
     build:
     - debian-pkg/debian
+    source:
+      commands:
+      - '@PLUGINS_DIR@/source_deb/scripts/debian-quilt @SOURCE_DIR@/debian-series.conf @BUILD_DIR@/debian/patches'
 vm-noble:
   deb:
     build:
     - debian-pkg/debian
+    source:
+      commands:
+      - '@PLUGINS_DIR@/source_deb/scripts/debian-quilt @SOURCE_DIR@/debian-series.conf @BUILD_DIR@/debian/patches'
 source:
   files:
   - url: https://github.com/saltstack/salt/releases/download/v@VERSION@/salt-@VERSION@.tar.gz
