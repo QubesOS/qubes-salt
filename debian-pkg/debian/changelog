@@ -1,3 +1,9 @@
+salt (3008.2-1) unstable; urgency=medium
+
+  * Update to 3008.2
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Fri, 25 Sep 2026 16:50:30 +0200
+
 salt (3007.13-2) unstable; urgency=medium
 
   * Include package also in F44

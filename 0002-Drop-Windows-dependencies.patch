@@ -12,45 +12,47 @@ diff --git a/requirements/base.txt b/requirements/base.txt
 index a42ff50f7d..73f058c5ff 100644
 --- a/requirements/base.txt
 +++ b/requirements/base.txt
-@@ -9,18 +9,15 @@
- # cheroot 8.5.2 fails to build with modern setuptools due to setuptools_scm_git_archive dependency
- cheroot>=10.0.1
- cherrypy>=18.6.1
--croniter>=0.3.0,!=0.3.22; sys_platform != 'win32'
+@@ -12,7 +12,6 @@
  cryptography
- distro>=1.0.1
+ distro
  frozenlist
--gitpython>=3.1.37; sys_platform == 'win32'
- importlib-metadata>=8.7.0
+-gitpython
+ idna
+ importlib-metadata
  jaraco.functools
- jaraco.text
+@@ -21,7 +20,6 @@
  Jinja2
  jmespath
  looseversion
--lxml>=4.6.3; sys_platform == 'win32'
- MarkupSafe<3.0.0
- msgpack>=1.0.0
- # Packaging 24.1 imports annotations from __future__ which breaks salt ssh
-@@ -28,13 +25,9 @@
- packaging>=21.3
- psutil<6.0.0; python_version <= '3.9'
+-lxml
+ MarkupSafe
+ more-itertools
+ msgpack
+@@ -39,18 +37,9 @@
  psutil>=5.0.0; python_version >= '3.10'
--pymssql>=2.2.11; sys_platform == 'win32'
--pymysql>=1.0.2; sys_platform == 'win32'
+ pyasn1
+ pycparser
+-# pymssql 2.3.12+ dropped win32 (32-bit Windows) wheels; 3008.x still
+-# builds a Windows x86 onedir so keep the pin at the last release that
+-# ships cp3X-win32 wheels.
+-pymssql>=2.2.1,<=2.3.11; sys_platform == 'win32' and python_version < '3.11'
+-pymssql==2.3.11; sys_platform == 'win32' and python_version >= '3.11'
  pyopenssl
- python-dateutil>=2.8.1
- python-gnupg>=0.4.7
--pythonnet>=3.0.1; sys_platform == 'win32'
--pywin32>=305; sys_platform == 'win32'
- PyYAML
+ python-dateutil>=2.9.0.post0
+ python-gnupg>=0.5.6
+-pythonnet>=3.0.1; sys_platform == 'win32' and python_version < '3.11'
+-pythonnet>=3.0.4; sys_platform == 'win32' and python_version >= '3.11' and python_version < '3.13'
+-pythonnet>=3.1.0rc0; sys_platform == 'win32' and python_version >= '3.13'
+-pywin32>=312; sys_platform == 'win32'
+ pycryptodomex>=3.23.0
+ PyYAML>=6.0.3
  requests
- setproctitle>=1.2.3
-@@ -42,6 +35,4 @@
- tornado
+@@ -65,6 +54,4 @@
  urllib3
  virtualenv
+ vultr>=1.0.1
 -wmi>=1.5.1; sys_platform == 'win32'
--xmltodict>=0.13.0; sys_platform == 'win32'
+-xmltodict>=1.0.4; sys_platform == 'win32'
  zipp
 -- 
 2.46.0

@@ -49,11 +49,12 @@ diff --git a/salt/minion.py b/salt/minion.py
 index 63fb6e9..8224424 100644
 --- a/salt/minion.py
 +++ b/salt/minion.py
-@@ -3907,6 +3907,6 @@ class SProxyMinion(SMinion):
-         self.opts["grains"] = salt.loader.grains(self.opts, proxy=self.proxy)
+@@ -6290,7 +6290,7 @@ class SProxyMinion(SMinion):
+         self.opts.mutate_key("grains", new_grains)
  
          #  Sync the grains here so the proxy can communicate them to the master
 -        self.functions["saltutil.sync_grains"](saltenv="base")
 +        self.functions["saltutil.sync_grains"](saltenv=self.opts["saltenv"])
          self.grains_cache = self.opts["grains"]
          self.ready = True
+ 

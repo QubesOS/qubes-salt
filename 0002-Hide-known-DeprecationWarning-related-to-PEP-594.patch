@@ -8,44 +8,26 @@ The code is prepared to handle the situation where those modules will be
 missing (with very minor functionality loss), so do not confuse the
 users.
 ---
- salt/modules/linux_shadow.py | 6 +++++-
  salt/utils/pycrypto.py       | 6 +++++-
  2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/salt/modules/linux_shadow.py b/salt/modules/linux_shadow.py
-index aa149ac4c8..6b0204b4b7 100644
---- a/salt/modules/linux_shadow.py
-+++ b/salt/modules/linux_shadow.py
-@@ -18,7 +18,11 @@ import salt.utils.files
- from salt.exceptions import CommandExecutionError
- 
- try:
--    import spwd
-+    import warnings
-+
-+    with warnings.catch_warnings():
-+        warnings.filterwarnings("ignore",category=DeprecationWarning)
-+        import spwd
- except ImportError:
-     pass
- 
 diff --git a/salt/utils/pycrypto.py b/salt/utils/pycrypto.py
 index a0f3874035..ab26ed75c3 100644
 --- a/salt/utils/pycrypto.py
 +++ b/salt/utils/pycrypto.py
 @@ -23,7 +23,11 @@ except ImportError:
-     HAS_RANDOM = False
+ HAS_RANDOM = True
  
  try:
--    import crypt
+-    import crypt  # pylint: disable=deprecated-module
 +    import warnings
 +
 +    with warnings.catch_warnings():
 +        warnings.filterwarnings("ignore",category=DeprecationWarning)
 +        import crypt
  
-     HAS_CRYPT = True
- except (ImportError, PermissionError):
+     # We need to ensure if the right `crypt` is loaded,
+     # as LazyLoader can load `salt.utils.crypt` instead of `crypt`
 -- 
 2.39.2
 
