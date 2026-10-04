@@ -12,23 +12,6 @@ users.
  salt/utils/pycrypto.py       | 6 +++++-
  2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/salt/modules/linux_shadow.py b/salt/modules/linux_shadow.py
-index aa149ac4c8..6b0204b4b7 100644
---- a/salt/modules/linux_shadow.py
-+++ b/salt/modules/linux_shadow.py
-@@ -18,7 +18,11 @@ import salt.utils.files
- from salt.exceptions import CommandExecutionError
- 
- try:
--    import spwd
-+    import warnings
-+
-+    with warnings.catch_warnings():
-+        warnings.filterwarnings("ignore",category=DeprecationWarning)
-+        import spwd
- except ImportError:
-     pass
- 
 diff --git a/salt/utils/pycrypto.py b/salt/utils/pycrypto.py
 index a0f3874035..ab26ed75c3 100644
 --- a/salt/utils/pycrypto.py
@@ -37,12 +20,12 @@ index a0f3874035..ab26ed75c3 100644
      HAS_RANDOM = False
  
  try:
--    import crypt
+-    import crypt  # pylint: disable=deprecated-module
 +    import warnings
 +
 +    with warnings.catch_warnings():
 +        warnings.filterwarnings("ignore",category=DeprecationWarning)
-+        import crypt
++        import crypt  # pylint: disable=deprecated-module
  
      HAS_CRYPT = True
  except (ImportError, PermissionError):
